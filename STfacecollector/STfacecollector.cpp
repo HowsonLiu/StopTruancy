@@ -4,9 +4,18 @@
 #include "pch.h"
 #include <iostream>
 
+#pragma comment(lib, "STfacedetection.lib")
+extern "C" __declspec(dllexport) bool ClassifierEmpty();
+extern "C" __declspec(dllexport) bool ClassifierLoadXml(const char*);
+extern "C" __declspec(dllexport) void* GetVectorRect();
+extern "C" __declspec(dllexport) bool ClassifierDetect(int rows, int cols, int type, void* data,
+	int flag, int minx, int miny, int maxx, int maxy);
+
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	int i;
+	std::cout << ClassifierEmpty();
+	std::cin >> i;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
