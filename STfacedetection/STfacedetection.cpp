@@ -25,7 +25,7 @@ void* GetVectorRect() {
 //用前四个Mat参数构造出Mat
 bool ClassifierDetect(int rows, int cols, int type, void* data, 
 	int flag, int minx, int miny, int maxx, int maxy) {
-	if (g_faceRect.empty() || !data || rows <= 0 || cols <= 0) return false;
+	if (g_cascade.empty() || !data || rows <= 0 || cols <= 0) return false;
 	cv::Mat origin(rows, cols, type, data);
 	cv::cvtColor(origin, g_gray, CV_BGR2GRAY);	// 转灰度图
 	cv::equalizeHist(g_gray, g_gray);	// 直方图均衡化，简单点来说就是提高对比度
