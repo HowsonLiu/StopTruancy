@@ -24,10 +24,11 @@ int main()
 		cap >> frame;
 		cv::imshow("face collector", frame);
 		cv::waitKey(30);
-		ClassifierDetect(frame.rows, frame.cols, frame.type(), frame.data, CV_HAAR_SCALE_IMAGE, 100, 100, 600, 600);
+		std::cout << frame.rows << " " << frame.cols << " " << frame.type() << " " << std::endl;
+		bool res = ClassifierDetect(frame.rows, frame.cols, frame.type(), frame.data, CV_HAAR_SCALE_IMAGE, 100, 100, 600, 600);
 		pFaceRectVec = static_cast<std::vector<cv::Rect>*> (GetVectorRect());
 		if (pFaceRectVec) {
-			std::cout << pFaceRectVec->size() << std::endl;
+			std::cout << pFaceRectVec->size() << " " << res << std::endl;
 			if(pFaceRectVec->size() > 0) break;
 		}
 	}
