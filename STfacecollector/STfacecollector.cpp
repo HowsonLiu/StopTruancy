@@ -7,25 +7,29 @@
 #include <opencv2/opencv.hpp>
 
 #pragma comment(lib, "STfacedetection.lib")
-extern "C" __declspec(dllexport) bool ClassifierEmpty();
-extern "C" __declspec(dllexport) bool ClassifierLoadXml(const char*);
-extern "C" __declspec(dllexport) void* GetVectorRect();
-extern "C" __declspec(dllexport) bool ClassifierDetect(int rows, int cols, int type, void* data,
+extern "C" __declspec(dllimport) bool ClassifierEmpty();
+extern "C" __declspec(dllimport) bool ClassifierLoadXml(const char*);
+extern "C" __declspec(dllimport) void* GetVectorRect();
+extern "C" __declspec(dllimport) bool ClassifierDetect(int rows, int cols, int type, void* data,
 	int flag, int minx, int miny, int maxx, int maxy);
+extern "C" __declspec(dllimport) bool ClassifierDetectEx(void* pMat, int flag, int minx, int miny, int maxx, int maxy);
 
 int main()
 {
 	cv::VideoCapture cap(0);
 	if (!cap.isOpened()) return -1;
 	std::vector<cv::Rect>* pFaceRectVec;
-	if (!ClassifierEmpty()) return -1;
+	if (ClassifierEmpty()) {
+		if(!ClassifierLoadXml("D:\\Programming_Project\\OpenCV\\StopTruancy\\x64\\Debug\\haarcascade_frontalface_alt.xml"))
+			return -1;
+	}
 	cv::Mat frame;
 	while (true) {
 		cap >> frame;
 		cv::imshow("face collector", frame);
 		cv::waitKey(30);
-		std::cout << frame.rows << " " << frame.cols << " " << frame.type() << " " << std::endl;
-		bool res = ClassifierDetect(frame.rows, frame.cols, frame.type(), frame.data, CV_HAAR_SCALE_IMAGE, 100, 100, 600, 600);
+		// bool res = ClassifierDetect(frame.rows, frame.cols, frame.type(), frame.data, CV_HAAR_SCALE_IMAGE, 100, 100, 600, 600);
+		bool res = ClassifierDetectEx((void*)&frame, CV_HAAR_SCALE_IMAGE, 100, 100, 600, 600);
 		pFaceRectVec = static_cast<std::vector<cv::Rect>*> (GetVectorRect());
 		if (pFaceRectVec) {
 			std::cout << pFaceRectVec->size() << " " << res << std::endl;
