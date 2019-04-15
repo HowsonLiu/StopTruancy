@@ -45,6 +45,8 @@ NetworkWidget::NetworkWidget(QWidget *parent)
 	m_offlineLabel->setPixmap(*offlinePixmap);
 	m_retryButton->setText("Retry");
 
+	connect(m_retryButton, &QPushButton::clicked, this, &NetworkWidget::onRetry);
+
 	// init
 	m_connectingLabel->hide();
 }
@@ -67,4 +69,14 @@ void NetworkWidget::SetNetStatus(NetStatus status)
 		m_retryButton->show();
 		m_connectingLabel->show();
 	}
+}
+
+void NetworkWidget::onRetry() {
+	SetNetStatus(Connecting);
+	// 交给网络组件做测试
+}
+
+void NetworkWidget::onConnectFailed()
+{
+	SetNetStatus(Offline);
 }

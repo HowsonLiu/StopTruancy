@@ -26,5 +26,9 @@ private:
 
 public:
 	void SetNetStatus(NetStatus status);
+
+private slots:
+	void onRetry();
+	void onConnectFailed();
 };
 
