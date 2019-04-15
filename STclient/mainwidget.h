@@ -5,6 +5,7 @@
 class LeftWidget;
 class StudentWidget;
 class ClassWidget;
+class NetworkWidget;
 class MainWidget : public QWidget
 {
 	Q_OBJECT
@@ -13,6 +14,7 @@ public:
 	~MainWidget();
 
 private:
+	NetworkWidget* m_networkWidget;
 	LeftWidget* m_leftWidget;
 	StudentWidget* m_studentWidget;
 	ClassWidget* m_classWidget;

@@ -1,4 +1,6 @@
 <RCC>
-    <qresource prefix="MainWidget">
+    <qresource prefix="/Network">
+        <file>Resources/loading.gif</file>
+        <file>Resources/offline.png</file>
     </qresource>
 </RCC>

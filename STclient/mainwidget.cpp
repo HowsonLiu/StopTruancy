@@ -2,14 +2,16 @@
 #include "leftwidget.h"
 #include "studentwidget.h"
 #include "classwidget.h"
+#include "networkwidget.h"
 #include <QSplitter>
 #include <QLabel>
-#include <QLayout>
+#include <QStackedLayout>
 
 MainWidget::MainWidget(QWidget *parent)
 	: QWidget(parent)
 {
 	// create
+	m_networkWidget = new NetworkWidget(this);
 	m_leftWidget = new LeftWidget(this);
 	m_studentWidget = new StudentWidget(this);
 	m_classWidget = new ClassWidget(this);
@@ -19,8 +21,10 @@ MainWidget::MainWidget(QWidget *parent)
 	splitter->addWidget(m_leftWidget);
 	splitter->addWidget(m_studentWidget);
 	splitter->addWidget(m_classWidget);
-	QHBoxLayout* layout = new QHBoxLayout(this);
-	layout->addWidget(splitter);	// 这里要把他放到layout里，不然他不受MainWidget大小控制
+	QStackedLayout* layout = new QStackedLayout(this);	// 重叠放置
+	layout->setStackingMode(QStackedLayout::StackAll);
+	layout->addWidget(m_networkWidget);
+	layout->addWidget(splitter);
 	setLayout(layout);
 
 	splitter->show();
