@@ -14,6 +14,7 @@ StudentWidget::StudentWidget(QWidget *parent)
 	// create
 	m_photoLabel = new QLabel(this);
 	m_nameLabel = new QLabel(this);
+	m_optimizeLabel = new QLabel(this);
 	m_optimizeButton = new QPushButton(this);
 	m_attendancesList = new QListView(this);
 
@@ -27,17 +28,21 @@ StudentWidget::StudentWidget(QWidget *parent)
 	topLayout->addStretch();
 	layout->addLayout(topLayout);
 	QHBoxLayout* midLayout = new QHBoxLayout(this);
+	midLayout->addWidget(m_optimizeLabel);
 	midLayout->addWidget(m_optimizeButton);
 	midLayout->addStretch();
 	layout->addLayout(midLayout);
 	layout->addWidget(m_attendancesList);
 	setLayout(layout);
 
-	// photo
-	m_photoLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-
 	// name
 	m_nameLabel->setFont(QFont("Microsoft YaHei", 20, 75));
+
+	// optimize
+	m_optimizeLabel->setFont(QFont("Microsoft YaHei", 10, 75));
+	m_optimizeLabel->setText("Recognition is not accurate? Let's optimize!");
+	m_optimizeButton->setStyleSheet("border-image:url(:/Student/Resources/add.png);");
+	m_optimizeButton->setFixedSize(QSize(20, 20));
 
 	// background
 	QPalette pal = palette();

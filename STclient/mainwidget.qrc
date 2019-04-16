@@ -8,5 +8,6 @@
     </qresource>
     <qresource prefix="/Student">
         <file>Resources/defalut_student_photo.png</file>
+        <file>Resources/add.png</file>
     </qresource>
 </RCC>

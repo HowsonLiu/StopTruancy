@@ -15,6 +15,7 @@ private:
 
 	QLabel* m_photoLabel;
 	QLabel* m_nameLabel;
+	QLabel* m_optimizeLabel;
 	QPushButton* m_optimizeButton;
 	QListView* m_attendancesList;
 
