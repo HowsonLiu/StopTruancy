@@ -6,6 +6,7 @@
 #include <QLineEdit>
 #include <QListView>
 #include <QPushButton>
+#include <QResizeEvent>
 
 LeftWidget::LeftWidget(QWidget *parent)
 	: QWidget(parent)
@@ -33,11 +34,27 @@ LeftWidget::LeftWidget(QWidget *parent)
 	QPixmap logo(":/MainWindows/Resources/logo.png");
 	logo = logo.scaled(QSize(289, 175), Qt::KeepAspectRatio);
 	m_signLabel->setPixmap(logo);
-
-	// combobox
+	
 }
 
 
 LeftWidget::~LeftWidget()
 {
+}
+
+void LeftWidget::resizeEvent(QResizeEvent * event)
+{
+	QWidget::resizeEvent(event);
+	// m_signLabel->setPixmap(m_signLabel->pixmap()->scaled(event->size().width(), 0 , Qt::KeepAspectRatio, Qt::SmoothTransformation));
+}
+	
+EmptyWidget::EmptyWidget(QWidget* parent)
+	: QWidget(parent)
+{
+	
+}
+
+EmptyWidget::~EmptyWidget() 
+{
+
 }

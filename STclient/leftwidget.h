@@ -13,6 +13,9 @@ public:
 	LeftWidget(QWidget *parent = Q_NULLPTR);
 	~LeftWidget();
 
+protected:
+	virtual void resizeEvent(QResizeEvent *event) override;
+
 private:
 	QLabel* m_signLabel;
 	QComboBox* m_comboBox;
@@ -22,3 +25,10 @@ private:
 	QPushButton* m_delButton;
 };
 
+class EmptyWidget : public QWidget 
+{
+	Q_OBJECT
+public:
+	EmptyWidget(QWidget* parent = Q_NULLPTR);
+	~EmptyWidget();
+};

@@ -15,10 +15,12 @@ MainWidget::MainWidget(QWidget *parent)
 	m_leftWidget = new LeftWidget(this);
 	m_studentWidget = new StudentWidget(this);
 	m_classWidget = new ClassWidget(this);
+	QLabel* emptyLabel = new QLabel(this);
 
 	// layout
 	QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
 	splitter->addWidget(m_leftWidget);
+	splitter->addWidget(emptyLabel);
 	splitter->addWidget(m_studentWidget);
 	splitter->addWidget(m_classWidget);
 	QStackedLayout* layout = new QStackedLayout(this);	// ÖØµþ·ÅÖÃ
@@ -27,7 +29,13 @@ MainWidget::MainWidget(QWidget *parent)
 	layout->addWidget(splitter);
 	setLayout(layout);
 
+	// emptyWidget
+	emptyLabel->setStyleSheet("background-color: white;");
+	emptyLabel->resize(600, 600);
+
 	// init
+	m_studentWidget->hide();
+	m_classWidget->hide();
 	splitter->show();
 	TryConnect();
 }
