@@ -27,9 +27,20 @@ MainWidget::MainWidget(QWidget *parent)
 	layout->addWidget(splitter);
 	setLayout(layout);
 
+	// init
 	splitter->show();
+	TryConnect();
 }
 
 MainWidget::~MainWidget()
 {
+}
+
+void MainWidget::TryConnect()
+{
+	bool res = true;	// ÍøÂç²âÊÔ
+	if (res) 
+		m_networkWidget->hide();
+	else
+		m_networkWidget->show();
 }

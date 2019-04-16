@@ -12,6 +12,7 @@ class MainWidget : public QWidget
 public:
 	MainWidget(QWidget *parent = Q_NULLPTR);
 	~MainWidget();
+	void TryConnect();
 
 private:
 	NetworkWidget* m_networkWidget;

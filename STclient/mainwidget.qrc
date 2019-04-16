@@ -3,4 +3,7 @@
         <file>Resources/loading.gif</file>
         <file>Resources/offline.png</file>
     </qresource>
+    <qresource prefix="/MainWindows">
+        <file>Resources/logo.png</file>
+    </qresource>
 </RCC>

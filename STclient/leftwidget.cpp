@@ -18,11 +18,6 @@ LeftWidget::LeftWidget(QWidget *parent)
 	m_addButton = new QPushButton(this);
 	m_delButton = new QPushButton(this);
 
-	// signlabel
-	m_signLabel->setText("StopTruancy");
-
-	// combobox
-
 	// layout
 	QVBoxLayout* mainLayout = new QVBoxLayout(this);
 	mainLayout->addWidget(m_signLabel);
@@ -33,6 +28,13 @@ LeftWidget::LeftWidget(QWidget *parent)
 	buttonsLayout->addWidget(m_addButton);
 	buttonsLayout->addWidget(m_delButton);
 	mainLayout->addLayout(buttonsLayout);
+
+	// signlabel
+	QPixmap logo(":/MainWindows/Resources/logo.png");
+	logo = logo.scaled(QSize(289, 175), Qt::KeepAspectRatio);
+	m_signLabel->setPixmap(logo);
+
+	// combobox
 }
 
 
