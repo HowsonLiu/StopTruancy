@@ -7,6 +7,7 @@
 #include <QListView>
 #include <QPushButton>
 #include <QResizeEvent>
+#include <QDebug>
 
 LeftWidget::LeftWidget(QWidget *parent)
 	: QWidget(parent)
@@ -21,10 +22,10 @@ LeftWidget::LeftWidget(QWidget *parent)
 
 	// layout
 	QVBoxLayout* mainLayout = new QVBoxLayout(this);
-	mainLayout->addWidget(m_signLabel);
+	mainLayout->addWidget(m_signLabel, 1, Qt::AlignCenter);
 	mainLayout->addWidget(m_comboBox);
 	mainLayout->addWidget(m_searchEdit);
-	mainLayout->addWidget(m_listView);
+	mainLayout->addWidget(m_listView, 5);
 	QHBoxLayout* buttonsLayout = new QHBoxLayout(this);
 	buttonsLayout->addWidget(m_addButton);
 	buttonsLayout->addWidget(m_delButton);
@@ -32,26 +33,29 @@ LeftWidget::LeftWidget(QWidget *parent)
 
 	// signlabel
 	QPixmap logo(":/MainWindows/Resources/logo.png");
-	logo = logo.scaled(QSize(289, 175), Qt::KeepAspectRatio);
+	logo = logo.scaled(QSize(250, 65), Qt::KeepAspectRatio);
 	m_signLabel->setPixmap(logo);
 	
+	// background
+	QPalette pal = palette();
+	pal.setColor(QPalette::Background, Qt::white);
+	setAutoFillBackground(true);
+	setPalette(pal);
 }
 
 
 LeftWidget::~LeftWidget()
 {
 }
-
-void LeftWidget::resizeEvent(QResizeEvent * event)
-{
-	QWidget::resizeEvent(event);
-	// m_signLabel->setPixmap(m_signLabel->pixmap()->scaled(event->size().width(), 0 , Qt::KeepAspectRatio, Qt::SmoothTransformation));
-}
 	
 EmptyWidget::EmptyWidget(QWidget* parent)
 	: QWidget(parent)
 {
-	
+	// background
+	QPalette pal = palette();
+	pal.setColor(QPalette::Background, Qt::white);
+	setAutoFillBackground(true);
+	setPalette(pal);
 }
 
 EmptyWidget::~EmptyWidget() 

@@ -21,6 +21,9 @@ private:
 public:
 	Student();
 	~Student();
+	inline QString getName() const { return name; }
+	inline QPixmap getPhoto() const { return photo; }
+	inline std::vector<Attendance> getAttendances() const { return attendances; }
 };
 
 class Class

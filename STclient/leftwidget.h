@@ -13,9 +13,6 @@ public:
 	LeftWidget(QWidget *parent = Q_NULLPTR);
 	~LeftWidget();
 
-protected:
-	virtual void resizeEvent(QResizeEvent *event) override;
-
 private:
 	QLabel* m_signLabel;
 	QComboBox* m_comboBox;

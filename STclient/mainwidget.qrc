@@ -6,4 +6,7 @@
     <qresource prefix="/MainWindows">
         <file>Resources/logo.png</file>
     </qresource>
+    <qresource prefix="/Student">
+        <file>Resources/defalut_student_photo.png</file>
+    </qresource>
 </RCC>
