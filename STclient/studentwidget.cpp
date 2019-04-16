@@ -26,12 +26,14 @@ StudentWidget::StudentWidget(QWidget *parent)
 	topLayout->addSpacing(10);
 	topLayout->addWidget(m_nameLabel);
 	topLayout->addStretch();
-	layout->addLayout(topLayout);
 	QHBoxLayout* midLayout = new QHBoxLayout(this);
 	midLayout->addWidget(m_optimizeLabel);
 	midLayout->addWidget(m_optimizeButton);
 	midLayout->addStretch();
+	layout->addLayout(topLayout);
+	layout->addSpacing(10);
 	layout->addLayout(midLayout);
+	layout->addSpacing(10);
 	layout->addWidget(m_attendancesList);
 	setLayout(layout);
 

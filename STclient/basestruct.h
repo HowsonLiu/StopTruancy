@@ -32,7 +32,9 @@ private:
 	QString name;
 	std::vector<QPixmap> photos;
 	std::vector<Attendance> attendances;
+
 public:
 	Class();
 	~Class();
+	inline QString getName() const { return name; }
 };

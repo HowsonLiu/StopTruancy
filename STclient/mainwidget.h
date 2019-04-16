@@ -24,4 +24,5 @@ public:
 
 public slots:
 	void onSelectStudent();
+	void onSelectClass();
 };

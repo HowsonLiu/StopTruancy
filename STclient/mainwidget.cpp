@@ -40,7 +40,7 @@ MainWidget::MainWidget(QWidget *parent)
 	TryConnect();
 
 	//test
-	onSelectStudent();
+	onSelectClass();
 }
 
 MainWidget::~MainWidget()
@@ -54,6 +54,14 @@ void MainWidget::TryConnect()
 		m_networkWidget->hide();
 	else
 		m_networkWidget->show();
+}
+
+void MainWidget::onSelectClass()
+{
+	m_emptyWidget->hide();
+	m_studentWidget->hide();
+	m_classWidget->show();
+	m_classWidget->SetClass(nullptr);
 }
 
 void MainWidget::onSelectStudent() 
