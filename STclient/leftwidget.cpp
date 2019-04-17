@@ -32,15 +32,38 @@ LeftWidget::LeftWidget(QWidget *parent)
 	mainLayout->addLayout(buttonsLayout);
 
 	// signlabel
-	QPixmap logo(":/MainWindows/Resources/logo.png");
+	QPixmap logo(":/LeftWidget/Resources/logo.png");
 	logo = logo.scaled(QSize(250, 65), Qt::KeepAspectRatio);
 	m_signLabel->setPixmap(logo);
+
+	// combobox
+	m_comboBox->addItem("Student");
+	m_comboBox->addItem("Class");
+
+	// search
+	QPushButton* searchButton = new QPushButton(this);
+	QHBoxLayout* searchLayout = new QHBoxLayout(this);
+	searchButton->setStyleSheet("border-image:url(:/LeftWidget/Resources/search.png)");
+	searchButton->setFixedSize(20, 20);
+	searchLayout->setContentsMargins(0, 0, 0, 0);	// 外边距为0
+	searchLayout->addWidget(searchButton, 0, Qt::AlignRight);	// 按钮右对齐
+	m_searchEdit->setTextMargins(0, 0, searchButton->width(), 0);	// 字体不要在按钮上面
+	m_searchEdit->setLayout(searchLayout);
 	
+	// add and delete
+	m_addButton->setFixedSize(50, 50);
+	m_delButton->setFixedSize(50, 50);
+
 	// background
 	QPalette pal = palette();
 	pal.setColor(QPalette::Background, Qt::white);
 	setAutoFillBackground(true);
 	setPalette(pal);
+
+	connect(m_comboBox, QOverload<int>::of(&QComboBox::activated), this, &LeftWidget::onSwitchComboBox);	
+
+	// init
+	onSwitchComboBox(0);
 }
 
 
@@ -48,6 +71,23 @@ LeftWidget::~LeftWidget()
 {
 }
 	
+void LeftWidget::onSwitchComboBox(int index) 
+{
+	switch (index)
+	{
+	case 0:
+		m_addButton->setStyleSheet("border-image:url(:/Student/Resources/user-add.png)");
+		m_delButton->setStyleSheet("border-image:url(:/Student/Resources/user-delete.png)");
+		break;
+	case 1:
+		m_addButton->setStyleSheet("border-image:url(:/Class/Resources/class-add.png)");
+		m_delButton->setStyleSheet("border-image:url(:/Class/Resources/class-delete.png)");
+		break;
+	default:
+		break;
+	}
+}
+
 EmptyWidget::EmptyWidget(QWidget* parent)
 	: QWidget(parent)
 {

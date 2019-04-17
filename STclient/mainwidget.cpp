@@ -23,7 +23,7 @@ MainWidget::MainWidget(QWidget *parent)
 	splitter->addWidget(m_emptyWidget);
 	splitter->addWidget(m_studentWidget);
 	splitter->addWidget(m_classWidget);
-	splitter->setStretchFactor(0, 0);	// 比例
+	splitter->setStretchFactor(0, 0);	// 左侧不参与拉伸
 	splitter->setStretchFactor(1, 5);
 	splitter->setStretchFactor(2, 5);
 	splitter->setStretchFactor(3, 5);

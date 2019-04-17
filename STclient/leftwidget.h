@@ -20,6 +20,9 @@ private:
 	QListView* m_listView;
 	QPushButton* m_addButton;
 	QPushButton* m_delButton;
+
+public slots:
+	void onSwitchComboBox(int);
 };
 
 class EmptyWidget : public QWidget 
