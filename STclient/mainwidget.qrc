@@ -12,6 +12,7 @@
         <file>Resources/add.png</file>
         <file>Resources/user-add.png</file>
         <file>Resources/user-delete.png</file>
+        <file>Resources/tick.png</file>
     </qresource>
     <qresource prefix="/Class">
         <file>Resources/class-add.png</file>

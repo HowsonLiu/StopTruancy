@@ -4,7 +4,9 @@
 #include <QPainter>
 #include <QStackedLayout>
 #include <QLabel>
-#include <QHBoxLayout>
+#include <QLayout>
+#include <QLineEdit>
+#include <QPushButton>
 
 FaceCollectionDialog::FaceCollectionDialog(std::vector<cv::Mat>* faceInfos, QWidget* parent)
 	: QDialog(parent)
@@ -138,4 +140,67 @@ cv::Mat QImage2Mat(const QImage & src)
 	cv::Mat result; // deep copy just in case (my lack of knowledge with open cv)
 	cvtColor(tmp, result, CV_BGR2RGB);
 	return result;
+}
+
+NewStudentDialog::NewStudentDialog(QString* name, QWidget* parent)
+	: QDialog(parent)
+	, m_name(name)
+{
+	// create
+	m_nameLabel = new QLabel(this);
+	m_edit = new QLineEdit(this);
+	m_button = new QPushButton(this);
+	m_tipLabel = new QLabel(this);
+
+	// layout
+	QVBoxLayout* layout = new QVBoxLayout;
+	QHBoxLayout* midLayout = new QHBoxLayout;
+	midLayout->addWidget(m_edit);
+	midLayout->addWidget(m_button);
+	layout->addWidget(m_nameLabel);
+	layout->addLayout(midLayout);
+	layout->addWidget(m_tipLabel);
+	setLayout(layout);
+
+	// name label
+	m_nameLabel->setFont(QFont("Microsoft YaHei", 20, 75));
+	m_nameLabel->setText("Student's name");
+
+	// button
+	m_button->setStyleSheet("border-image:url(:/Student/Resources/tick.png)");
+	m_button->setFixedSize(15, 15);
+
+	// tips label
+	m_tipLabel->setFont(QFont("Microsoft YaHei", 7, 75));
+	m_tipLabel->setText("Already exists name");
+	m_tipLabel->setStyleSheet("color:red");
+
+	// background
+	QPalette pal = palette();
+	pal.setColor(QPalette::Background, Qt::white);
+	setAutoFillBackground(true);
+	setPalette(pal);
+
+	connect(m_button, &QPushButton::click, this, &NewStudentDialog::accept);
+	connect(m_edit, &QLineEdit::textChanged, this, &NewStudentDialog::onTextChanged);
+
+	// init
+	m_tipLabel->hide();
+}
+
+NewStudentDialog::~NewStudentDialog()
+{
+}
+
+void NewStudentDialog::onTextChanged(const QString& text) 
+{
+	*m_name = text;
+	if (true) {
+		m_tipLabel->show();
+		m_button->setEnabled(false);
+	}
+	else {
+		m_tipLabel->hide();
+		m_button->setEnabled(true);
+	}
 }

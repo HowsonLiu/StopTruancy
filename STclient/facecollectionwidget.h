@@ -4,7 +4,7 @@
 #include <vector>
 #include <QDialog>
 
-#define COLLECT_NUMBER 20
+#define COLLECT_NUMBER 1
 #define SNAP_INTERVAL 2000
 #define PAINT_INTERVAL 30
 #define FACECOLLECTIONDIALOG_ERROR_CODE 2
@@ -55,6 +55,25 @@ public:
 
 signals:
 	void sigCaptureError(int);
+};
+
+class QLineEdit;
+class NewStudentDialog : public QDialog 
+{
+	Q_OBJECT
+private:
+	QLabel* m_nameLabel;
+	QLineEdit* m_edit;
+	QPushButton* m_button;
+	QLabel* m_tipLabel;
+
+	QString* m_name;
+public:
+	explicit NewStudentDialog(QString* name, QWidget* parent);
+	~NewStudentDialog();
+
+public slots:
+	void onTextChanged(const QString&);
 };
 
 QImage Mat2QImage(const cv::Mat& src);

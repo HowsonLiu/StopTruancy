@@ -81,7 +81,9 @@ void LeftWidget::onAddButtonClick()
 		FaceCollectionDialog faceCollectionWidget(&faceInfos, this);
 		int res = faceCollectionWidget.exec();
 		if (res == QDialog::Accepted) {
-			qDebug() << faceInfos.size() << endl;
+			QString name;
+			NewStudentDialog newStudentDialog(&name, this);
+			res = newStudentDialog.exec();
 		}
 		else if(res == FACECOLLECTIONDIALOG_ERROR_CODE){
 			QMessageBox::critical(this, "Can not open camera"
