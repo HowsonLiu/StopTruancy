@@ -22,6 +22,7 @@ private:
 	QPushButton* m_delButton;
 
 public slots:
+	void onAddButtonClick();
 	void onSwitchComboBox(int);
 };
 

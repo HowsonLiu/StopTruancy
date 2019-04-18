@@ -1,4 +1,5 @@
 #include "leftwidget.h"
+#include "facecollectionwidget.h"
 #include <QLabel>
 #include <QComboBox>
 #include <QVBoxLayout>
@@ -7,6 +8,7 @@
 #include <QListView>
 #include <QPushButton>
 #include <QResizeEvent>
+#include <QMessageBox>
 #include <QDebug>
 
 LeftWidget::LeftWidget(QWidget *parent)
@@ -61,6 +63,7 @@ LeftWidget::LeftWidget(QWidget *parent)
 	setPalette(pal);
 
 	connect(m_comboBox, QOverload<int>::of(&QComboBox::activated), this, &LeftWidget::onSwitchComboBox);	
+	connect(m_addButton, &QPushButton::clicked, this, &LeftWidget::onAddButtonClick);
 
 	// init
 	onSwitchComboBox(0);
@@ -69,6 +72,22 @@ LeftWidget::LeftWidget(QWidget *parent)
 
 LeftWidget::~LeftWidget()
 {
+}
+
+void LeftWidget::onAddButtonClick() 
+{
+	if (m_comboBox->currentIndex() == 0) {
+		std::vector<cv::Mat> faceInfos;
+		FaceCollectionDialog faceCollectionWidget(&faceInfos, this);
+		int res = faceCollectionWidget.exec();
+		if (res == QDialog::Accepted) {
+			qDebug() << faceInfos.size() << endl;
+		}
+		else if(res == FACECOLLECTIONDIALOG_ERROR_CODE){
+			QMessageBox::critical(this, "Can not open camera"
+				, "Please check whether the computer contains a camera or whether the camera is occupied by other applications");
+		}
+	}
 }
 	
 void LeftWidget::onSwitchComboBox(int index) 
