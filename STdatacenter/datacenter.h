@@ -8,8 +8,10 @@ class DataCenter
 {
 private:
 	const QString m_rootPath;
-	const QString m_allClassPath;
-	const QString m_allStudentPath;
+	const QString m_allClassStcPath;
+	const QString m_allStudentStsPath;
+	const QString m_classPath;
+	const QString m_studentPath;
 
 private:
 	DataCenter();
@@ -17,6 +19,9 @@ private:
 
 public:
 	static DataCenter* getInstance();
+	QString getRootPath() const;
+	QString getClassPath() const;
+	QString getStudentPath() const;
 	std::vector<QString> getAllClassName() const;
 	bool addClassName(const QString& name);
 	std::vector<QString> getAllStudentName() const;
