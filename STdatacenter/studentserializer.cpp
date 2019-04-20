@@ -70,6 +70,11 @@ bool StudentSerializer::AddClass(const QString& name)
 	return false;
 }
 
+bool StudentSerializer::Init()
+{
+	return DATA_CENTER_INSTANCE->addStudentName(m_name);
+}
+
 bool StudentSerializer::Delete()
 {
 	QFile file(m_cfgPath);

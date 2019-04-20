@@ -2,7 +2,7 @@
 #include <QFile>
 #include <QTextStream>
 
-DataCenter::DataCenter() 
+DataCenter::DataCenter()
 	: m_rootPath(ROOT_PATH)
 	, m_allClassStcPath(m_rootPath + "\\class.stc")
 	, m_allStudentStsPath(m_rootPath + "\\student.sts")
@@ -53,11 +53,34 @@ std::vector<QString> DataCenter::getAllClassName() const
 bool DataCenter::addClassName(const QString& name)
 {
 	QFile allClassFile(m_allClassStcPath);
-	if (!allClassFile.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) return false;
-	QTextStream writer(&allClassFile);
-	writer << name << endl;
+	if (!allClassFile.open(QIODevice::ReadWrite | QIODevice::Text)) return false;
+	QTextStream stream(&allClassFile);
+	while (!stream.atEnd()) {
+		QString curStudent = stream.readLine();
+		if (QString::compare(name, curStudent) == 0) return true;	// 去重
+	}
+	stream << name << endl;
 	allClassFile.close();
 	return false;
+}
+
+bool DataCenter::delClassName(const QString& name)
+{
+	std::vector<QString> allClasses;
+	QFile allClassFile(m_allClassStcPath);
+	if (!allClassFile.open(QIODevice::ReadWrite | QIODevice::Text)) return false;
+	QTextStream stream(&allClassFile);
+	while (!stream.atEnd()) {
+		QString curStudent = stream.readLine();
+		if(QString::compare(name, curStudent) != 0)
+			allClasses.push_back(curStudent);
+	}
+	allClassFile.resize(0);	// 归零重写
+	for (QString curStudent : allClasses) {
+		stream << curStudent << endl;
+	}
+	allClassFile.close();
+	return true;
 }
 
 std::vector<QString> DataCenter::getAllStudentName() const
@@ -76,9 +99,32 @@ std::vector<QString> DataCenter::getAllStudentName() const
 bool DataCenter::addStudentName(const QString &name)
 {
 	QFile allStudentFile(m_allStudentStsPath);
-	if (!allStudentFile.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) return false;
-	QTextStream writer(&allStudentFile);
-	writer << name << endl;
+	if (!allStudentFile.open(QIODevice::ReadWrite | QIODevice::Text)) return false;
+	QTextStream stream(&allStudentFile);
+	while (!stream.atEnd()) {
+		QString curStudent = stream.readLine();
+		if (QString::compare(name, curStudent) == 0) return true;	// 去重
+	}
+	stream << name << endl;
 	allStudentFile.close();
 	return false;
+}
+
+bool DataCenter::delStudentName(const QString & name)
+{
+	std::vector<QString> allStudents;
+	QFile allStudentFile(m_allStudentStsPath);
+	if (!allStudentFile.open(QIODevice::ReadWrite | QIODevice::Text)) return false;
+	QTextStream stream(&allStudentFile);
+	while (!stream.atEnd()) {
+		QString curStudent = stream.readLine();
+		if (QString::compare(name, curStudent) != 0)
+			allStudents.push_back(curStudent);
+	}
+	allStudentFile.resize(0);	// 归零重写
+	for (QString curStudent : allStudents) {
+		stream << curStudent << endl;
+	}
+	allStudentFile.close();
+	return true;
 }

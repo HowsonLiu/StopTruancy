@@ -24,7 +24,9 @@ public:
 	QString getStudentPath() const;
 	std::vector<QString> getAllClassName() const;
 	bool addClassName(const QString& name);
+	bool delClassName(const QString& name);
 	std::vector<QString> getAllStudentName() const;
 	bool addStudentName(const QString& name);
+	bool delStudentName(const QString& name);
 };
 #define DATA_CENTER_INSTANCE DataCenter::getInstance()
