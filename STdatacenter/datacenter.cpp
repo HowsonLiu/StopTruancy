@@ -42,8 +42,9 @@ std::vector<QString> DataCenter::getAllClassName() const
 	std::vector<QString> res;
 	QFile allClassFile(m_allClassStcPath);
 	if (allClassFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-		while (!allClassFile.atEnd()) {
-			res.push_back(allClassFile.readLine());
+		QTextStream stream(&allClassFile);
+		while (!stream.atEnd()) {
+			res.push_back(stream.readLine());
 		}
 	}
 	allClassFile.close();
@@ -88,8 +89,9 @@ std::vector<QString> DataCenter::getAllStudentName() const
 	std::vector<QString> res;
 	QFile allStudentFile(m_allStudentStsPath);
 	if (allStudentFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-		while (!allStudentFile.atEnd()) {
-			res.push_back(allStudentFile.readLine());
+		QTextStream stream(&allStudentFile);
+		while (!stream.atEnd()) {
+			res.push_back(stream.readLine());
 		}
 	}
 	allStudentFile.close();

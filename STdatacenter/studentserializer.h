@@ -8,9 +8,9 @@ class StudentSerializer
 {
 private:
 	const QString m_name;
-	const QString m_path;
+	const QString m_path;		// 此路径是否存在决定学生是否存在
 	const QString m_faceInfoPath;
-	const QString m_cfgPath;
+	const QString m_cfgPath;	// cfg文件有没有值决定学生能否删除
 
 public:
 	StudentSerializer(const QString&);

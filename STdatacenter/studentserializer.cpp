@@ -50,8 +50,9 @@ std::vector<QString> StudentSerializer::Classes()
 	std::vector<QString> res;
 	QFile classesFile(m_cfgPath);
 	if (classesFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-		while (!classesFile.atEnd()) {
-			res.push_back(classesFile.readLine());
+		QTextStream stream(&classesFile);
+		while (!stream.atEnd()) {
+			res.push_back(stream.readLine());
 		}
 	}
 	classesFile.close();
@@ -61,24 +62,30 @@ std::vector<QString> StudentSerializer::Classes()
 bool StudentSerializer::AddClass(const QString& name)
 {
 	QFile classesFile(m_cfgPath);
-	QDir dir;
-	if (!dir.exists(m_path)) dir.mkpath(m_path);
-	if (!classesFile.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) return false;
-	QTextStream writer(&classesFile);
-	writer << name << endl;
+	if (!classesFile.open(QIODevice::ReadWrite | QIODevice::Text)) return false;
+	QTextStream stream(&classesFile);
+	while (!stream.atEnd()) {
+		QString curStudent = stream.readLine();
+		if (QString::compare(name, curStudent) == 0) return true;	// 去重
+	}
+	stream << name << endl;
 	classesFile.close();
 	return false;
 }
 
 bool StudentSerializer::Init()
 {
-	return DATA_CENTER_INSTANCE->addStudentName(m_name);
+	DATA_CENTER_INSTANCE->addStudentName(m_name);
+	QDir dir;
+	if (!dir.exists(m_path)) return dir.mkpath(m_path);
+	return true;
 }
 
 bool StudentSerializer::Delete()
 {
 	QFile file(m_cfgPath);
 	if (file.exists() && file.size() > 0) return false;	// 有选修的课程时不可删除
+	DATA_CENTER_INSTANCE->delStudentName(m_name);
 	QDir dir(m_path);
 	return dir.removeRecursively();
 }
