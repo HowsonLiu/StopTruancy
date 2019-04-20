@@ -35,12 +35,18 @@
     <ClCompile Include="studentserializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="classserializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="datacenter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="studentserializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="classserializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

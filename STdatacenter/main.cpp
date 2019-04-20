@@ -1,6 +1,7 @@
 #include <QtCore/QCoreApplication>
 #include "datacenter.h"
 #include "studentserializer.h"
+#include "classserializer.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,5 +21,10 @@ int main(int argc, char *argv[])
 	//vm.push_back(cv::imread("D:\\PaPa Liu\\Pictures\\SankakuImage\\6550581_big.jpg", 0));
 	//s.WriteImage(vm);
 	//s.AddClass("Math");
+
+	ClassSerializer c("Math");
+	c.Init();
+	c.AddStudent("3115005489");
+	c.AddStudents({ "3115005489", "3115005490" });
 	return a.exec();
 }

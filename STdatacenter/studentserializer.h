@@ -19,7 +19,9 @@ public:
 	void ReadImages(std::vector<cv::Mat>*);
 	std::vector<QString> Classes();
 	bool AddClass(const QString&);
+	bool DelClass(const QString&);
 	bool Init();
 	bool Delete();
+	bool Exist() const;
 };
 

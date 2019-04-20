@@ -70,7 +70,26 @@ bool StudentSerializer::AddClass(const QString& name)
 	}
 	stream << name << endl;
 	classesFile.close();
-	return false;
+	return true;
+}
+
+bool StudentSerializer::DelClass(const QString& name)
+{
+	std::vector<QString> Classes;
+	QFile classesFile(m_cfgPath);
+	if (!classesFile.open(QIODevice::ReadWrite | QIODevice::Text)) return false;
+	QTextStream stream(&classesFile);
+	while (!stream.atEnd()) {
+		QString curStudent = stream.readLine();
+		if (QString::compare(name, curStudent) != 0)
+			Classes.push_back(curStudent);
+	}
+	classesFile.resize(0);	// πÈ¡„÷ÿ–¥
+	for (QString curStudent : Classes) {
+		stream << curStudent << endl;
+	}
+	classesFile.close();
+	return true;
 }
 
 bool StudentSerializer::Init()
@@ -88,4 +107,9 @@ bool StudentSerializer::Delete()
 	DATA_CENTER_INSTANCE->delStudentName(m_name);
 	QDir dir(m_path);
 	return dir.removeRecursively();
+}
+
+bool StudentSerializer::Exist() const
+{
+	return QDir(m_path).exists();
 }

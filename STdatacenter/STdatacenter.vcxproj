@@ -95,11 +95,13 @@
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="classserializer.cpp" />
     <ClCompile Include="datacenter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="studentserializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="classserializer.h" />
     <ClInclude Include="datacenter.h" />
     <ClInclude Include="studentserializer.h" />
   </ItemGroup>
