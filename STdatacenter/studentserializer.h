@@ -15,13 +15,13 @@ private:
 public:
 	StudentSerializer(const QString&);
 	~StudentSerializer();
+	bool Exist() const;
+	bool Init();
 	void WriteImage(const std::vector<cv::Mat>&);
 	void ReadImages(std::vector<cv::Mat>*);
 	std::vector<QString> Classes();
 	bool AddClass(const QString&);
 	bool DelClass(const QString&);
-	bool Init();
 	bool Delete();
-	bool Exist() const;
 };
 

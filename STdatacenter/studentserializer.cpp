@@ -96,8 +96,7 @@ bool StudentSerializer::Init()
 {
 	DATA_CENTER_INSTANCE->addStudentName(m_name);
 	QDir dir;
-	if (!dir.exists(m_path)) return dir.mkpath(m_path);
-	return true;
+	return dir.exists(m_path) || dir.mkpath(m_path) && dir.mkpath(m_faceInfoPath);
 }
 
 bool StudentSerializer::Delete()

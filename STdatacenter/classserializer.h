@@ -1,6 +1,15 @@
 #pragma once
 #include <QString>
 #include <vector>
+#include <opencv2/opencv.hpp>
+
+#define CS_ALREADY_DONE 1
+#define CS_OK 0
+#define CS_STUDENT_NOT_EXIST -1
+#define CS_API_ERROR -2
+#define CS_SQL_ERROR -3
+#define CS_INVALID_PARAM -4
+#define CS_SAME_NAME -5
 
 class ClassSerializer
 {
@@ -15,10 +24,16 @@ private:
 public:
 	ClassSerializer(const QString&);
 	~ClassSerializer();
-	bool Init();
+	int Init();
 	bool Exist() const;
 	bool Delete();
-	bool AddStudent(const QString&);
-	bool AddStudents(const std::vector<QString>&);
+	int AddStudent(const QString&);
+	int AddStudents(const std::vector<QString>&);
+	std::vector<QString> Students() const;
+	void GetLessonsImage(std::vector<cv::Mat>*, std::vector<QString>*);
+	int AddLesson(const cv::Mat&, const QString&, const std::vector<QString>&);
+	int GetLessonNum(int*);
+	int GetStudentAttendances(const QString&, int*);
+	int Train();
 };
 

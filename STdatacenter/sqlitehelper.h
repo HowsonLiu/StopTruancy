@@ -17,7 +17,7 @@ public:
 	~SQLiteHelper();
 	inline bool isValid() const { return m_bValid; }
 	bool Init();
-	bool AddCol(const QString&);	// sqlite 不支持添加多项
+	bool AddStudent(const QString&);	// sqlite 不支持添加多项
 	bool AddRecord(const QString&, const std::vector<QString>&);
 	bool GetRecordNums(int*) const;
 	bool GetStudentAttendanceNums(const QString&, int*);

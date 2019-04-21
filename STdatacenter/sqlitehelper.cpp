@@ -33,7 +33,7 @@ bool SQLiteHelper::Init()
 	return sqlite3_exec(m_db, sql.toUtf8(), nullptr, nullptr, nullptr) == SQLITE_OK;
 }
 
-bool SQLiteHelper::AddCol(const QString& col)
+bool SQLiteHelper::AddStudent(const QString& col)
 {
 	QString sql = "ALTER TABLE LESSON ADD COLUMN %1 INT DEFAULT 0;";	// sqlite√ª”–bool
 	sql = sql.arg(StuName2Col(col));
