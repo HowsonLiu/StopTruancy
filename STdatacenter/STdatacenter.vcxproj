@@ -98,11 +98,13 @@
     <ClCompile Include="classserializer.cpp" />
     <ClCompile Include="datacenter.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="sqlitehelper.cpp" />
     <ClCompile Include="studentserializer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="classserializer.h" />
     <ClInclude Include="datacenter.h" />
+    <ClInclude Include="sqlitehelper.h" />
     <ClInclude Include="studentserializer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -2,6 +2,7 @@
 #include "datacenter.h"
 #include "studentserializer.h"
 #include "classserializer.h"
+#include "sqlitehelper.h"
 
 int main(int argc, char *argv[])
 {
@@ -22,9 +23,14 @@ int main(int argc, char *argv[])
 	//s.WriteImage(vm);
 	//s.AddClass("Math");
 
-	ClassSerializer c("Math");
-	c.Init();
-	c.AddStudent("3115005489");
-	c.AddStudents({ "3115005489", "3115005490" });
+	//ClassSerializer c("Math");
+	//c.Init();
+	//c.AddStudent("3115005489");
+	//c.AddStudents({ "3115005489", "3115005490" });
+
+	SQLiteHelper h("D:\\tmp\\data\\class\\Math\\Math.db");
+	bool res;
+	if (h.isValid()) res = h.Init();
+	res = h.AddCols({ "3115005490", "3115005491"});
 	return a.exec();
 }
