@@ -6,6 +6,7 @@ class QComboBox;
 class QLineEdit;
 class QListView;
 class QPushButton;
+class AllStudentsModel;
 class LeftWidget : public QWidget
 {
 	Q_OBJECT
@@ -20,6 +21,8 @@ private:
 	QListView* m_listView;
 	QPushButton* m_addButton;
 	QPushButton* m_delButton;
+
+	AllStudentsModel* m_allStudentsModel;
 
 public slots:
 	void onAddButtonClick();

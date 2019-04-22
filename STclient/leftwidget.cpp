@@ -10,6 +10,7 @@
 #include <QResizeEvent>
 #include <QMessageBox>
 #include <QDebug>
+#include "mvd.h"
 
 LeftWidget::LeftWidget(QWidget *parent)
 	: QWidget(parent)
@@ -21,6 +22,7 @@ LeftWidget::LeftWidget(QWidget *parent)
 	m_listView = new QListView(this);
 	m_addButton = new QPushButton(this);
 	m_delButton = new QPushButton(this);
+	m_allStudentsModel = new AllStudentsModel(this);
 
 	// layout
 	QVBoxLayout* mainLayout = new QVBoxLayout(this);
@@ -97,6 +99,7 @@ void LeftWidget::onSwitchComboBox(int index)
 	switch (index)
 	{
 	case 0:
+		m_listView->setModel(m_allStudentsModel);
 		m_addButton->setStyleSheet("border-image:url(:/Student/Resources/user-add.png)");
 		m_delButton->setStyleSheet("border-image:url(:/Student/Resources/user-delete.png)");
 		break;
