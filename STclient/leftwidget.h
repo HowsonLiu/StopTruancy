@@ -26,9 +26,14 @@ private:
 	AllStudentsModel* m_allStudentsModel;
 	AllClassesModel* m_allClassesModel;
 
+signals:
+	void sigSelectStudent(const QString&);
+	void sigSelectClass(const QString&);
+
 public slots:
 	void onAddButtonClick();
 	void onSwitchComboBox(int);
+	void onItemDoubleClick(const QModelIndex&);
 };
 
 class EmptyWidget : public QWidget 

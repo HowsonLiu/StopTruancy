@@ -23,6 +23,6 @@ public:
 	void TryConnect();
 
 public slots:
-	void onSelectStudent();
-	void onSelectClass();
+	void onSelectStudent(const QString&);
+	void onSelectClass(const QString&);
 };

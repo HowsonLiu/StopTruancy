@@ -39,8 +39,9 @@ MainWidget::MainWidget(QWidget *parent)
 	splitter->show();
 	TryConnect();
 
-	//test
-	onSelectClass();
+	connect(m_leftWidget, &LeftWidget::sigSelectClass, this, &MainWidget::onSelectClass);
+	connect(m_leftWidget, &LeftWidget::sigSelectStudent, this, &MainWidget::onSelectStudent);
+
 }
 
 MainWidget::~MainWidget()
@@ -56,7 +57,7 @@ void MainWidget::TryConnect()
 		m_networkWidget->show();
 }
 
-void MainWidget::onSelectClass()
+void MainWidget::onSelectClass(const QString& name)
 {
 	m_emptyWidget->hide();
 	m_studentWidget->hide();
@@ -64,7 +65,7 @@ void MainWidget::onSelectClass()
 	m_classWidget->SetClass(nullptr);
 }
 
-void MainWidget::onSelectStudent() 
+void MainWidget::onSelectStudent(const QString& name) 
 {
 	m_emptyWidget->hide();
 	m_classWidget->hide();

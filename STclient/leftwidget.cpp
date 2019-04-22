@@ -67,6 +67,7 @@ LeftWidget::LeftWidget(QWidget *parent)
 
 	connect(m_comboBox, QOverload<int>::of(&QComboBox::activated), this, &LeftWidget::onSwitchComboBox);	
 	connect(m_addButton, &QPushButton::clicked, this, &LeftWidget::onAddButtonClick);
+	connect(m_listView, &QListView::doubleClicked, this, &LeftWidget::onItemDoubleClick);
 
 	// init
 	onSwitchComboBox(0);
@@ -108,6 +109,25 @@ void LeftWidget::onSwitchComboBox(int index)
 		m_listView->setModel(m_allClassesModel);
 		m_addButton->setStyleSheet("border-image:url(:/Class/Resources/class-add.png)");
 		m_delButton->setStyleSheet("border-image:url(:/Class/Resources/class-delete.png)");
+		break;
+	default:
+		break;
+	}
+}
+
+void LeftWidget::onItemDoubleClick(const QModelIndex& index)
+{
+	if (!index.isValid()) return;
+	QString stuName, clsName;
+	switch (m_comboBox->currentIndex())
+	{
+	case 0:
+		stuName = m_allStudentsModel->data(index).toString();
+		emit sigSelectStudent(stuName);
+		break;
+	case 1:
+		clsName = m_allClassesModel->data(index).toString();
+		emit sigSelectClass(clsName);
 		break;
 	default:
 		break;

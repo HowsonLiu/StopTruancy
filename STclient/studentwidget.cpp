@@ -62,7 +62,7 @@ void StudentWidget::SetStudent(Student* stu)
 {
 	m_student = stu;
 	if (m_student) {
-		m_photoLabel->setPixmap(m_student->getPhoto());
+		// m_photoLabel->setPixmap(m_student->getPhoto());
 		m_nameLabel->setText(m_student->getName());
 	}
 	else {
