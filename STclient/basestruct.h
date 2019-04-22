@@ -14,16 +14,18 @@ struct Attendance
 class Student
 {
 private:
-	QString name;
-	QPixmap photo;
-	std::vector<Attendance> attendances;
+	QString m_name;
+	QPixmap m_photo;
+	std::vector<Attendance> m_attendances;
+
+	bool m_bValid;
 
 public:
-	Student();
+	Student(const QString&);
 	~Student();
-	inline QString getName() const { return name; }
-	inline QPixmap getPhoto() const { return photo; }
-	inline std::vector<Attendance> getAttendances() const { return attendances; }
+	inline QString getName() const { return m_name; }
+	inline QPixmap getPhoto() const { return m_photo; }
+	inline std::vector<Attendance> getAttendances() const { return m_attendances; }
 };
 
 class Class

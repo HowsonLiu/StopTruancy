@@ -45,6 +45,19 @@ void StudentSerializer::ReadImages(std::vector<cv::Mat>* pvm)
 	}
 }
 
+void StudentSerializer::ReadProfilePhoto(cv::Mat* mat)
+{
+	QDir dir(m_faceInfoPath);
+	if (!mat || !dir.exists()) return;
+	QStringList filters;
+	filters << "*.png" << "*.jpg" << "*.pgm";
+	dir.setNameFilters(filters);
+	QStringList imageNameList = dir.entryList();
+	if (imageNameList.isEmpty()) return;
+	cv::String imagePath = dir.filePath(imageNameList[0]).toStdString();
+	*mat = cv::imread(imagePath, 1);
+}
+
 std::vector<QString> StudentSerializer::Classes()
 {
 	std::vector<QString> res;

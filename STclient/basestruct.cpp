@@ -1,8 +1,9 @@
 #include "basestruct.h"
+#include "../STdatacenter/studentserializer.h"
 
 
-
-Student::Student()
+Student::Student(const QString& name)
+	: m_bValid(true)
 {
 }
 

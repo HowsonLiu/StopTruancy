@@ -19,6 +19,7 @@ public:
 	bool Init();
 	void WriteImage(const std::vector<cv::Mat>&);
 	void ReadImages(std::vector<cv::Mat>*);
+	void ReadProfilePhoto(cv::Mat*);
 	std::vector<QString> Classes();
 	bool AddClass(const QString&);
 	bool DelClass(const QString&);
