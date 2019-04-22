@@ -23,6 +23,7 @@ LeftWidget::LeftWidget(QWidget *parent)
 	m_addButton = new QPushButton(this);
 	m_delButton = new QPushButton(this);
 	m_allStudentsModel = new AllStudentsModel(this);
+	m_allClassesModel = new AllClassesModel(this);
 
 	// layout
 	QVBoxLayout* mainLayout = new QVBoxLayout(this);
@@ -104,6 +105,7 @@ void LeftWidget::onSwitchComboBox(int index)
 		m_delButton->setStyleSheet("border-image:url(:/Student/Resources/user-delete.png)");
 		break;
 	case 1:
+		m_listView->setModel(m_allClassesModel);
 		m_addButton->setStyleSheet("border-image:url(:/Class/Resources/class-add.png)");
 		m_delButton->setStyleSheet("border-image:url(:/Class/Resources/class-delete.png)");
 		break;

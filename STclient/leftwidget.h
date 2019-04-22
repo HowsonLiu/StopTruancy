@@ -7,6 +7,7 @@ class QLineEdit;
 class QListView;
 class QPushButton;
 class AllStudentsModel;
+class AllClassesModel;
 class LeftWidget : public QWidget
 {
 	Q_OBJECT
@@ -23,6 +24,7 @@ private:
 	QPushButton* m_delButton;
 
 	AllStudentsModel* m_allStudentsModel;
+	AllClassesModel* m_allClassesModel;
 
 public slots:
 	void onAddButtonClick();
