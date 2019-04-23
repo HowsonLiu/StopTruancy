@@ -56,18 +56,20 @@ StudentWidget::StudentWidget(QWidget *parent)
 
 StudentWidget::~StudentWidget()
 {
+	if (m_student) delete m_student;
 }
 
 void StudentWidget::SetStudent(Student* stu)
 {
+	if (m_student) delete m_student;
 	m_student = stu;
 	if (m_student) {
-		// m_photoLabel->setPixmap(m_student->getPhoto());
+		m_photoLabel->setPixmap(*m_student->getPhoto());
 		m_nameLabel->setText(m_student->getName());
 	}
 	else {
 		m_photoLabel->setPixmap(m_defaultPhoto);
 		m_nameLabel->setText(m_defaultName);
-		
+		m_attendancesList->setModel(nullptr);
 	}
 }

@@ -4,6 +4,7 @@
 
 #define DEFAULT_SUFFIX ".jpg"
 
+class QPixmap;
 class StudentSerializer
 {
 private:
@@ -19,7 +20,7 @@ public:
 	bool Init();
 	void WriteImage(const std::vector<cv::Mat>&);
 	void ReadImages(std::vector<cv::Mat>*);
-	void ReadProfilePhoto(cv::Mat*);
+	void ReadProfilePhoto(QPixmap*);
 	std::vector<QString> Classes();
 	bool AddClass(const QString&);
 	bool DelClass(const QString&);

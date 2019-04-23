@@ -2,7 +2,7 @@
 #include <QString>
 #include <vector>
 
-class QImage;
+class QPixmap;
 struct Attendance
 {
 	QString studentName;
@@ -16,7 +16,7 @@ class Student
 {
 private:
 	QString m_name;
-	QImage* m_photo;
+	QPixmap* m_photo;
 	std::vector<Attendance> m_attendances;
 
 	StudentSerializer* m_serializer;
@@ -26,7 +26,7 @@ public:
 	~Student();
 	inline bool Exist() const;
 	inline QString getName() const { return m_name; }
-	inline QImage* getPhoto() const { return m_photo; }
+	inline QPixmap* getPhoto() const { return m_photo; }
 	inline std::vector<Attendance> getAttendances() const { return m_attendances; }
 };
 
@@ -34,7 +34,7 @@ class Class
 {
 private:
 	QString name;
-	std::vector<QImage*> photos;
+	std::vector<QPixmap*> photos;
 	std::vector<Attendance> attendances;
 
 public:

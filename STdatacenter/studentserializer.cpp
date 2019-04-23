@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QStringList>
 #include <QTextStream>
+#include <QPixmap>
 
 StudentSerializer::StudentSerializer(const QString& name) 
 	: m_name(name)
@@ -45,17 +46,16 @@ void StudentSerializer::ReadImages(std::vector<cv::Mat>* pvm)
 	}
 }
 
-void StudentSerializer::ReadProfilePhoto(cv::Mat* mat)
+void StudentSerializer::ReadProfilePhoto(QPixmap* image)
 {
 	QDir dir(m_faceInfoPath);
-	if (!mat || !dir.exists()) return;
+	if (!image || !dir.exists()) return;
 	QStringList filters;
 	filters << "*.png" << "*.jpg" << "*.pgm";
 	dir.setNameFilters(filters);
 	QStringList imageNameList = dir.entryList();
 	if (imageNameList.isEmpty()) return;
-	cv::String imagePath = dir.filePath(imageNameList[0]).toStdString();
-	*mat = cv::imread(imagePath, 1);
+	image->load(dir.filePath(imageNameList[0]));
 }
 
 std::vector<QString> StudentSerializer::Classes()

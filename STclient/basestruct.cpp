@@ -1,16 +1,14 @@
 #include "basestruct.h"
 #include "../STdatacenter/studentserializer.h"
 #include "../STdatacenter/classserializer.h"
-#include <QImage>
+#include <QPixmap>
 
 Student::Student(const QString& name)
 	: m_name(name)
 {
 	m_serializer = new StudentSerializer(name);
-	cv::Mat mat;
-	m_serializer->ReadProfilePhoto(&mat);
-	if (!mat.empty()) 
-		m_photo = new QImage((const uchar *)mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
+	m_photo = new QPixmap;
+	m_serializer->ReadProfilePhoto(m_photo);
 	for (QString className : m_serializer->Classes()) {
 		ClassSerializer cls(className);
 		if (cls.Exist()) {
