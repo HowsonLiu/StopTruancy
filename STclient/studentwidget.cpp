@@ -1,5 +1,9 @@
 #include "studentwidget.h"
 #include "basestruct.h"
+#include "facecollectionwidget.h"
+#include "../STdatacenter/studentserializer.h"
+#include <opencv2/opencv.hpp>
+#include <QMessageBox>
 #include <QLabel>
 #include <QPushButton>
 #include <QListView>
@@ -51,6 +55,8 @@ StudentWidget::StudentWidget(QWidget *parent)
 	pal.setColor(QPalette::Background, Qt::white);
 	setAutoFillBackground(true);
 	setPalette(pal);
+
+	connect(m_optimizeButton, &QPushButton::clicked, this, &StudentWidget::onOptimizeButtonClick);
 }
 
 
@@ -77,4 +83,15 @@ void StudentWidget::SetStudent(Student* stu)
 QString StudentWidget::GetCurName() const
 {
 	return m_student ? m_student->getName() : QString();
+}
+
+void StudentWidget::onOptimizeButtonClick()
+{
+	std::vector<cv::Mat> faceInfos;
+	FaceCollectionDialog faceCollectionWidget(&faceInfos, this);
+	if (faceCollectionWidget.exec() == QDialog::Accepted) {
+		StudentSerializer stu(m_student->getName());
+		if(stu.Exist()) stu.WriteImages(faceInfos);
+		QMessageBox::information(this, "Success", "Optimized successfully");
+	}
 }

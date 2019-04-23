@@ -24,5 +24,8 @@ public:
 	~StudentWidget();
 	void SetStudent(Student*);
 	QString GetCurName() const;
+
+public slots:
+	void onOptimizeButtonClick();
 };
 
