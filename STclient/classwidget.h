@@ -2,9 +2,11 @@
 #include <QWidget>
 
 class QListView;
+class QTreeView;
 class Class;
 class QLabel;
 class QPushButton;
+class AttendancesModel;
 class ClassWidget : public QWidget
 {
 	Q_OBJECT
@@ -15,7 +17,8 @@ private:
 	QLabel* m_nameLabel;
 	QPushButton* m_addLessonButton;
 	QListView* m_lessonList;
-	QListView* m_attendanceList;
+	QTreeView* m_attendanceList;
+	AttendancesModel* m_attendanceModel;
 
 public:
 	ClassWidget(QWidget *parent = Q_NULLPTR);

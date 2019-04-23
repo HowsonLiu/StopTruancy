@@ -1,7 +1,8 @@
 #include "classwidget.h"
-#include "basestruct.h"
+#include "mvd.h"
 #include <QVBoxLayout>
 #include <QListView>
+#include <QTreeView>
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -15,7 +16,8 @@ ClassWidget::ClassWidget(QWidget *parent)
 	m_nameLabel = new QLabel(this);
 	m_addLessonButton = new QPushButton(this);
 	m_lessonList = new QListView(this);
-	m_attendanceList = new QListView(this);
+	m_attendanceList = new QTreeView(this);
+	m_attendanceModel = new AttendancesModel(this);
 
 	// layout
 	QVBoxLayout* layout = new QVBoxLayout(this);
@@ -32,6 +34,13 @@ ClassWidget::ClassWidget(QWidget *parent)
 	m_addLessonButton->setStyleSheet("border-image:url(:/Student/Resources/add.png);");
 	m_addLessonButton->setFixedSize(QSize(20, 20));
 
+	// attendance
+	m_attendanceList->setModel(m_attendanceModel);
+	m_attendanceList->setItemsExpandable(false);	// 不可展开
+	m_attendanceList->setRootIsDecorated(false);	// 隐藏折叠三角形
+	m_attendanceList->setHeaderHidden(true);
+	m_attendanceList->setColumnHidden(CLASS_NAME_INDEX, true);	// 隐藏班级名字列
+
 	// background
 	QPalette pal = palette();
 	pal.setColor(QPalette::Background, Qt::white);
@@ -42,16 +51,20 @@ ClassWidget::ClassWidget(QWidget *parent)
 
 ClassWidget::~ClassWidget()
 {
+	if (m_class) delete m_class;
 }
 
-void ClassWidget::SetClass(Class * cls)
+void ClassWidget::SetClass(Class* cls)
 {
+	if (m_class) delete m_class;
 	m_class = cls;
 	if (m_class) {
 		m_nameLabel->setText(cls->getName());
+		m_attendanceModel->SetAttendances(m_class->getAttendances());
 	}
 	else {
 		m_nameLabel->setText(m_defaultName);
+		m_attendanceModel->SetAttendances(std::vector<Attendance>());
 	}
 }
 

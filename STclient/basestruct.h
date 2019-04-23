@@ -30,15 +30,20 @@ public:
 	inline std::vector<Attendance> getAttendances() const { return m_attendances; }
 };
 
+class ClassSerializer;
 class Class
 {
 private:
-	QString name;
-	std::vector<QPixmap*> photos;
-	std::vector<Attendance> attendances;
+	QString m_name;
+	std::vector<QPixmap> m_photos;
+	std::vector<QString> m_photosName;
+	std::vector<Attendance> m_attendances;
+
+	ClassSerializer* m_serializer;
 
 public:
 	Class(const QString&);
 	~Class();
-	inline QString getName() const { return name; }
+	inline QString getName() const { return m_name; }
+	inline std::vector<Attendance> getAttendances() const { return m_attendances; }
 };

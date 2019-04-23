@@ -26,7 +26,7 @@ class AllClassesModel : public QAbstractItemModel
 {
 	Q_OBJECT
 private:
-	std::vector<QString> m_classes;
+	QList<QString> m_classes;
 
 public:
 	explicit AllClassesModel(QObject* parent = nullptr);

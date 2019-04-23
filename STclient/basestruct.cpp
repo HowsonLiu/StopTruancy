@@ -35,7 +35,21 @@ inline bool Student::Exist() const
 }
 
 Class::Class(const QString& name)
+	: m_name(name)
 {
+	m_serializer = new ClassSerializer(name);
+	m_serializer->GetLessonsImage(&m_photos, &m_photosName);
+	for (QString stuName : m_serializer->Students()) {
+		StudentSerializer stu(stuName);
+		if (stu.Exist()) {
+			Attendance attend;
+			attend.className = m_name;
+			attend.studentName = stuName;
+			m_serializer->GetLessonNum(&attend.allNum);
+			m_serializer->GetStudentAttendances(stuName, &attend.attendanceNum);
+			m_attendances.push_back(attend);
+		}
+	}
 }
 
 Class::~Class()

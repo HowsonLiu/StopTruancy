@@ -86,8 +86,10 @@ bool AllStudentsModel::removeRows(int row, int count, const QModelIndex& parent)
 
 AllClassesModel::AllClassesModel(QObject* parent)
 	: QAbstractItemModel(parent)
-	, m_classes(DATA_CENTER_INSTANCE->getAllClassName())
 {
+	for (QString name : DATA_CENTER_INSTANCE->getAllClassName()) {
+		m_classes.push_back(name);
+	}
 }
 
 AllClassesModel::~AllClassesModel()
