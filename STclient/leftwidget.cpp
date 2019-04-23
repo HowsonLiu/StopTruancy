@@ -118,19 +118,14 @@ void LeftWidget::onSwitchComboBox(int index)
 void LeftWidget::onItemDoubleClick(const QModelIndex& index)
 {
 	if (!index.isValid()) return;
-	QString stuName, clsName;
-	switch (m_comboBox->currentIndex())
+	if (m_comboBox->currentIndex() == 0)
 	{
-	case 0:
-		stuName = m_allStudentsModel->data(index).toString();
+		QString stuName = m_allStudentsModel->data(index).toString();
 		emit sigSelectStudent(stuName);
-		break;
-	case 1:
-		clsName = m_allClassesModel->data(index).toString();
+	}
+	else if (m_comboBox->currentIndex() == 1) {
+		QString clsName = m_allClassesModel->data(index).toString();
 		emit sigSelectClass(clsName);
-		break;
-	default:
-		break;
 	}
 }
 

@@ -36,7 +36,7 @@ inline bool Student::Exist() const
 	return m_serializer && m_serializer->Exist();
 }
 
-Class::Class()
+Class::Class(const QString& name)
 {
 }
 

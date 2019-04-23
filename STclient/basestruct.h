@@ -38,7 +38,7 @@ private:
 	std::vector<Attendance> attendances;
 
 public:
-	Class();
+	Class(const QString&);
 	~Class();
 	inline QString getName() const { return name; }
 };

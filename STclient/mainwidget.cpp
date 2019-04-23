@@ -3,9 +3,13 @@
 #include "studentwidget.h"
 #include "classwidget.h"
 #include "networkwidget.h"
+#include "../STdatacenter/studentserializer.h"
+#include "../STdatacenter/classserializer.h"
+#include "basestruct.h"
 #include <QSplitter>
 #include <QLabel>
 #include <QStackedLayout>
+#include <QMessageBox>
 
 MainWidget::MainWidget(QWidget *parent)
 	: QWidget(parent)
@@ -59,16 +63,32 @@ void MainWidget::TryConnect()
 
 void MainWidget::onSelectClass(const QString& name)
 {
+	ClassSerializer serializer(name);
+	if (serializer.Exist()) {
+		Class* cls = new Class(name);
+		m_classWidget->SetClass(cls);
+	}
+	else {
+		QMessageBox::critical(this, "Error", "Failed to read class information");
+		return;
+	}
 	m_emptyWidget->hide();
 	m_studentWidget->hide();
-	m_classWidget->show();
-	m_classWidget->SetClass(nullptr);
+	m_classWidget->show();	
 }
 
 void MainWidget::onSelectStudent(const QString& name) 
 {
+	StudentSerializer serializer(name);
+	if (serializer.Exist()) {
+		Student* stu = new Student(name);
+		m_studentWidget->SetStudent(stu);
+	}
+	else {
+		QMessageBox::critical(this, "Error", "Failed to read student information");
+		return;
+	}
 	m_emptyWidget->hide();
 	m_classWidget->hide();
 	m_studentWidget->show();
-	m_studentWidget->SetStudent(nullptr);
 }
