@@ -1,12 +1,12 @@
 #include "studentwidget.h"
-#include "basestruct.h"
+#include "mvd.h"
 #include "facecollectionwidget.h"
 #include "../STdatacenter/studentserializer.h"
 #include <opencv2/opencv.hpp>
 #include <QMessageBox>
 #include <QLabel>
 #include <QPushButton>
-#include <QListView>
+#include <QTreeView>
 #include <QBoxLayout>
 
 StudentWidget::StudentWidget(QWidget *parent)
@@ -20,7 +20,8 @@ StudentWidget::StudentWidget(QWidget *parent)
 	m_nameLabel = new QLabel(this);
 	m_optimizeLabel = new QLabel(this);
 	m_optimizeButton = new QPushButton(this);
-	m_attendancesList = new QListView(this);
+	m_attendancesList = new QTreeView(this);
+	m_attendancesModel = new AttendancesModel(this);
 
 	// layout
 	QVBoxLayout* layout = new QVBoxLayout(this);
@@ -50,6 +51,13 @@ StudentWidget::StudentWidget(QWidget *parent)
 	m_optimizeButton->setStyleSheet("border-image:url(:/Student/Resources/add.png);");
 	m_optimizeButton->setFixedSize(QSize(20, 20));
 
+	// list
+	m_attendancesList->setModel(m_attendancesModel);
+	m_attendancesList->setItemsExpandable(false);	// 不可展开
+	m_attendancesList->setRootIsDecorated(false);	// 隐藏折叠三角形
+	m_attendancesList->setHeaderHidden(true);
+	m_attendancesList->setColumnHidden(STUDENT_NAME_INDEX, true);	// 隐藏学生姓名列
+
 	// background
 	QPalette pal = palette();
 	pal.setColor(QPalette::Background, Qt::white);
@@ -72,11 +80,12 @@ void StudentWidget::SetStudent(Student* stu)
 	if (m_student) {
 		m_photoLabel->setPixmap(*m_student->getPhoto());
 		m_nameLabel->setText(m_student->getName());
+		m_attendancesModel->SetAttendances(m_student->getAttendances());
 	}
 	else {
 		m_photoLabel->setPixmap(m_defaultPhoto);
 		m_nameLabel->setText(m_defaultName);
-		m_attendancesList->setModel(nullptr);
+		m_attendancesModel->SetAttendances(std::vector<Attendance>());
 	}
 }
 

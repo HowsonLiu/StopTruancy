@@ -4,7 +4,8 @@
 class Student;
 class QLabel;
 class QPushButton;
-class QListView;
+class QTreeView;
+class AttendancesModel;
 class StudentWidget : public QWidget
 {
 	Q_OBJECT
@@ -17,7 +18,8 @@ private:
 	QLabel* m_nameLabel;
 	QLabel* m_optimizeLabel;
 	QPushButton* m_optimizeButton;
-	QListView* m_attendancesList;
+	QTreeView* m_attendancesList;
+	AttendancesModel* m_attendancesModel;
 
 public:
 	StudentWidget(QWidget *parent = Q_NULLPTR);

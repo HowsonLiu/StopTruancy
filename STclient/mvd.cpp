@@ -134,3 +134,68 @@ QModelIndex AllClassesModel::index(int row, int column, const QModelIndex & pare
 		return QModelIndex();
 	return createIndex(row, column);
 }
+
+AttendancesModel::AttendancesModel(QObject * parent)
+	: QAbstractItemModel(parent)
+{
+}
+
+AttendancesModel::~AttendancesModel()
+{
+}
+
+void AttendancesModel::SetAttendances(const std::vector<Attendance>& attendances)
+{
+	beginResetModel();	// 重置时需要做的
+	m_attendances.clear();
+	for (Attendance att : attendances) {
+		m_attendances.push_back(att);
+	}
+	endResetModel();
+}
+
+int AttendancesModel::rowCount(const QModelIndex& parent) const
+{
+	Q_UNUSED(parent);
+	return m_attendances.size();
+}
+
+int AttendancesModel::columnCount(const QModelIndex& parent) const
+{
+	Q_UNUSED(parent);
+	return 3;	// 三列，分别是学生名，课堂名，考勤字符串
+}
+
+QVariant AttendancesModel::data(const QModelIndex& index, int role) const
+{
+	if (!index.isValid()) return QVariant();
+	int row = index.row();
+	int column = index.column();
+	Attendance att = m_attendances.at(row);
+	switch (role)
+	{
+	case Qt::DisplayRole:
+		if (column == STUDENT_NAME_INDEX)
+			return att.studentName;
+		else if (column == CLASS_NAME_INDEX)
+			return att.className;
+		else if (column == ATTENDANCE_INDEX)
+			return QString("%1/%2").arg(att.attendanceNum).arg(att.allNum);
+	default:
+		break;
+	}
+	return QVariant();
+}
+
+QModelIndex AttendancesModel::parent(const QModelIndex & index) const
+{
+	Q_UNUSED(index);
+	return QModelIndex();
+}
+
+QModelIndex AttendancesModel::index(int row, int column, const QModelIndex& parent) const
+{
+	if (row < 0 || column < 0 || column >= columnCount(parent))
+		return QModelIndex();
+	return createIndex(row, column);
+}
