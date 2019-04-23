@@ -1,4 +1,5 @@
 #include "facecollectionwidget.h"
+#include "../STdatacenter/studentserializer.h"
 #include <QTimer>
 #include <QMessageBox>
 #include <QPainter>
@@ -181,7 +182,8 @@ NewStudentDialog::NewStudentDialog(QString* name, QWidget* parent)
 	setAutoFillBackground(true);
 	setPalette(pal);
 
-	connect(m_button, &QPushButton::click, this, &NewStudentDialog::accept);
+	connect(m_button, &QPushButton::click, this, &NewStudentDialog::onEnterOrButtonClick);
+	connect(m_edit, &QLineEdit::returnPressed, this, &NewStudentDialog::onEnterOrButtonClick);
 	connect(m_edit, &QLineEdit::textChanged, this, &NewStudentDialog::onTextChanged);
 
 	// init
@@ -192,10 +194,16 @@ NewStudentDialog::~NewStudentDialog()
 {
 }
 
+void NewStudentDialog::onEnterOrButtonClick()
+{
+	if (StudentSerializer(m_edit->text()).Exist()) return;
+	if (m_name) *m_name = m_edit->text();
+	accept();
+}
+
 void NewStudentDialog::onTextChanged(const QString& text) 
 {
-	*m_name = text;
-	if (true) {
+	if (StudentSerializer(text).Exist()) {
 		m_tipLabel->show();
 		m_button->setEnabled(false);
 	}

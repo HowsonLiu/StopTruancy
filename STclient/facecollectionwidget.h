@@ -4,7 +4,7 @@
 #include <vector>
 #include <QDialog>
 
-#define COLLECT_NUMBER 1
+#define COLLECT_NUMBER 20
 #define SNAP_INTERVAL 2000
 #define PAINT_INTERVAL 30
 #define FACECOLLECTIONDIALOG_ERROR_CODE 2
@@ -74,6 +74,7 @@ public:
 
 public slots:
 	void onTextChanged(const QString&);
+	void onEnterOrButtonClick();
 };
 
 QImage Mat2QImage(const cv::Mat& src);

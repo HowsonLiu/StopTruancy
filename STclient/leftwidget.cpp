@@ -1,5 +1,7 @@
 #include "leftwidget.h"
 #include "facecollectionwidget.h"
+#include "mvd.h"
+#include "../STdatacenter/studentserializer.h"
 #include <QLabel>
 #include <QComboBox>
 #include <QVBoxLayout>
@@ -10,7 +12,6 @@
 #include <QResizeEvent>
 #include <QMessageBox>
 #include <QDebug>
-#include "mvd.h"
 
 LeftWidget::LeftWidget(QWidget *parent)
 	: QWidget(parent)
@@ -87,7 +88,11 @@ void LeftWidget::onAddButtonClick()
 		if (res == QDialog::Accepted) {
 			QString name;
 			NewStudentDialog newStudentDialog(&name, this);
-			res = newStudentDialog.exec();
+			if (newStudentDialog.exec() == QDialog::Accepted) {
+				StudentSerializer stu(name);
+				stu.Init();
+				stu.WriteImages(faceInfos);
+			}
 		}
 		else if(res == FACECOLLECTIONDIALOG_ERROR_CODE){
 			QMessageBox::critical(this, "Can not open camera"

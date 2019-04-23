@@ -17,7 +17,7 @@ StudentSerializer::~StudentSerializer()
 {
 }
 
-void StudentSerializer::WriteImage(const std::vector<cv::Mat>& vm)
+void StudentSerializer::WriteImages(const std::vector<cv::Mat>& vm)
 {
 	QDir dir(m_faceInfoPath);
 	if (!dir.exists() && !dir.mkpath(m_faceInfoPath)) return;

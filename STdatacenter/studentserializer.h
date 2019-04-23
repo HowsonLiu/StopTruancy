@@ -18,7 +18,7 @@ public:
 	~StudentSerializer();
 	bool Exist() const;
 	bool Init();
-	void WriteImage(const std::vector<cv::Mat>&);
+	void WriteImages(const std::vector<cv::Mat>&);
 	void ReadImages(std::vector<cv::Mat>*);
 	void ReadProfilePhoto(QPixmap*);
 	std::vector<QString> Classes();
