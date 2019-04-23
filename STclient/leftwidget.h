@@ -1,5 +1,6 @@
 #pragma once
 #include <QWidget>
+#include "facecollectionwidget.h"
 
 class QLabel;
 class QComboBox;
@@ -29,12 +30,17 @@ private:
 signals:
 	void sigSelectStudent(const QString&);
 	void sigSelectClass(const QString&);
+	void sigUpdateStudents();
+	void sigUpdateClasses();
 
 public slots:
 	void onAddButtonClick();
 	void onDelButtonClick();
 	void onSwitchComboBox(int);
 	void onItemDoubleClick(const QModelIndex&);
+
+public:
+	void AddStudent(const QString& name, const std::vector<cv::Mat>&);
 };
 
 class EmptyWidget : public QWidget 

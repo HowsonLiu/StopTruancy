@@ -1,5 +1,4 @@
 #include "leftwidget.h"
-#include "facecollectionwidget.h"
 #include "mvd.h"
 #include "../STdatacenter/studentserializer.h"
 #include <QLabel>
@@ -90,11 +89,7 @@ void LeftWidget::onAddButtonClick()
 		if (res == QDialog::Accepted) {
 			QString name;
 			NewStudentDialog newStudentDialog(&name, this);
-			if (newStudentDialog.exec() == QDialog::Accepted) {
-				StudentSerializer stu(name);
-				stu.Init();
-				stu.WriteImages(faceInfos);
-			}
+			if (newStudentDialog.exec() == QDialog::Accepted) AddStudent(name, faceInfos);
 		}
 		else if(res == FACECOLLECTIONDIALOG_ERROR_CODE){
 			QMessageBox::critical(this, "Can not open camera"
@@ -155,6 +150,16 @@ void LeftWidget::onItemDoubleClick(const QModelIndex& index)
 		QString clsName = m_allClassesModel->data(index).toString();
 		emit sigSelectClass(clsName);
 	}
+}
+
+void LeftWidget::AddStudent(const QString& name, const std::vector<cv::Mat>& faces)
+{
+	m_allStudentsModel->insertRows(0, 1, QModelIndex());					// 先随便插入一个
+	QModelIndex index = m_allStudentsModel->index(0, 0, QModelIndex());		// 拿出来改
+	m_allStudentsModel->setData(index, name, Qt::DisplayRole);
+	StudentSerializer stu(name);								// 更新后台数据
+	stu.Init();
+	stu.WriteImages(faces);
 }
 
 EmptyWidget::EmptyWidget(QWidget* parent)
