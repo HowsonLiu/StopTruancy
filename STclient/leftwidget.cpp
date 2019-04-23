@@ -11,6 +11,7 @@
 #include <QPushButton>
 #include <QResizeEvent>
 #include <QMessageBox>
+#include <QModelIndex>
 #include <QDebug>
 
 LeftWidget::LeftWidget(QWidget *parent)
@@ -69,6 +70,7 @@ LeftWidget::LeftWidget(QWidget *parent)
 	connect(m_comboBox, QOverload<int>::of(&QComboBox::activated), this, &LeftWidget::onSwitchComboBox);	
 	connect(m_addButton, &QPushButton::clicked, this, &LeftWidget::onAddButtonClick);
 	connect(m_listView, &QListView::doubleClicked, this, &LeftWidget::onItemDoubleClick);
+	connect(m_delButton, &QPushButton::clicked, this, &LeftWidget::onDelButtonClick);
 
 	// init
 	onSwitchComboBox(0);
@@ -101,7 +103,28 @@ void LeftWidget::onAddButtonClick()
 	}
 }
 	
-void LeftWidget::onSwitchComboBox(int index) 
+void LeftWidget::onDelButtonClick()
+{
+	QModelIndexList indexList = m_listView->selectionModel()->selectedIndexes();
+	if (m_comboBox->currentIndex() == 0) {
+		for (QModelIndex index : indexList) {
+			if (!index.isValid()) continue;
+			QString name = m_allStudentsModel->data(index).toString();
+			StudentSerializer stu(name);
+			if (stu.canDelete()) {
+				stu.Delete();
+			}
+			else {
+				QMessageBox::information(this, "Can not delete", "This student has a course that cannot be deleted");
+			}
+		}
+	}
+	else if (m_comboBox->currentIndex() == 0) {
+
+	}
+}
+
+void LeftWidget::onSwitchComboBox(int index)
 {
 	switch (index)
 	{

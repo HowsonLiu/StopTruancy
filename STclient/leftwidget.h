@@ -32,6 +32,7 @@ signals:
 
 public slots:
 	void onAddButtonClick();
+	void onDelButtonClick();
 	void onSwitchComboBox(int);
 	void onItemDoubleClick(const QModelIndex&);
 };

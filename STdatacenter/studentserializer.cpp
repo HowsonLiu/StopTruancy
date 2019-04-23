@@ -114,8 +114,6 @@ bool StudentSerializer::Init()
 
 bool StudentSerializer::Delete()
 {
-	QFile file(m_cfgPath);
-	if (file.exists() && file.size() > 0) return false;	// 有选修的课程时不可删除
 	DATA_CENTER_INSTANCE->delStudentName(m_name);
 	QDir dir(m_path);
 	return dir.removeRecursively();
@@ -124,4 +122,10 @@ bool StudentSerializer::Delete()
 bool StudentSerializer::Exist() const
 {
 	return QDir(m_path).exists();
+}
+
+bool StudentSerializer::canDelete() const
+{
+	QFile file(m_cfgPath);
+	return !file.exists() || file.size() <= 0;	// 有选修的课程时不可删除
 }

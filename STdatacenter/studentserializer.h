@@ -17,6 +17,7 @@ public:
 	StudentSerializer(const QString&);
 	~StudentSerializer();
 	bool Exist() const;
+	bool canDelete() const;
 	bool Init();
 	void WriteImages(const std::vector<cv::Mat>&);
 	void ReadImages(std::vector<cv::Mat>*);
