@@ -2,6 +2,7 @@
 #include <QString>
 #include <vector>
 #include <opencv2/opencv.hpp>
+#include <QPixmap>
 
 #define CS_ALREADY_DONE 1
 #define CS_OK 0
@@ -30,7 +31,7 @@ public:
 	int AddStudent(const QString&);
 	int AddStudents(const std::vector<QString>&);
 	std::vector<QString> Students() const;
-	void GetLessonsImage(std::vector<cv::Mat>*, std::vector<QString>*);
+	void GetLessonsImage(std::vector<QPixmap>*, std::vector<QString>*);
 	int AddLesson(const cv::Mat&, const QString&, const std::vector<QString>&);
 	int GetLessonNum(int*);
 	int GetStudentAttendances(const QString&, int*);
