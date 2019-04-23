@@ -45,6 +45,8 @@ MainWidget::MainWidget(QWidget *parent)
 
 	connect(m_leftWidget, &LeftWidget::sigSelectClass, this, &MainWidget::onSelectClass);
 	connect(m_leftWidget, &LeftWidget::sigSelectStudent, this, &MainWidget::onSelectStudent);
+	connect(m_leftWidget, &LeftWidget::sigDelStudent, this, &MainWidget::onDelStudent);
+	connect(m_leftWidget, &LeftWidget::sigDelClass, this, &MainWidget::onDelClass);
 
 }
 
@@ -61,24 +63,24 @@ void MainWidget::TryConnect()
 		m_networkWidget->show();
 }
 
-void MainWidget::onSelectClass(const QString& name)
+void MainWidget::onDelStudent(const QString& stuName)
 {
-	ClassSerializer serializer(name);
-	if (serializer.Exist()) {
-		Class* cls = new Class(name);
-		m_classWidget->SetClass(cls);
-	}
-	else {
-		QMessageBox::critical(this, "Error", "Failed to read class information");
-		return;
-	}
-	m_emptyWidget->hide();
-	m_studentWidget->hide();
-	m_classWidget->show();	
+	if (!m_studentWidget->isHidden() && m_studentWidget->GetCurName() == stuName)
+		onSelectStudent(QString());
+}
+
+void MainWidget::onDelClass(const QString& clsName)
+{
+	if (!m_classWidget->isHidden() && m_classWidget->GetCurName() == clsName)
+		onSelectClass(QString());
 }
 
 void MainWidget::onSelectStudent(const QString& name) 
 {
+	if (name.isEmpty()) {
+		m_studentWidget->SetStudent(nullptr);
+		return;
+	}
 	StudentSerializer serializer(name);
 	if (serializer.Exist()) {
 		Student* stu = new Student(name);
@@ -91,4 +93,24 @@ void MainWidget::onSelectStudent(const QString& name)
 	m_emptyWidget->hide();
 	m_classWidget->hide();
 	m_studentWidget->show();
+}
+
+void MainWidget::onSelectClass(const QString& name)
+{
+	if (name.isEmpty()) {
+		m_classWidget->SetClass(nullptr);
+		return;
+	}
+	ClassSerializer serializer(name);
+	if (serializer.Exist()) {
+		Class* cls = new Class(name);
+		m_classWidget->SetClass(cls);
+	}
+	else {
+		QMessageBox::critical(this, "Error", "Failed to read class information");
+		return;
+	}
+	m_emptyWidget->hide();
+	m_studentWidget->hide();
+	m_classWidget->show();	
 }

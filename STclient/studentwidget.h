@@ -23,5 +23,6 @@ public:
 	StudentWidget(QWidget *parent = Q_NULLPTR);
 	~StudentWidget();
 	void SetStudent(Student*);
+	QString GetCurName() const;
 };
 

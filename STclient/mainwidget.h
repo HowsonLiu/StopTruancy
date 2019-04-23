@@ -25,4 +25,6 @@ public:
 public slots:
 	void onSelectStudent(const QString&);
 	void onSelectClass(const QString&);
+	void onDelStudent(const QString&);
+	void onDelClass(const QString&);
 };

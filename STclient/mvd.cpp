@@ -75,6 +75,15 @@ bool AllStudentsModel::insertRows(int row, int count, const QModelIndex & parent
 	return true;
 }
 
+bool AllStudentsModel::removeRows(int row, int count, const QModelIndex& parent)
+{
+	beginRemoveRows(parent, row, row + count - 1);
+	for (int i = 0; i < count; ++i)
+		m_students.removeAt(row);	// ²»ÓÃ++
+	endRemoveRows();
+	return true;
+}
+
 AllClassesModel::AllClassesModel(QObject* parent)
 	: QAbstractItemModel(parent)
 	, m_classes(DATA_CENTER_INSTANCE->getAllClassName())

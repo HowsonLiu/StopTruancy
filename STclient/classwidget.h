@@ -21,5 +21,6 @@ public:
 	ClassWidget(QWidget *parent = Q_NULLPTR);
 	~ClassWidget();
 	void SetClass(Class* cls);
+	QString GetCurName() const;
 };
 

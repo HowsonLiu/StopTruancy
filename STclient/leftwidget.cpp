@@ -55,7 +55,7 @@ LeftWidget::LeftWidget(QWidget *parent)
 	searchLayout->addWidget(searchButton, 0, Qt::AlignRight);	// 按钮右对齐
 	m_searchEdit->setTextMargins(0, 0, searchButton->width(), 0);	// 字体不要在按钮上面
 	m_searchEdit->setLayout(searchLayout);
-	
+
 	// add and delete
 	m_addButton->setFixedSize(50, 50);
 	m_delButton->setFixedSize(50, 50);
@@ -66,7 +66,7 @@ LeftWidget::LeftWidget(QWidget *parent)
 	setAutoFillBackground(true);
 	setPalette(pal);
 
-	connect(m_comboBox, QOverload<int>::of(&QComboBox::activated), this, &LeftWidget::onSwitchComboBox);	
+	connect(m_comboBox, QOverload<int>::of(&QComboBox::activated), this, &LeftWidget::onSwitchComboBox);
 	connect(m_addButton, &QPushButton::clicked, this, &LeftWidget::onAddButtonClick);
 	connect(m_listView, &QListView::doubleClicked, this, &LeftWidget::onItemDoubleClick);
 	connect(m_delButton, &QPushButton::clicked, this, &LeftWidget::onDelButtonClick);
@@ -80,7 +80,7 @@ LeftWidget::~LeftWidget()
 {
 }
 
-void LeftWidget::onAddButtonClick() 
+void LeftWidget::onAddButtonClick()
 {
 	if (m_comboBox->currentIndex() == 0) {
 		std::vector<cv::Mat> faceInfos;
@@ -91,30 +91,19 @@ void LeftWidget::onAddButtonClick()
 			NewStudentDialog newStudentDialog(&name, this);
 			if (newStudentDialog.exec() == QDialog::Accepted) AddStudent(name, faceInfos);
 		}
-		else if(res == FACECOLLECTIONDIALOG_ERROR_CODE){
+		else if (res == FACECOLLECTIONDIALOG_ERROR_CODE) {
 			QMessageBox::critical(this, "Can not open camera"
 				, "Please check whether the computer contains a camera or whether the camera is occupied by other applications");
 		}
 	}
 }
-	
+
 void LeftWidget::onDelButtonClick()
 {
-	QModelIndexList indexList = m_listView->selectionModel()->selectedIndexes();
 	if (m_comboBox->currentIndex() == 0) {
-		for (QModelIndex index : indexList) {
-			if (!index.isValid()) continue;
-			QString name = m_allStudentsModel->data(index).toString();
-			StudentSerializer stu(name);
-			if (stu.canDelete()) {
-				stu.Delete();
-			}
-			else {
-				QMessageBox::information(this, "Can not delete", "This student has a course that cannot be deleted");
-			}
-		}
+		DelStudent();
 	}
-	else if (m_comboBox->currentIndex() == 0) {
+	else if (m_comboBox->currentIndex() == 1) {
 
 	}
 }
@@ -162,6 +151,25 @@ void LeftWidget::AddStudent(const QString& name, const std::vector<cv::Mat>& fac
 	stu.WriteImages(faces);
 }
 
+void LeftWidget::DelStudent()
+{
+	QModelIndexList indexList = m_listView->selectionModel()->selectedIndexes();
+	for (QModelIndex index : indexList) {
+		if (!index.isValid()) continue;
+		QString name = m_allStudentsModel->data(index).toString();
+		StudentSerializer stu(name);
+		if (stu.canDelete()) {
+			stu.Delete();
+			m_allStudentsModel->removeRows(index.row(), 1, QModelIndex());	// 没有排序，可以直接按照row来删除
+			emit sigDelStudent(name);
+		}
+		else {
+			QMessageBox::information(this, "Can not delete", "This student has a course that cannot be deleted");
+		}
+	}
+
+}
+
 EmptyWidget::EmptyWidget(QWidget* parent)
 	: QWidget(parent)
 {
@@ -172,7 +180,7 @@ EmptyWidget::EmptyWidget(QWidget* parent)
 	setPalette(pal);
 }
 
-EmptyWidget::~EmptyWidget() 
+EmptyWidget::~EmptyWidget()
 {
 
 }

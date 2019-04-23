@@ -54,3 +54,8 @@ void ClassWidget::SetClass(Class * cls)
 		m_nameLabel->setText(m_defaultName);
 	}
 }
+
+QString ClassWidget::GetCurName() const
+{
+	return m_class ? m_class->getName() : QString();
+}

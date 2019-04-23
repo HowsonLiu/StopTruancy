@@ -73,3 +73,8 @@ void StudentWidget::SetStudent(Student* stu)
 		m_attendancesList->setModel(nullptr);
 	}
 }
+
+QString StudentWidget::GetCurName() const
+{
+	return m_student ? m_student->getName() : QString();
+}

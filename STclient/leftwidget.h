@@ -30,8 +30,8 @@ private:
 signals:
 	void sigSelectStudent(const QString&);
 	void sigSelectClass(const QString&);
-	void sigUpdateStudents();
-	void sigUpdateClasses();
+	void sigDelStudent(const QString&);
+	void sigDelClass(const QString&);
 
 public slots:
 	void onAddButtonClick();
@@ -41,6 +41,7 @@ public slots:
 
 public:
 	void AddStudent(const QString& name, const std::vector<cv::Mat>&);
+	void DelStudent();
 };
 
 class EmptyWidget : public QWidget 

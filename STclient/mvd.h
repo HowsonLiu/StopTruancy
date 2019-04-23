@@ -18,6 +18,7 @@ public:
 	virtual QModelIndex parent(const QModelIndex& index) const override;
 	virtual QModelIndex index(int row, int column, const QModelIndex &parent /* = QModelIndex() */) const override;
 	virtual bool insertRows(int row, int count, const QModelIndex &parent /* = QModelIndex() */) override;
+	virtual bool removeRows(int row, int count, const QModelIndex &parent /* = QModelIndex() */) override;
 };
 
 class AllClassesModel : public QAbstractItemModel 
