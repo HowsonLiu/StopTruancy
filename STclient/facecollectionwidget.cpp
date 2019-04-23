@@ -66,8 +66,10 @@ void FaceCollectionDialog::onSnap()
 		m_faceInfos->push_back(mat.clone());
 		m_curNum = m_faceInfos->size();
 		UpdateLabel();
-		if (m_curNum >= m_totalNum)
+		if (m_curNum >= m_totalNum) {
+			m_timer->stop();	// 不停止的话会很多次
 			accept();
+		}
 	}
 }
 
@@ -182,7 +184,7 @@ NewStudentDialog::NewStudentDialog(QString* name, QWidget* parent)
 	setAutoFillBackground(true);
 	setPalette(pal);
 
-	connect(m_button, &QPushButton::click, this, &NewStudentDialog::onEnterOrButtonClick);
+	connect(m_button, &QPushButton::clicked, this, &NewStudentDialog::onEnterOrButtonClick);
 	connect(m_edit, &QLineEdit::returnPressed, this, &NewStudentDialog::onEnterOrButtonClick);
 	connect(m_edit, &QLineEdit::textChanged, this, &NewStudentDialog::onTextChanged);
 

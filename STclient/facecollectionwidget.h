@@ -4,7 +4,7 @@
 #include <vector>
 #include <QDialog>
 
-#define COLLECT_NUMBER 20
+#define COLLECT_NUMBER 5
 #define SNAP_INTERVAL 2000
 #define PAINT_INTERVAL 30
 #define FACECOLLECTIONDIALOG_ERROR_CODE 2
