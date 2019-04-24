@@ -1,6 +1,7 @@
 #include "mvd.h"
 #include "../STdatacenter/datacenter.h"
 #include <vector>
+#include <QIcon>
 
 AllStudentsModel::AllStudentsModel(QObject* parent)
 	: QAbstractItemModel(parent)
@@ -193,6 +194,65 @@ QModelIndex AttendancesModel::parent(const QModelIndex & index) const
 }
 
 QModelIndex AttendancesModel::index(int row, int column, const QModelIndex& parent) const
+{
+	if (row < 0 || column < 0 || column >= columnCount(parent))
+		return QModelIndex();
+	return createIndex(row, column);
+}
+
+LessonsModel::LessonsModel(QObject* parent)
+	: QAbstractItemModel(parent)
+{
+}
+
+LessonsModel::~LessonsModel()
+{
+}
+
+void LessonsModel::SetLessons(const QList<Lesson>& lesson)
+{
+	beginResetModel();
+	m_lessons = lesson;
+	endResetModel();
+}
+
+int LessonsModel::rowCount(const QModelIndex& parent) const
+{
+	Q_UNUSED(parent);
+	return m_lessons.size();
+}
+
+int LessonsModel::columnCount(const QModelIndex& parent) const
+{
+	Q_UNUSED(parent);
+	return 1;
+}
+
+QVariant LessonsModel::data(const QModelIndex& index, int role) const
+{
+	if (!index.isValid()) return QVariant();
+	int row = index.row();
+	int column = index.column();
+	Lesson ls = m_lessons.at(row);
+	switch (role)
+	{
+	case Qt::DisplayRole:
+		return ls.name;
+	case Qt::DecorationRole:	// Í¼±ê½ÇÉ«
+		return QIcon(ls.photo);
+	default:
+		break;
+	}
+	return QVariant();
+}
+
+QModelIndex LessonsModel::parent(const QModelIndex & index) const
+{
+	Q_UNUSED(index);
+	return QModelIndex();
+}
+
+QModelIndex LessonsModel::index(int row, int column, const QModelIndex & parent) const
 {
 	if (row < 0 || column < 0 || column >= columnCount(parent))
 		return QModelIndex();

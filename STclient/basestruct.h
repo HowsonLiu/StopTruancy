@@ -2,6 +2,7 @@
 #include <QString>
 #include <QList>
 #include <QPixmap>
+#include "../STdatacenter/classserializer.h"
 
 class QPixmap;
 struct Attendance
@@ -31,12 +32,6 @@ public:
 	inline QList<Attendance> getAttendances() const { return m_attendances; }
 };
 
-struct Lesson 
-{
-	QPixmap photo;
-	QString name;
-};
-
 class ClassSerializer;
 class Class
 {
@@ -52,4 +47,5 @@ public:
 	~Class();
 	inline QString getName() const { return m_name; }
 	inline QList<Attendance> getAttendances() const { return m_attendances; }
+	inline QList<Lesson> getLessons() const { return m_lessons; }
 };

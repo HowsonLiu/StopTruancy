@@ -19,6 +19,7 @@ ClassWidget::ClassWidget(QWidget *parent)
 	m_lessonList = new QListView(this);
 	m_attendanceList = new QTreeView(this);
 	m_attendanceModel = new AttendancesModel(this);
+	m_lessonsModel = new LessonsModel(this);
 
 	// layout
 	QVBoxLayout* layout = new QVBoxLayout(this);
@@ -36,8 +37,11 @@ ClassWidget::ClassWidget(QWidget *parent)
 	m_addLessonButton->setFixedSize(QSize(20, 20));
 
 	// photo
+	m_lessonList->setModel(m_lessonsModel);
 	m_lessonList->setViewMode(QListView::IconMode);
-	m_lessonList->setIconSize(QSize(100, 80));
+	m_lessonList->setIconSize(QSize(150, 150));		// 按照较少的值按比例拉伸
+	m_lessonList->setGridSize(QSize(180, 150));
+	m_lessonList->setResizeMode(QListView::Adjust);	// 拉伸更新
 
 	// attendance
 	m_attendanceList->setModel(m_attendanceModel);
@@ -66,10 +70,12 @@ void ClassWidget::SetClass(Class* cls)
 	if (m_class) {
 		m_nameLabel->setText(cls->getName());
 		m_attendanceModel->SetAttendances(m_class->getAttendances());
+		m_lessonsModel->SetLessons(m_class->getLessons());
 	}
 	else {
 		m_nameLabel->setText(m_defaultName);
 		m_attendanceModel->SetAttendances(QList<Attendance>());
+		m_lessonsModel->SetLessons(QList<Lesson>());
 	}
 }
 

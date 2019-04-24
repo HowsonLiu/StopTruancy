@@ -36,9 +36,7 @@ Class::Class(const QString& name)
 	: m_name(name)
 {
 	m_serializer = new ClassSerializer(name);
-	std::vector<QPixmap> photos;
-	std::vector<QString> names;
-	m_serializer->GetLessonsImage(&photos, &names);
+	m_serializer->GetLessonsImage(&m_lessons);
 	for (QString stuName : m_serializer->Students()) {
 		StudentSerializer stu(stuName);
 		if (stu.Exist()) {
