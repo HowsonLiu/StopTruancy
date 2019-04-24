@@ -65,6 +65,7 @@ StudentWidget::StudentWidget(QWidget *parent)
 	setPalette(pal);
 
 	connect(m_optimizeButton, &QPushButton::clicked, this, &StudentWidget::onOptimizeButtonClick);
+	connect(m_attendancesList, &QTreeView::doubleClicked, this, &StudentWidget::onItemDoubleClick);
 }
 
 
@@ -92,6 +93,14 @@ void StudentWidget::SetStudent(Student* stu)
 QString StudentWidget::GetCurName() const
 {
 	return m_student ? m_student->getName() : QString();
+}
+
+void StudentWidget::onItemDoubleClick(const QModelIndex& index)
+{
+	if (!index.isValid()) return;
+	QModelIndex curIndex = m_attendancesModel->index(index.row(), CLASS_NAME_INDEX, index.parent());	// 需要计算同行class列的index
+	QString clsName = m_attendancesModel->data(curIndex, Qt::DisplayRole).toString();
+	emit sigSelectClass(clsName);
 }
 
 void StudentWidget::onOptimizeButtonClick()

@@ -27,7 +27,11 @@ public:
 	void SetStudent(Student*);
 	QString GetCurName() const;
 
+signals:
+	void sigSelectClass(const QString&);
+
 public slots:
 	void onOptimizeButtonClick();
+	void onItemDoubleClick(const QModelIndex&);
 };
 

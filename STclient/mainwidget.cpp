@@ -45,6 +45,8 @@ MainWidget::MainWidget(QWidget *parent)
 
 	connect(m_leftWidget, &LeftWidget::sigSelectClass, this, &MainWidget::onSelectClass);
 	connect(m_leftWidget, &LeftWidget::sigSelectStudent, this, &MainWidget::onSelectStudent);
+	connect(m_studentWidget, &StudentWidget::sigSelectClass, this, &MainWidget::onSelectClass);
+	connect(m_classWidget, &ClassWidget::sigSelectStudent, this, &MainWidget::onSelectStudent);
 	connect(m_leftWidget, &LeftWidget::sigDelStudent, this, &MainWidget::onDelStudent);
 	connect(m_leftWidget, &LeftWidget::sigDelClass, this, &MainWidget::onDelClass);
 

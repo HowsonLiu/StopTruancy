@@ -28,7 +28,11 @@ public:
 	void SetClass(Class* cls);
 	QString GetCurName() const;
 
+signals:
+	void sigSelectStudent(const QString&);
+
 public slots:
-	void onItemDoubleClick(const QModelIndex&);
+	void onLessonItemDoubleClick(const QModelIndex&);
+	void onAttendanceItemDoubleClick(const QModelIndex&);
 };
 

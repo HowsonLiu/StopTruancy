@@ -56,7 +56,8 @@ ClassWidget::ClassWidget(QWidget *parent)
 	setAutoFillBackground(true);
 	setPalette(pal);
 
-	connect(m_lessonList, &QListView::doubleClicked, this, &ClassWidget::onItemDoubleClick);
+	connect(m_lessonList, &QListView::doubleClicked, this, &ClassWidget::onLessonItemDoubleClick);
+	connect(m_attendanceList, &QTreeView::doubleClicked, this, &ClassWidget::onAttendanceItemDoubleClick);
 }
 
 
@@ -86,11 +87,19 @@ QString ClassWidget::GetCurName() const
 	return m_class ? m_class->getName() : QString();
 }
 
-void ClassWidget::onItemDoubleClick(const QModelIndex& index) 
+void ClassWidget::onLessonItemDoubleClick(const QModelIndex& index) 
 {
 	if (!index.isValid()) return;
 	QPixmap big = m_lessonsModel->data(index, Qt::UserRole).value<QPixmap>();
 	QLabel* bigLabel = new QLabel;
 	bigLabel->setPixmap(big);
 	bigLabel->show();
+}
+
+void ClassWidget::onAttendanceItemDoubleClick(const QModelIndex& index)
+{
+	if (!index.isValid()) return;
+	QModelIndex curIndex = m_attendanceModel->index(index.row(), STUDENT_NAME_INDEX, index.parent());	// 计算同行stu列的index
+	QString stuName = m_attendanceModel->data(curIndex, Qt::DisplayRole).toString();
+	emit sigSelectStudent(stuName);
 }
