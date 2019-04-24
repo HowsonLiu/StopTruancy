@@ -2,6 +2,8 @@
 #include "../STdatacenter/datacenter.h"
 #include <vector>
 #include <QIcon>
+#include <QPainter>
+#include <QStyleOptionViewItem>
 
 AllStudentsModel::AllStudentsModel(QObject* parent)
 	: QAbstractItemModel(parent)
@@ -259,4 +261,38 @@ QModelIndex LessonsModel::index(int row, int column, const QModelIndex & parent)
 	if (row < 0 || column < 0 || column >= columnCount(parent))
 		return QModelIndex();
 	return createIndex(row, column);
+}
+
+DefaultStuAndClsDelegate::DefaultStuAndClsDelegate(QObject* parent /* = nullptr */)
+	: QStyledItemDelegate(parent)
+{
+
+}
+
+DefaultStuAndClsDelegate::~DefaultStuAndClsDelegate()
+{
+}
+
+void DefaultStuAndClsDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+	if (index.isValid()) {
+		painter->save();
+		QString name = index.data(Qt::DisplayRole).toString();
+
+		// »­Ñ¡Ôñ±³¾°
+		if (option.state.testFlag(QStyle::State_Selected)) {
+			painter->fillRect(option.rect, QColor("#e3e3e5"));
+		}
+
+		QRectF textRect(option.rect.left() + 5, option.rect.top(), option.rect.width(), option.rect.height());
+		painter->setPen(QPen(Qt::black));
+		painter->setFont(QFont("Microsoft Yahei", 20));
+		painter->drawText(textRect, name);
+	}
+}
+
+QSize DefaultStuAndClsDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex & index) const
+{
+	Q_UNUSED(index);
+	return QSize(option.rect.width(), 40);
 }

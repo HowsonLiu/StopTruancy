@@ -25,6 +25,7 @@ LeftWidget::LeftWidget(QWidget *parent)
 	m_delButton = new QPushButton(this);
 	m_allStudentsModel = new AllStudentsModel(this);
 	m_allClassesModel = new AllClassesModel(this);
+	DefaultStuAndClsDelegate* defaultDelegate = new DefaultStuAndClsDelegate(this);
 
 	// layout
 	QVBoxLayout* mainLayout = new QVBoxLayout(this);
@@ -59,6 +60,9 @@ LeftWidget::LeftWidget(QWidget *parent)
 	// add and delete
 	m_addButton->setFixedSize(50, 50);
 	m_delButton->setFixedSize(50, 50);
+
+	// listview
+	m_listView->setItemDelegate(defaultDelegate);
 
 	// background
 	QPalette pal = palette();
