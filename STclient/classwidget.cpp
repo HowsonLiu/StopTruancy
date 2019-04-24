@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QListView>
 
 ClassWidget::ClassWidget(QWidget *parent)
 	: QWidget(parent)
@@ -33,6 +34,10 @@ ClassWidget::ClassWidget(QWidget *parent)
 	// button
 	m_addLessonButton->setStyleSheet("border-image:url(:/Student/Resources/add.png);");
 	m_addLessonButton->setFixedSize(QSize(20, 20));
+
+	// photo
+	m_lessonList->setViewMode(QListView::IconMode);
+	m_lessonList->setIconSize(QSize(100, 80));
 
 	// attendance
 	m_attendanceList->setModel(m_attendanceModel);
@@ -64,7 +69,7 @@ void ClassWidget::SetClass(Class* cls)
 	}
 	else {
 		m_nameLabel->setText(m_defaultName);
-		m_attendanceModel->SetAttendances(std::vector<Attendance>());
+		m_attendanceModel->SetAttendances(QList<Attendance>());
 	}
 }
 

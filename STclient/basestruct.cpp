@@ -7,8 +7,7 @@ Student::Student(const QString& name)
 	: m_name(name)
 {
 	m_serializer = new StudentSerializer(name);
-	m_photo = new QPixmap;
-	m_serializer->ReadProfilePhoto(m_photo);
+	m_serializer->ReadProfilePhoto(&m_photo);
 	for (QString className : m_serializer->Classes()) {
 		ClassSerializer cls(className);
 		if (cls.Exist()) {
@@ -26,7 +25,6 @@ Student::Student(const QString& name)
 Student::~Student()
 {
 	if (m_serializer) delete m_serializer;
-	if (m_photo) delete m_photo;
 }
 
 inline bool Student::Exist() const
@@ -38,7 +36,9 @@ Class::Class(const QString& name)
 	: m_name(name)
 {
 	m_serializer = new ClassSerializer(name);
-	m_serializer->GetLessonsImage(&m_photos, &m_photosName);
+	std::vector<QPixmap> photos;
+	std::vector<QString> names;
+	m_serializer->GetLessonsImage(&photos, &names);
 	for (QString stuName : m_serializer->Students()) {
 		StudentSerializer stu(stuName);
 		if (stu.Exist()) {

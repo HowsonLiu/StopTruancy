@@ -51,7 +51,7 @@ private:
 public:
 	explicit AttendancesModel(QObject* parent = nullptr);
 	~AttendancesModel();
-	void SetAttendances(const std::vector<Attendance>&);
+	void SetAttendances(const QList<Attendance>&);
 	virtual int rowCount(const QModelIndex &parent /* = QModelIndex() */) const override;
 	virtual int columnCount(const QModelIndex &parent /* = QModelIndex() */) const override;
 	virtual QVariant data(const QModelIndex &index, int role /* = Qt::DisplayRole */) const override;

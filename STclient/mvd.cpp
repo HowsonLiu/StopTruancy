@@ -146,13 +146,10 @@ AttendancesModel::~AttendancesModel()
 {
 }
 
-void AttendancesModel::SetAttendances(const std::vector<Attendance>& attendances)
+void AttendancesModel::SetAttendances(const QList<Attendance>& attendances)
 {
 	beginResetModel();	// 重置时需要做的
-	m_attendances.clear();
-	for (Attendance att : attendances) {
-		m_attendances.push_back(att);
-	}
+	m_attendances = attendances;
 	endResetModel();
 }
 

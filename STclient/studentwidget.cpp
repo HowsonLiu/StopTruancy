@@ -78,14 +78,14 @@ void StudentWidget::SetStudent(Student* stu)
 	if (m_student) delete m_student;
 	m_student = stu;
 	if (m_student) {
-		m_photoLabel->setPixmap(*m_student->getPhoto());
+		m_photoLabel->setPixmap(m_student->getPhoto());
 		m_nameLabel->setText(m_student->getName());
 		m_attendancesModel->SetAttendances(m_student->getAttendances());
 	}
 	else {
 		m_photoLabel->setPixmap(m_defaultPhoto);
 		m_nameLabel->setText(m_defaultName);
-		m_attendancesModel->SetAttendances(std::vector<Attendance>());
+		m_attendancesModel->SetAttendances(QList<Attendance>());
 	}
 }
 
