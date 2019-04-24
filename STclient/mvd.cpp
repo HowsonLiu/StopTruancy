@@ -240,6 +240,8 @@ QVariant LessonsModel::data(const QModelIndex& index, int role) const
 		return ls.name;
 	case Qt::DecorationRole:	// 图标角色
 		return QIcon(ls.photo);
+	case Qt::UserRole:		// 用来看大图
+		return ls.photo;	
 	default:
 		break;
 	}

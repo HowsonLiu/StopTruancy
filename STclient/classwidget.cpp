@@ -55,6 +55,8 @@ ClassWidget::ClassWidget(QWidget *parent)
 	pal.setColor(QPalette::Background, Qt::white);
 	setAutoFillBackground(true);
 	setPalette(pal);
+
+	connect(m_lessonList, &QListView::doubleClicked, this, &ClassWidget::onItemDoubleClick);
 }
 
 
@@ -82,4 +84,13 @@ void ClassWidget::SetClass(Class* cls)
 QString ClassWidget::GetCurName() const
 {
 	return m_class ? m_class->getName() : QString();
+}
+
+void ClassWidget::onItemDoubleClick(const QModelIndex& index) 
+{
+	if (!index.isValid()) return;
+	QPixmap big = m_lessonsModel->data(index, Qt::UserRole).value<QPixmap>();
+	QLabel* bigLabel = new QLabel;
+	bigLabel->setPixmap(big);
+	bigLabel->show();
 }

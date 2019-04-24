@@ -27,5 +27,8 @@ public:
 	~ClassWidget();
 	void SetClass(Class* cls);
 	QString GetCurName() const;
+
+public slots:
+	void onItemDoubleClick(const QModelIndex&);
 };
 
