@@ -110,19 +110,19 @@ std::vector<QString> ClassSerializer::Students() const
 	return res;
 }
 
-void ClassSerializer::GetLessonsImage(std::vector<QPixmap>* pPixmaps, std::vector<QString>* pNames)
+void ClassSerializer::GetLessonsImage(QList<Lesson>* pLessons)
 {
 	QDir dir(m_lessonPath);
-	if (!pPixmaps || !pNames || !dir.exists()) return;
+	if (!pLessons || !dir.exists()) return;
 	QStringList filters;
 	filters << "*.png" << "*.jpg" << "*.pgm";
 	dir.setNameFilters(filters);
 	QStringList imageNameList = dir.entryList();
 	for (QString imageName : imageNameList) {
-		QPixmap pixmap;
-		if (!pixmap.load(dir.filePath(imageName))) continue;
-		pPixmaps->push_back(pixmap);
-		pNames->push_back(imageName);
+		Lesson l;
+		if (!l.photo.load(dir.filePath(imageName))) continue;
+		l.name = imageName;
+		pLessons->push_back(l);
 	}
 }
 

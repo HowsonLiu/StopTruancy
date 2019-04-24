@@ -12,6 +12,12 @@
 #define CS_INVALID_PARAM -4
 #define CS_SAME_NAME -5
 
+struct Lesson
+{
+	QPixmap photo;
+	QString name;
+};
+
 class ClassSerializer
 {
 private:
@@ -31,7 +37,7 @@ public:
 	int AddStudent(const QString&);
 	int AddStudents(const std::vector<QString>&);
 	std::vector<QString> Students() const;
-	void GetLessonsImage(std::vector<QPixmap>*, std::vector<QString>*);
+	void GetLessonsImage(QList<Lesson>*);
 	int AddLesson(const cv::Mat&, const QString&, const std::vector<QString>&);
 	int GetLessonNum(int*);
 	int GetStudentAttendances(const QString&, int*);
