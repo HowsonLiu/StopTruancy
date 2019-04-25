@@ -31,5 +31,6 @@ public:
 public slots:
 	void onTextChanged(const QString&);
 	void onItemClicked();
+	void onPushButtonClicked();
 };
 

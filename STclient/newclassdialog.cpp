@@ -64,6 +64,10 @@ NewClassDialog::NewClassDialog(QString* name, std::vector<QString>* studentNames
 	m_numLabel->setFont(QFont(g_defaultFont, 30, g_defaultTitleFontWeight));
 	m_numLabel->setStyleSheet("color:red");
 
+	// ok button
+	m_okButton->setStyleSheet("border-image:url(:/Student/Resources/tick.png)");
+	m_okButton->setFixedSize(QSize(30, 30));
+
 	// background
 	QPalette pal = palette();
 	pal.setColor(QPalette::Background, Qt::white);
@@ -72,6 +76,7 @@ NewClassDialog::NewClassDialog(QString* name, std::vector<QString>* studentNames
 
 	connect(m_nameEdit, &QLineEdit::textChanged, this, &NewClassDialog::onTextChanged);
 	connect(m_listView, &QListView::clicked, this, &NewClassDialog::onItemClicked);
+	connect(m_okButton, &QPushButton::clicked, this, &NewClassDialog::onPushButtonClicked);
 
 	// init
 	m_numLabel->setText("0");
@@ -89,6 +94,17 @@ void NewClassDialog::onItemClicked()
 	m_numLabel->setText(QString::number(num));
 	bVaildStudents = num > 0;
 	m_okButton->setEnabled(bVaildStudents && bVaildName);
+}
+
+void NewClassDialog::onPushButtonClicked()
+{
+	*m_name = m_nameEdit->text();
+	QModelIndexList selectedList = m_listView->selectionModel()->selectedIndexes();
+	for (QModelIndex curIndex : selectedList) {
+		QString curStuName = m_allStudentsModel->data(curIndex, Qt::DisplayRole).toString();
+		m_studentNames->push_back(curStuName);
+	}
+	accept();
 }
 
 void NewClassDialog::onTextChanged(const QString& text)

@@ -106,6 +106,9 @@ void LeftWidget::onAddButtonClick()
 		std::vector<QString> studentNames;
 		NewClassDialog newClassDialog(&className, &studentNames, this);
 		int res = newClassDialog.exec();
+		if (res == QDialog::Accepted) {
+			AddClass(className, studentNames);
+		}
 	}
 }
 
@@ -115,7 +118,7 @@ void LeftWidget::onDelButtonClick()
 		DelStudent();
 	}
 	else if (m_comboBox->currentIndex() == 1) {
-
+		DelClass();
 	}
 }
 
@@ -178,7 +181,29 @@ void LeftWidget::DelStudent()
 			QMessageBox::information(this, "Can not delete", "This student has a course that cannot be deleted");
 		}
 	}
+}
 
+void LeftWidget::AddClass(const QString& name, const std::vector<QString>& stuNames)
+{
+	m_allClassesModel->insertRows(0, 1, QModelIndex());					// 先随便插入一个
+	QModelIndex index = m_allClassesModel->index(0, 0, QModelIndex());		// 拿出来改
+	m_allClassesModel->setData(index, name, Qt::DisplayRole);
+	ClassSerializer cls(name);								// 更新后台数据
+	cls.Init();
+	cls.AddStudents(stuNames);
+}
+
+void LeftWidget::DelClass()
+{
+	QModelIndexList indexList = m_listView->selectionModel()->selectedIndexes();
+	for (QModelIndex index : indexList) {
+		if (!index.isValid()) continue;
+		QString name = m_allClassesModel->data(index).toString();
+		ClassSerializer cls(name);
+		cls.Delete();
+		m_allClassesModel->removeRows(index.row(), 1, QModelIndex());	// 没有排序，可以直接按照row来删除
+		emit sigDelClass(name);
+	}
 }
 
 EmptyWidget::EmptyWidget(QWidget* parent)

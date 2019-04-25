@@ -128,6 +128,17 @@ QVariant AllClassesModel::data(const QModelIndex& index, int role) const
 	return QVariant();
 }
 
+bool AllClassesModel::setData(const QModelIndex & index, const QVariant & value, int role)
+{
+	if (index.isValid() && role == Qt::DisplayRole) {
+		int row = index.row();
+		m_classes.replace(row, value.toString());	// 这里对刚才瞎jb填的值进行更正
+		emit(dataChanged(index, index));
+		return true;
+	}
+	return false;
+}
+
 QModelIndex AllClassesModel::parent(const QModelIndex& index) const
 {
 	Q_UNUSED(index);
@@ -139,6 +150,23 @@ QModelIndex AllClassesModel::index(int row, int column, const QModelIndex & pare
 	if (row < 0 || column < 0 || column >= columnCount(parent))
 		return QModelIndex();
 	return createIndex(row, column);
+}
+
+bool AllClassesModel::insertRows(int row, int count, const QModelIndex & parent)
+{
+	beginInsertRows(parent, row, row + count - 1);
+	m_classes.insert(row, QString());	// 这里是瞎jb插入一个空值
+	endInsertRows();
+	return true;
+}
+
+bool AllClassesModel::removeRows(int row, int count, const QModelIndex & parent)
+{
+	beginRemoveRows(parent, row, row + count - 1);
+	for (int i = 0; i < count; ++i)
+		m_classes.removeAt(row);	// 不用++
+	endRemoveRows();
+	return true;
 }
 
 AttendancesModel::AttendancesModel(QObject * parent)

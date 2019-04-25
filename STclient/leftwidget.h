@@ -42,6 +42,8 @@ public slots:
 public:
 	void AddStudent(const QString& name, const std::vector<cv::Mat>&);
 	void DelStudent();
+	void AddClass(const QString& name, const std::vector<QString>&);
+	void DelClass();
 };
 
 class EmptyWidget : public QWidget 
