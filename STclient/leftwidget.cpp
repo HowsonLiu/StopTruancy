@@ -1,6 +1,7 @@
 #include "leftwidget.h"
 #include "mvd.h"
 #include "../STdatacenter/studentserializer.h"
+#include "newclassdialog.h"
 #include <QLabel>
 #include <QComboBox>
 #include <QVBoxLayout>
@@ -99,6 +100,12 @@ void LeftWidget::onAddButtonClick()
 			QMessageBox::critical(this, "Can not open camera"
 				, "Please check whether the computer contains a camera or whether the camera is occupied by other applications");
 		}
+	}
+	else if (m_comboBox->currentIndex() == 1) {
+		QString className;
+		std::vector<QString> studentNames;
+		NewClassDialog newClassDialog(&className, &studentNames, this);
+		int res = newClassDialog.exec();
 	}
 }
 
