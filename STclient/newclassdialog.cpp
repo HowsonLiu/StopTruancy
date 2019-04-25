@@ -1,6 +1,7 @@
 #include "newclassdialog.h"
 #include "Resources.h"
 #include "../STdatacenter/classserializer.h"
+#include "mvd.h"
 #include <QLineEdit>
 #include <QListView>
 #include <QPushButton>
@@ -11,6 +12,8 @@ NewClassDialog::NewClassDialog(QString* name, std::vector<QString>* studentNames
 	: QDialog(parent)
 	, m_name(name)
 	, m_studentNames(studentNames)
+	, bVaildName(false)
+	, bVaildStudents(false)
 {
 	// create
 	m_nameEdit = new QLineEdit(this);
@@ -19,6 +22,7 @@ NewClassDialog::NewClassDialog(QString* name, std::vector<QString>* studentNames
 	m_listView = new QListView(this);
 	m_numLabel = new QLabel(this);
 	m_okButton = new QPushButton(this);
+	m_allStudentsModel = new AllStudentsModel(this);
 
 	// layout
 	QVBoxLayout* layout = new QVBoxLayout(this);
@@ -34,10 +38,10 @@ NewClassDialog::NewClassDialog(QString* name, std::vector<QString>* studentNames
 
 	// name edit
 	m_nameEdit->setFont(QFont(g_defaultFont, g_defaultTitleFontSize, g_defaultTitleFontWeight));
+	m_nameEdit->setPlaceholderText("Class Name");
 
 	// tip label
 	m_tipLabel->setFont(QFont(g_defaultFont, g_defaultTipFontSize, g_defaultTitleFontWeight));
-	m_tipLabel->setText("Already exists name");
 	m_tipLabel->setStyleSheet("color:red");
 
 	// search
@@ -50,6 +54,16 @@ NewClassDialog::NewClassDialog(QString* name, std::vector<QString>* studentNames
 	m_searchEdit->setTextMargins(0, 0, searchButton->width(), 0);	// 字体不要在按钮上面
 	m_searchEdit->setLayout(searchLayout);
 
+	// listview
+	m_listView->setModel(m_allStudentsModel);
+	m_listView->setSelectionMode(QListView::MultiSelection);	// 多选
+	DefaultStuAndClsDelegate* defaultDelegate = new DefaultStuAndClsDelegate(this);
+	m_listView->setItemDelegate(defaultDelegate);
+
+	// number label
+	m_numLabel->setFont(QFont(g_defaultFont, 30, g_defaultTitleFontWeight));
+	m_numLabel->setStyleSheet("color:red");
+
 	// background
 	QPalette pal = palette();
 	pal.setColor(QPalette::Background, Qt::white);
@@ -57,9 +71,11 @@ NewClassDialog::NewClassDialog(QString* name, std::vector<QString>* studentNames
 	setPalette(pal);
 
 	connect(m_nameEdit, &QLineEdit::textChanged, this, &NewClassDialog::onTextChanged);
+	connect(m_listView, &QListView::clicked, this, &NewClassDialog::onItemClicked);
 
 	// init
-	m_tipLabel->hide();
+	m_numLabel->setText("0");
+	onTextChanged("");
 }
 
 
@@ -67,14 +83,32 @@ NewClassDialog::~NewClassDialog()
 {
 }
 
+void NewClassDialog::onItemClicked()
+{
+	int num = m_listView->selectionModel()->selectedIndexes().size();
+	m_numLabel->setText(QString::number(num));
+	bVaildStudents = num > 0;
+	m_okButton->setEnabled(bVaildStudents && bVaildName);
+}
+
 void NewClassDialog::onTextChanged(const QString& text)
 {
-	if (ClassSerializer(text).Exist()) {
+	if (text.isEmpty()) {
+		m_tipLabel->setText("Name can't be empty");
 		m_tipLabel->show();
-		m_okButton->setEnabled(false);
+		bVaildName = false;
+		m_okButton->setEnabled(bVaildStudents && bVaildName);
+		return;
+	}
+	if (ClassSerializer(text).Exist()) {
+		m_tipLabel->setText("Already exists name");
+		m_tipLabel->show();
+		bVaildName = false;
+		m_okButton->setEnabled(bVaildStudents && bVaildName);
 	}
 	else {
 		m_tipLabel->hide();
-		m_okButton->setEnabled(true);
+		bVaildName = true;
+		m_okButton->setEnabled(bVaildStudents && bVaildName);
 	}
 }

@@ -6,6 +6,7 @@ class QLineEdit;
 class QListView;
 class QLabel;
 class QPushButton;
+class AllStudentsModel;
 class NewClassDialog : public QDialog
 {
 	Q_OBJECT
@@ -16,9 +17,12 @@ private:
 	QListView* m_listView;
 	QLabel* m_numLabel;
 	QPushButton* m_okButton;
+	AllStudentsModel* m_allStudentsModel;
 
 	QString* m_name;
 	std::vector<QString>* m_studentNames;
+	bool bVaildName;
+	bool bVaildStudents;
 
 public:
 	NewClassDialog(QString*, std::vector<QString>*, QWidget* parent = nullptr);
@@ -26,5 +30,6 @@ public:
 
 public slots:
 	void onTextChanged(const QString&);
+	void onItemClicked();
 };
 
