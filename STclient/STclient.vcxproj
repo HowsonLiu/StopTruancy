@@ -124,6 +124,7 @@
     <ClCompile Include="mvd.cpp" />
     <ClCompile Include="networkwidget.cpp" />
     <ClCompile Include="newclassdialog.cpp" />
+    <ClCompile Include="newlessondialog.cpp" />
     <ClCompile Include="studentwidget.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +159,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basestruct.h" />
+    <QtMoc Include="newlessondialog.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>
+    </QtMoc>
     <ClInclude Include="Resources.h" />
     <QtMoc Include="newclassdialog.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>

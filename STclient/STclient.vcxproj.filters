@@ -60,6 +60,9 @@
     <ClCompile Include="newclassdialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="newlessondialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="mainwidget.h">
@@ -84,6 +87,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="newclassdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="newlessondialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

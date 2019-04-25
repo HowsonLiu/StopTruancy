@@ -1,6 +1,7 @@
 #include "classwidget.h"
 #include "Resources.h"
 #include "mvd.h"
+#include "newlessondialog.h"
 #include <QVBoxLayout>
 #include <QListView>
 #include <QTreeView>
@@ -9,6 +10,7 @@
 #include <QLayout>
 #include <QListView>
 #include <QMessageBox>
+#include <QFileDialog>
 
 ClassWidget::ClassWidget(QWidget *parent)
 	: QWidget(parent)
@@ -81,6 +83,7 @@ ClassWidget::ClassWidget(QWidget *parent)
 	connect(m_lessonList, &QListView::doubleClicked, this, &ClassWidget::onLessonItemDoubleClick);
 	connect(m_attendanceList, &QTreeView::doubleClicked, this, &ClassWidget::onAttendanceItemDoubleClick);
 	connect(m_trainButton, &QPushButton::clicked, this, &ClassWidget::onTrainButtonClick);
+	connect(m_addLessonButton, &QPushButton::clicked, this, &ClassWidget::onAddLessonButtonClick);
 }
 
 
@@ -141,4 +144,14 @@ void ClassWidget::onTrainButtonClick()
 	else if (res == CS_API_ERROR) {
 		QMessageBox::critical(this, "Error", "OpenCV error");
 	}
+}
+
+void ClassWidget::onAddLessonButtonClick()
+{
+	QString path = QFileDialog::getOpenFileName(this, "Upload a lesson photo"
+		, "/", "Images(*.jpg *.png)");
+	QImage photo;
+	photo.load(path);
+	NewLessonDialog newLessonDialog(m_class->getName(), &photo, this);
+	int res = newLessonDialog.exec();
 }
