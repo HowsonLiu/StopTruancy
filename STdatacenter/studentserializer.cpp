@@ -32,7 +32,7 @@ void StudentSerializer::WriteImages(const std::vector<cv::Mat>& vm)
 	}
 }
 
-void StudentSerializer::ReadImages(std::vector<cv::Mat>* pvm)
+void StudentSerializer::ReadOriginImages(std::vector<cv::Mat>* pvm)
 {
 	QDir dir(m_faceInfoPath);
 	if (!pvm || !dir.exists()) return;
@@ -42,7 +42,23 @@ void StudentSerializer::ReadImages(std::vector<cv::Mat>* pvm)
 	QStringList imageNameList = dir.entryList();
 	for (QString imageName : imageNameList) {
 		cv::String imagePath = dir.filePath(imageName).toStdString();
-		pvm->push_back(cv::imread(imagePath, 0));	// 读入灰色图像
+		pvm->push_back(cv::imread(imagePath));
+	}
+}
+
+void StudentSerializer::ReadTrainImages(std::vector<cv::Mat>* pvm)
+{
+	QDir dir(m_faceInfoPath);
+	if (!pvm || !dir.exists()) return;
+	QStringList filters;
+	filters << "*.png" << "*.jpg" << "*.pgm";
+	dir.setNameFilters(filters);
+	QStringList imageNameList = dir.entryList();
+	for (QString imageName : imageNameList) {
+		cv::String imagePath = dir.filePath(imageName).toStdString();
+		cv::Mat grayMat = cv::imread(imagePath, 0);		// 读入灰色图像
+		cv::resize(grayMat, grayMat, cv::Size(TRAIN_RESIZE_WIDTH, TRAIN_RESIZE_HEIGHT));	// 不同规格训练会错
+		pvm->push_back(grayMat.clone());	
 	}
 }
 

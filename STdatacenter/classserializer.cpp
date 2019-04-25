@@ -158,7 +158,7 @@ int ClassSerializer::Train()
 	for (QString name : Students()) {
 		StudentSerializer student(name);
 		if (!student.Exist()) continue;	// 这种情况不应该存在
-		student.ReadImages(&mats);
+		student.ReadTrainImages(&mats);
 		while (mats.size() > names.size())
 			names.push_back(name.toInt());
 	}
