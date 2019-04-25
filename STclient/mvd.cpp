@@ -325,3 +325,58 @@ QSize DefaultStuAndClsDelegate::sizeHint(const QStyleOptionViewItem& option, con
 	Q_UNUSED(index);
 	return QSize(option.rect.width(), 40);
 }
+
+StudentsModel::StudentsModel(QObject * parent)
+	: QAbstractItemModel(parent)
+{
+}
+
+StudentsModel::~StudentsModel()
+{
+}
+
+void StudentsModel::SetStudents(const QList<QString>& students)
+{
+	m_students = students;
+}
+
+int StudentsModel::rowCount(const QModelIndex & parent) const
+{
+	Q_UNUSED(parent);
+	return m_students.size();
+}
+
+int StudentsModel::columnCount(const QModelIndex & parent) const
+{
+	Q_UNUSED(parent);
+	return 1;
+}
+
+QVariant StudentsModel::data(const QModelIndex & index, int role) const
+{
+	if (!index.isValid()) return QVariant();
+	int row = index.row();
+	int column = index.column();	// 要获取数据的行列
+	QString name = m_students.at(row);
+	switch (role)
+	{
+	case Qt::DisplayRole:
+		return name;	// 简单的只返回名字就可以了
+	default:
+		break;
+	}
+	return QVariant();
+}
+
+QModelIndex StudentsModel::parent(const QModelIndex & index) const
+{
+	Q_UNUSED(index);
+	return QModelIndex();
+}
+
+QModelIndex StudentsModel::index(int row, int column, const QModelIndex & parent) const
+{
+	if (row < 0 || column < 0 || column >= columnCount(parent))
+		return QModelIndex();
+	return createIndex(row, column);
+}
