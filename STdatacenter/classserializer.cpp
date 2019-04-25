@@ -110,6 +110,18 @@ std::vector<QString> ClassSerializer::Students() const
 	return res;
 }
 
+void ClassSerializer::GetStudents(QList<QString>* ll)
+{
+	QFile studentFile(m_cfgPath);
+	if (studentFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+		QTextStream stream(&studentFile);
+		while (!stream.atEnd()) {
+			ll->push_back(stream.readLine());
+		}
+	}
+	studentFile.close();
+}
+
 void ClassSerializer::GetLessonsImage(QList<Lesson>* pLessons)
 {
 	QDir dir(m_lessonPath);

@@ -37,6 +37,7 @@ public:
 	int AddStudent(const QString&);
 	int AddStudents(const std::vector<QString>&);
 	std::vector<QString> Students() const;
+	void GetStudents(QList<QString>*);
 	void GetLessonsImage(QList<Lesson>*);
 	int AddLesson(const cv::Mat&, const QString&, const std::vector<QString>&);
 	int GetLessonNum(int*);
