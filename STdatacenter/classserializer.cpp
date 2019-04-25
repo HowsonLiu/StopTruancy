@@ -163,8 +163,13 @@ int ClassSerializer::Train()
 			names.push_back(name.toInt());
 	}
 	if (mats.size() <= 0) return CS_STUDENT_NOT_EXIST;
-	cv::Ptr<cv::face::EigenFaceRecognizer> model = cv::face::EigenFaceRecognizer::create();
-	model->train(mats, names);
-	model->write(m_xmlPath.toStdString());
+	try {
+		cv::Ptr<cv::face::EigenFaceRecognizer> model = cv::face::EigenFaceRecognizer::create();
+		model->train(mats, names);
+		model->write(m_xmlPath.toStdString());
+	}
+	catch (std::exception& e) {
+		return CS_API_ERROR;
+	}
 	return CS_OK;
 }

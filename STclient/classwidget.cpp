@@ -138,4 +138,7 @@ void ClassWidget::onTrainButtonClick()
 	else if (res == CS_STUDENT_NOT_EXIST) {
 		QMessageBox::critical(this, "Error", "This class has no students");
 	}
+	else if (res == CS_API_ERROR) {
+		QMessageBox::critical(this, "Error", "OpenCV error");
+	}
 }
