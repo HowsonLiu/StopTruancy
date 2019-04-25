@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QLayout>
 #include <QListView>
+#include <QMessageBox>
 
 ClassWidget::ClassWidget(QWidget *parent)
 	: QWidget(parent)
@@ -79,6 +80,7 @@ ClassWidget::ClassWidget(QWidget *parent)
 
 	connect(m_lessonList, &QListView::doubleClicked, this, &ClassWidget::onLessonItemDoubleClick);
 	connect(m_attendanceList, &QTreeView::doubleClicked, this, &ClassWidget::onAttendanceItemDoubleClick);
+	connect(m_trainButton, &QPushButton::clicked, this, &ClassWidget::onTrainButtonClick);
 }
 
 
@@ -123,4 +125,17 @@ void ClassWidget::onAttendanceItemDoubleClick(const QModelIndex& index)
 	QModelIndex curIndex = m_attendanceModel->index(index.row(), STUDENT_NAME_INDEX, index.parent());	// 计算同行stu列的index
 	QString stuName = m_attendanceModel->data(curIndex, Qt::DisplayRole).toString();
 	emit sigSelectStudent(stuName);
+}
+
+void ClassWidget::onTrainButtonClick()
+{
+	ClassSerializer serializer(m_class->getName());
+	if (!serializer.Exist()) return;
+	int res = serializer.Train();
+	if (res == CS_OK) {
+		QMessageBox::information(this, "Success", "Train successfully");
+	}
+	else if (res == CS_STUDENT_NOT_EXIST) {
+		QMessageBox::critical(this, "Error", "This class has no students");
+	}
 }

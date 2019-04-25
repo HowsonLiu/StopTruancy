@@ -37,5 +37,6 @@ signals:
 public slots:
 	void onLessonItemDoubleClick(const QModelIndex&);
 	void onAttendanceItemDoubleClick(const QModelIndex&);
+	void onTrainButtonClick();
 };
 

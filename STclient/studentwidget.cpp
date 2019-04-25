@@ -109,7 +109,7 @@ void StudentWidget::onOptimizeButtonClick()
 	std::vector<cv::Mat> faceInfos;
 	FaceCollectionDialog faceCollectionWidget(&faceInfos, this);
 	if (faceCollectionWidget.exec() == QDialog::Accepted) {
-		StudentSerializer stu(m_student->getName());
+		StudentSerializer stu(m_student->getName());	
 		if(stu.Exist()) stu.WriteImages(faceInfos);
 		QMessageBox::information(this, "Success", "Optimized successfully");
 	}

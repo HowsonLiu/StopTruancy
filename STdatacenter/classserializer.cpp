@@ -166,6 +166,5 @@ int ClassSerializer::Train()
 	cv::Ptr<cv::face::EigenFaceRecognizer> model = cv::face::EigenFaceRecognizer::create();
 	model->train(mats, names);
 	model->write(m_xmlPath.toStdString());
-	int res = model->predict(mats[0]);
 	return CS_OK;
 }
