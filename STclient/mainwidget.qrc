@@ -17,5 +17,6 @@
     <qresource prefix="/Class">
         <file>Resources/class-add.png</file>
         <file>Resources/class-delete.png</file>
+        <file>Resources/refresh.png</file>
     </qresource>
 </RCC>

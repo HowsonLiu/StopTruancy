@@ -16,6 +16,9 @@ private:
 	QString m_defaultName;
 
 	QLabel* m_nameLabel;
+	QPushButton* m_trainButton;
+	QLabel* m_trainLabel;
+	QLabel* m_addLessonLabel;
 	QPushButton* m_addLessonButton;
 	QListView* m_lessonList;
 	QTreeView* m_attendanceList;

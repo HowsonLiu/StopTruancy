@@ -6,7 +6,7 @@
 #include <QTreeView>
 #include <QLabel>
 #include <QPushButton>
-#include <QVBoxLayout>
+#include <QLayout>
 #include <QListView>
 
 ClassWidget::ClassWidget(QWidget *parent)
@@ -16,6 +16,9 @@ ClassWidget::ClassWidget(QWidget *parent)
 {
 	// create
 	m_nameLabel = new QLabel(this);
+	m_trainButton = new QPushButton(this);
+	m_trainLabel = new QLabel(this);
+	m_addLessonLabel = new QLabel(this);
 	m_addLessonButton = new QPushButton(this);
 	m_lessonList = new QListView(this);
 	m_attendanceList = new QTreeView(this);
@@ -24,8 +27,17 @@ ClassWidget::ClassWidget(QWidget *parent)
 
 	// layout
 	QVBoxLayout* layout = new QVBoxLayout(this);
-	layout->addWidget(m_nameLabel);
-	layout->addWidget(m_addLessonButton, 0, Qt::AlignRight);
+	QHBoxLayout* topLayout = new QHBoxLayout(this);
+	topLayout->addWidget(m_nameLabel);
+	topLayout->addWidget(m_trainButton);
+	topLayout->addWidget(m_trainLabel);
+	topLayout->addStretch();
+	layout->addLayout(topLayout);
+	QHBoxLayout* midLayout = new QHBoxLayout(this);
+	midLayout->addStretch();
+	midLayout->addWidget(m_addLessonLabel);
+	midLayout->addWidget(m_addLessonButton);
+	layout->addLayout(midLayout);
 	layout->addWidget(m_lessonList);
 	layout->addWidget(m_attendanceList);
 	setLayout(layout);
@@ -33,7 +45,15 @@ ClassWidget::ClassWidget(QWidget *parent)
 	// name
 	m_nameLabel->setFont(QFont(g_defaultFont, g_defaultTitleFontSize, g_defaultTitleFontWeight));
 
-	// button
+	// train
+	m_trainButton->setStyleSheet("border-image:url(:/Class/Resources/refresh.png)");
+	m_trainButton->setFixedSize(QSize(20, 20));
+	m_trainLabel->setFont(QFont(g_defaultFont, g_defaultTipFontSize, g_defaultTitleFontWeight));
+	m_trainLabel->setText("Train!!");
+
+	// add lesson
+	m_addLessonLabel->setFont(QFont(g_defaultFont, g_defaultTipFontSize, g_defaultTitleFontWeight));
+	m_addLessonLabel->setText("Add lessons");
 	m_addLessonButton->setStyleSheet("border-image:url(:/Student/Resources/add.png);");
 	m_addLessonButton->setFixedSize(QSize(20, 20));
 
