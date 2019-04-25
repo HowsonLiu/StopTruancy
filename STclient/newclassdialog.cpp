@@ -1,9 +1,11 @@
 #include "newclassdialog.h"
+#include "Resources.h"
 #include <QLineEdit>
 #include <QListView>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QFont>
 
 NewClassDialog::NewClassDialog(QWidget* parent)
 	: QDialog(parent)
@@ -15,7 +17,7 @@ NewClassDialog::NewClassDialog(QWidget* parent)
 	m_listView = new QListView(this);
 
 	// name edit
-
+	//QFont nameFont(g_defaultFont, )
 
 	// search
 	QPushButton* searchButton = new QPushButton(this);

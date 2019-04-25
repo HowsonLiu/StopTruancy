@@ -44,7 +44,7 @@ StudentWidget::StudentWidget(QWidget *parent)
 	setLayout(layout);
 
 	// name
-	m_nameLabel->setFont(QFont(g_defaultFont, 20, 75));
+	m_nameLabel->setFont(QFont(g_defaultFont, g_defaultTitleFontSize, g_defaultTitleFontWeight));
 
 	// optimize
 	m_optimizeLabel->setFont(QFont(g_defaultFont, 10, 75));

@@ -31,7 +31,7 @@ ClassWidget::ClassWidget(QWidget *parent)
 	setLayout(layout);
 
 	// name
-	m_nameLabel->setFont(QFont(g_defaultFont, 20, 75));
+	m_nameLabel->setFont(QFont(g_defaultFont, g_defaultTitleFontSize, g_defaultTitleFontWeight));
 
 	// button
 	m_addLessonButton->setStyleSheet("border-image:url(:/Student/Resources/add.png);");
