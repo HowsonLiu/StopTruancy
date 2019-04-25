@@ -1,4 +1,5 @@
 #include "studentwidget.h"
+#include "Resources.h"
 #include "mvd.h"
 #include "facecollectionwidget.h"
 #include "../STdatacenter/studentserializer.h"
@@ -43,10 +44,10 @@ StudentWidget::StudentWidget(QWidget *parent)
 	setLayout(layout);
 
 	// name
-	m_nameLabel->setFont(QFont("Microsoft YaHei", 20, 75));
+	m_nameLabel->setFont(QFont(g_defaultFont, 20, 75));
 
 	// optimize
-	m_optimizeLabel->setFont(QFont("Microsoft YaHei", 10, 75));
+	m_optimizeLabel->setFont(QFont(g_defaultFont, 10, 75));
 	m_optimizeLabel->setText("Recognition is not accurate? Let's optimize!");
 	m_optimizeButton->setStyleSheet("border-image:url(:/Student/Resources/add.png);");
 	m_optimizeButton->setFixedSize(QSize(20, 20));

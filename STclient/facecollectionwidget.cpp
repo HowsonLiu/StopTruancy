@@ -1,4 +1,5 @@
 #include "facecollectionwidget.h"
+#include "Resources.h"
 #include "../STdatacenter/studentserializer.h"
 #include <QTimer>
 #include <QMessageBox>
@@ -34,7 +35,7 @@ FaceCollectionDialog::FaceCollectionDialog(std::vector<cv::Mat>* faceInfos, QWid
 	setLayout(layout);
 
 	// label
-	m_label->setFont(QFont("Microsoft YaHei", 20, 75));
+	m_label->setFont(QFont(g_defaultFont, 20, 75));
 	m_label->setStyleSheet("color:green");
 
 	connect(m_cameraWidget, &CameraWidget::sigCaptureError, this, &FaceCollectionDialog::done);
@@ -166,7 +167,7 @@ NewStudentDialog::NewStudentDialog(QString* name, QWidget* parent)
 	setLayout(layout);
 
 	// name label
-	m_nameLabel->setFont(QFont("Microsoft YaHei", 20, 75));
+	m_nameLabel->setFont(QFont(g_defaultFont, 20, 75));
 	m_nameLabel->setText("Student's name");
 
 	// button
@@ -174,7 +175,7 @@ NewStudentDialog::NewStudentDialog(QString* name, QWidget* parent)
 	m_button->setFixedSize(15, 15);
 
 	// tips label
-	m_tipLabel->setFont(QFont("Microsoft YaHei", 7, 75));
+	m_tipLabel->setFont(QFont(g_defaultFont, 7, 75));
 	m_tipLabel->setText("Already exists name");
 	m_tipLabel->setStyleSheet("color:red");
 

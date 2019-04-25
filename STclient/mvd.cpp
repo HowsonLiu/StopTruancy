@@ -1,4 +1,5 @@
 #include "mvd.h"
+#include "Resources.h"
 #include "../STdatacenter/datacenter.h"
 #include <vector>
 #include <QIcon>
@@ -286,7 +287,7 @@ void DefaultStuAndClsDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 
 		QRectF textRect(option.rect.left() + 5, option.rect.top(), option.rect.width(), option.rect.height());
 		painter->setPen(QPen(Qt::black));
-		painter->setFont(QFont("Microsoft Yahei", 20));
+		painter->setFont(QFont(g_defaultFont, 20));
 		painter->drawText(textRect, name);
 	}
 }

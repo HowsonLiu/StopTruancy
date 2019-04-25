@@ -57,6 +57,9 @@
     <ClCompile Include="mvd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="newclassdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="mainwidget.h">
@@ -80,6 +83,9 @@
     <QtMoc Include="mvd.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="newclassdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="mainwidget.qrc">
@@ -88,6 +94,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basestruct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

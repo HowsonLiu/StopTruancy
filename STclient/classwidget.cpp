@@ -1,4 +1,5 @@
 #include "classwidget.h"
+#include "Resources.h"
 #include "mvd.h"
 #include <QVBoxLayout>
 #include <QListView>
@@ -30,7 +31,7 @@ ClassWidget::ClassWidget(QWidget *parent)
 	setLayout(layout);
 
 	// name
-	m_nameLabel->setFont(QFont("Microsoft YaHei", 20, 75));
+	m_nameLabel->setFont(QFont(g_defaultFont, 20, 75));
 
 	// button
 	m_addLessonButton->setStyleSheet("border-image:url(:/Student/Resources/add.png);");
