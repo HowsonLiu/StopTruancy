@@ -71,6 +71,7 @@ NewLessonDialog::NewLessonDialog(const QString& classname, QImage* image, QWidge
 
 	Predict();
 	m_numLabel->setText(QString::number(m_faceRect.size()));
+	SetUp();
 }
 
 
@@ -106,7 +107,7 @@ void NewLessonDialog::Init()
 
 void NewLessonDialog::Predict()
 {
-	m_originMat = QImage2Mat(*m_originPhoto);
+	m_originMat = QImage2MatEx(*m_originPhoto);
 	cv::cvtColor(m_originMat, m_gray, CV_BGR2GRAY);
 	cv::equalizeHist(m_gray, m_gray);
 	m_cascade.detectMultiScale(m_gray, m_faceRect, 1.1f, 3, CV_HAAR_SCALE_IMAGE, cv::Size(100, 100));
@@ -132,6 +133,18 @@ void NewLessonDialog::Predict()
 		}
 	}
 	m_customResult = m_originResult;
+}
+
+void NewLessonDialog::SetUp()
+{
+	if (m_faceRect.size() <= 0) {
+		m_forwardButton->setEnabled(false);
+		m_backButton->setEnabled(false);
+		m_listView->setSelectionMode(QListView::NoSelection);
+	}
+	else {
+		RectangleIndexFace(0);
+	}
 }
 
 void NewLessonDialog::RectangleIndexFace(int index)

@@ -51,6 +51,7 @@ public:
 private:
 	void Init();
 	void Predict();
+	void SetUp();
 	void RectangleIndexFace(int);
 };
 

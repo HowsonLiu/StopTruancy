@@ -85,5 +85,8 @@ public slots:
 	void onEnterOrButtonClick();
 };
 
+// cv里面默认BGR， QImage里面默认RGB
 QImage Mat2QImage(const cv::Mat& src);
 cv::Mat QImage2Mat(const QImage& src);
+QImage Mat2QImageEx(const cv::Mat& mat);
+cv::Mat QImage2MatEx(const QImage& image);
