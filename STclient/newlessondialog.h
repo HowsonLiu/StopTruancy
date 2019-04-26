@@ -30,6 +30,7 @@ private:
 
 	QImage* m_originPhoto;
 	QString m_className;
+	QList<QString> m_stuList;
 	int m_errorCode;
 
 	cv::Mat m_originMat;
@@ -52,6 +53,11 @@ private:
 	void Init();
 	void Predict();
 	void SetUp();
-	void RectangleIndexFace(int);
+	void RectangleIndexFace();
+	void AutoSelectStudent();
+	bool SaveChanges();
+	void onForwardButtonClicked();
+	void onBackButtonClicked();
+	void onOkButtonClicked();
 };
 

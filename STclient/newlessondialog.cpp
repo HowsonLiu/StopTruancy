@@ -9,6 +9,7 @@
 #include <QListView>
 #include <QPushButton>
 #include <QLayout>
+#include <QMessageBox>
 #include <QDebug>
 
 NewLessonDialog::NewLessonDialog(const QString& classname, QImage* image, QWidget* parent)
@@ -16,6 +17,7 @@ NewLessonDialog::NewLessonDialog(const QString& classname, QImage* image, QWidge
 	, m_className(classname)
 	, m_originPhoto(image)
 	, m_errorCode(NEW_LESSON_OK)
+	, m_curIndex(0)
 {
 	// create
 	m_photoLabel = new QLabel(this);
@@ -52,12 +54,12 @@ NewLessonDialog::NewLessonDialog(const QString& classname, QImage* image, QWidge
 	m_photoLabel->setPixmap(QPixmap::fromImage(*m_originPhoto));
 
 	// student list
-	QList<QString> stuList;
-	ClassSerializer(m_className).GetStudents(&stuList);
-	m_studentsModel->SetStudents(stuList);
+	ClassSerializer(m_className).GetStudents(&m_stuList);
+	m_studentsModel->SetStudents(m_stuList);
 	m_listView->setModel(m_studentsModel);
 	DefaultStuAndClsDelegate* defaultDelegate = new DefaultStuAndClsDelegate(this);
 	m_listView->setItemDelegate(defaultDelegate);
+	m_listView->setSelectionMode(QListView::MultiSelection);
 
 	// num label
 	m_numLabel->setFont(QFont(g_defaultFont, 30, g_defaultTitleFontWeight));
@@ -72,6 +74,9 @@ NewLessonDialog::NewLessonDialog(const QString& classname, QImage* image, QWidge
 	Predict();
 	m_numLabel->setText(QString::number(m_faceRect.size()));
 	SetUp();
+
+	connect(m_forwardButton, &QPushButton::clicked, this, &NewLessonDialog::onForwardButtonClicked);
+	connect(m_backButton, &QPushButton::clicked, this, &NewLessonDialog::onBackButtonClicked);
 }
 
 
@@ -143,15 +148,71 @@ void NewLessonDialog::SetUp()
 		m_listView->setSelectionMode(QListView::NoSelection);
 	}
 	else {
-		RectangleIndexFace(0);
+		RectangleIndexFace();
 	}
 }
 
-void NewLessonDialog::RectangleIndexFace(int index)
+void NewLessonDialog::RectangleIndexFace()
 {
-	if (index < 0 || index >= m_faceRect.size()) return;
-	cv::Mat showMat = m_originMat;
-	cv::rectangle(showMat, m_faceRect[index], cv::Scalar(0, 255, 0), 1, 8, 0);
+	if (m_curIndex < 0 || m_curIndex >= m_faceRect.size()) return;
+	cv::Mat showMat = m_originMat.clone();
+	cv::rectangle(showMat, m_faceRect[m_curIndex], cv::Scalar(0, 255, 0), 1, 8, 0);
 	*m_showPhoto = Mat2QImage(showMat);
 	m_photoLabel->setPixmap(QPixmap::fromImage(*m_showPhoto));
+}
+
+void NewLessonDialog::AutoSelectStudent()
+{
+	m_listView->clearSelection();
+	if (m_customResult[m_curIndex] == -1) return;
+	QString stuName = QString::number(m_customResult[m_curIndex]);
+	int row = m_stuList.indexOf(stuName);
+	QModelIndex index = m_studentsModel->index(row, 0, QModelIndex());
+	m_listView->setCurrentIndex(index);
+}
+
+bool NewLessonDialog::SaveChanges()
+{
+	QModelIndexList selectList = m_listView->selectionModel()->selectedIndexes();
+	if (selectList.size() <= 0) {
+		m_customResult[m_curIndex] = -1;
+	}
+	else if (selectList.size() == 1) {
+		QString stuName = selectList[0].data(Qt::DisplayRole).toString();
+		m_customResult[m_curIndex] = stuName.toInt();
+	}
+	else {
+		QMessageBox::critical(this, "Error", "A face can not belong to 2 person");
+		return false;
+	}
+	return true;
+}
+
+void NewLessonDialog::onForwardButtonClicked()
+{
+	if (!SaveChanges()) return;
+	if (m_curIndex >= m_faceRect.size() - 1) {
+		m_forwardButton->setEnabled(false);
+		return;
+	}
+	if (++m_curIndex > 0) m_backButton->setEnabled(true);
+	RectangleIndexFace();
+	AutoSelectStudent();
+}
+
+void NewLessonDialog::onBackButtonClicked()
+{
+	if (!SaveChanges()) return;
+	if (m_curIndex <= 0) {
+		m_backButton->setEnabled(false);
+		return;
+	}
+	if (--m_curIndex < m_faceRect.size() - 1) m_forwardButton->setEnabled(true);
+	RectangleIndexFace();
+	AutoSelectStudent();
+}
+
+void NewLessonDialog::onOkButtonClicked()
+{
+	if (!SaveChanges()) return;
 }
