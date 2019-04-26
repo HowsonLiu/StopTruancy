@@ -150,6 +150,7 @@ void ClassWidget::onAddLessonButtonClick()
 {
 	QString path = QFileDialog::getOpenFileName(this, "Upload a lesson photo"
 		, "/", "Images(*.jpg *.png)");
+	if (path.isEmpty()) return;
 	QImage photo;
 	photo.load(path);
 	NewLessonDialog newLessonDialog(m_class->getName(), &photo, this);

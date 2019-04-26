@@ -8,28 +8,40 @@
 #define NEW_LESSON_ERROR_DETECTION_XML_ERROR -3
 #define NEW_LESSON_ERROR_TRAIN_ERROR -4
 
+#define LESSON_PHOTO_MAX_WIDTH 1500
+#define LESSON_PHTOT_MAX_HEIGHT 900
+
 class QLabel;
 class QListView;
 class QPushButton;
 class QImage;
+class StudentsModel;
 class NewLessonDialog : public QDialog
 {
 	Q_OBJECT
 private:
 	QLabel* m_photoLabel;
 	QListView* m_listView;
+	StudentsModel* m_studentsModel;
 	QLabel* m_numLabel;
 	QPushButton* m_forwardButton;
 	QPushButton* m_backButton;
 	QPushButton* m_okButton;
 
-	QImage* m_photo;
+	QImage* m_originPhoto;
 	QString m_className;
-	cv::CascadeClassifier m_cascade;
-	std::vector<cv::Rect> m_faceRect;
-	cv::Ptr<cv::face::EigenFaceRecognizer> m_modelPCA;
-
 	int m_errorCode;
+
+	cv::Mat m_originMat;
+	cv::Mat m_gray;
+	cv::CascadeClassifier m_cascade;
+	cv::Ptr<cv::face::EigenFaceRecognizer> m_modelPCA;
+	std::vector<cv::Rect> m_faceRect;
+	std::vector<int> m_originResult;
+	std::vector<int> m_customResult;
+
+	int m_curIndex;
+	QImage* m_showPhoto;
 
 public:
 	NewLessonDialog(const QString&, QImage*, QWidget* parent = nullptr);
@@ -38,5 +50,7 @@ public:
 
 private:
 	void Init();
+	void Predict();
+	void RectangleIndexFace(int);
 };
 
