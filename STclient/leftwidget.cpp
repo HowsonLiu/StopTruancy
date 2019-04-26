@@ -90,15 +90,24 @@ void LeftWidget::onAddButtonClick()
 	if (m_comboBox->currentIndex() == 0) {
 		std::vector<cv::Mat> faceInfos;
 		FaceCollectionDialog faceCollectionWidget(&faceInfos, this);
-		int res = faceCollectionWidget.exec();
-		if (res == QDialog::Accepted) {
-			QString name;
-			NewStudentDialog newStudentDialog(&name, this);
-			if (newStudentDialog.exec() == QDialog::Accepted) AddStudent(name, faceInfos);
+		int errorCode = faceCollectionWidget.getErrorCode();
+		if (errorCode == FACE_COLLECTION_DIALOG_INVALID_PARAM) {
+			QMessageBox::critical(this, "Source Code Error", "Invalid param");
 		}
-		else if (res == FACECOLLECTIONDIALOG_ERROR_CODE) {
-			QMessageBox::critical(this, "Can not open camera"
-				, "Please check whether the computer contains a camera or whether the camera is occupied by other applications");
+		else if (errorCode == CAMERA_WIDGET_FACE_DETECTION_XML_ERROR) {
+			QMessageBox::critical(this, "Face Detection Error", "Can not find the detection xml");
+		}
+		else if (errorCode == FACE_COLLECTION_DIALOG_OK) {
+			int res = faceCollectionWidget.exec();
+			if (res == QDialog::Accepted) {
+				QString name;
+				NewStudentDialog newStudentDialog(&name, this);
+				if (newStudentDialog.exec() == QDialog::Accepted) AddStudent(name, faceInfos);
+			}
+			else if (res == CAMERA_WIDGET_RUNTIME_ERROR) {
+				QMessageBox::critical(this, "Can not open camera"
+					, "Please check whether the computer contains a camera or whether the camera is occupied by other applications");
+			}
 		}
 	}
 	else if (m_comboBox->currentIndex() == 1) {

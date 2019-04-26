@@ -153,5 +153,22 @@ void ClassWidget::onAddLessonButtonClick()
 	QImage photo;
 	photo.load(path);
 	NewLessonDialog newLessonDialog(m_class->getName(), &photo, this);
-	int res = newLessonDialog.exec();
+	int errorCode = newLessonDialog.getErrorCode();
+	if (errorCode == NEW_LESSON_ERROR_CLASS_NOT_EXIST) {
+		QMessageBox::critical(this, "Error", "This class does't exist any more");
+	}
+	else if (errorCode == NEW_LESSON_ERROR_IMAGE_INVALID) {
+		QMessageBox::critical(this, "Error", "The image has something wrong");
+	}
+	else if (errorCode == NEW_LESSON_ERROR_DETECTION_XML_ERROR) {
+		QMessageBox::critical(this, "Error", "Face dection xml is wrong");
+	}
+	else if (errorCode == NEW_LESSON_ERROR_TRAIN_ERROR) {
+		QMessageBox::critical(this, "Error", "Train error");
+	}
+	else if (errorCode == NEW_LESSON_OK) {
+		if (newLessonDialog.exec() == QDialog::Accepted) {
+
+		}
+	}
 }

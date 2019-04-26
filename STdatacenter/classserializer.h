@@ -31,6 +31,7 @@ private:
 public:
 	ClassSerializer(const QString&);
 	~ClassSerializer();
+	inline QString getXmlPath() const { return m_xmlPath; }
 	int Init();
 	bool Exist() const;
 	bool Delete();

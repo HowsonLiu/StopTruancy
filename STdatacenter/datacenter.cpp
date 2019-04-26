@@ -8,6 +8,7 @@ DataCenter::DataCenter()
 	, m_allStudentStsPath(m_rootPath + "\\student.sts")
 	, m_classPath(m_rootPath + "\\class")
 	, m_studentPath(m_rootPath + "\\student")
+	, m_faceDetectionXmlPath(m_rootPath + "\\face_detection.xml")
 {
 }
 
@@ -35,6 +36,11 @@ QString DataCenter::getClassPath() const
 QString DataCenter::getStudentPath() const
 {
 	return m_studentPath;
+}
+
+QString DataCenter::getFaceDetectionXmlPath() const
+{
+	return m_faceDetectionXmlPath;
 }
 
 std::vector<QString> DataCenter::getAllClassName() const

@@ -1,4 +1,6 @@
 #include "newlessondialog.h"
+#include "../STdatacenter/classserializer.h"
+#include "../STdatacenter/datacenter.h"
 #include <QLabel>
 #include <QListView>
 #include <QPushButton>
@@ -8,6 +10,7 @@ NewLessonDialog::NewLessonDialog(const QString& classname, QImage* image, QWidge
 	: QDialog(parent)
 	, m_className(classname)
 	, m_photo(image)
+	, m_errorCode(NEW_LESSON_OK)
 {
 	// create
 	m_photoLabel = new QLabel(this);
@@ -31,10 +34,36 @@ NewLessonDialog::NewLessonDialog(const QString& classname, QImage* image, QWidge
 	layout->addLayout(rightLayout);
 	setLayout(layout);
 
-	
+	Init();
 }
 
 
 NewLessonDialog::~NewLessonDialog()
 {
+}
+
+void NewLessonDialog::Init()
+{
+	ClassSerializer serializer(m_className);
+	if (!serializer.Exist()) {
+		m_errorCode = NEW_LESSON_ERROR_CLASS_NOT_EXIST;
+		return;
+	}
+	if (!m_photo || m_photo->isNull()) {
+		m_errorCode = NEW_LESSON_ERROR_IMAGE_INVALID;
+		return;
+	}
+	if (!m_cascade.load(DATA_CENTER_INSTANCE->getFaceDetectionXmlPath().toStdString())) {
+		m_errorCode = NEW_LESSON_ERROR_DETECTION_XML_ERROR;
+		return;
+	}
+	try {
+		m_modelPCA = cv::face::EigenFaceRecognizer::create();
+		m_modelPCA->read(serializer.getXmlPath().toStdString());	
+	}
+	catch (std::exception& e) {
+		m_errorCode = NEW_LESSON_ERROR_TRAIN_ERROR;
+		return;
+	}
+	m_errorCode = NEW_LESSON_OK;
 }

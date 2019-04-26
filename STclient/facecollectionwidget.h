@@ -7,7 +7,12 @@
 #define COLLECT_NUMBER 5
 #define SNAP_INTERVAL 2000
 #define PAINT_INTERVAL 30
-#define FACECOLLECTIONDIALOG_ERROR_CODE 2
+
+#define FACE_COLLECTION_DIALOG_OK 0
+#define FACE_COLLECTION_DIALOG_INVALID_PARAM -1
+#define CAMERA_WIDGET_OK 0
+#define CAMERA_WIDGET_FACE_DETECTION_XML_ERROR -2
+#define CAMERA_WIDGET_RUNTIME_ERROR -3
 
 class QTimer;
 class CameraWidget;
@@ -23,10 +28,12 @@ private:
 	int m_totalNum;
 	int m_curNum;
 	std::vector<cv::Mat>* m_faceInfos;
+	int m_errorCode;
 
 public:
 	FaceCollectionDialog(std::vector<cv::Mat>* faceInfos, QWidget* parent = nullptr);
 	~FaceCollectionDialog();
+	inline int getErrorCode() const { return m_errorCode; }
 	void UpdateLabel();
 
 public slots:
@@ -41,7 +48,7 @@ private:
 	cv::Mat m_frame;
 	cv::Mat m_gray;
 	QTimer* m_timer;
-	bool m_bInitError;
+	int m_errorCode;
 	cv::CascadeClassifier m_cascade;
 	std::vector<cv::Rect> m_faceRect;
 
@@ -51,10 +58,11 @@ protected:
 public:
 	CameraWidget(QWidget* parent = nullptr);
 	~CameraWidget();
+	inline int getErrorCode() const { return m_errorCode; }
 	void GetCurrentFace(cv::Mat*);
 
 signals:
-	void sigCaptureError(int);
+	void sigRuntimeError(int);
 };
 
 class QLineEdit;

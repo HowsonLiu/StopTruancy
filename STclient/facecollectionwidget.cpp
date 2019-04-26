@@ -1,6 +1,7 @@
 #include "facecollectionwidget.h"
 #include "Resources.h"
 #include "../STdatacenter/studentserializer.h"
+#include "../STdatacenter/datacenter.h"
 #include <QTimer>
 #include <QMessageBox>
 #include <QPainter>
@@ -38,11 +39,17 @@ FaceCollectionDialog::FaceCollectionDialog(std::vector<cv::Mat>* faceInfos, QWid
 	m_label->setFont(QFont(g_defaultFont, 20, 75));
 	m_label->setStyleSheet("color:green");
 
-	connect(m_cameraWidget, &CameraWidget::sigCaptureError, this, &FaceCollectionDialog::done);
+	connect(m_cameraWidget, &CameraWidget::sigRuntimeError, this, &FaceCollectionDialog::done);
 	connect(m_timer, &QTimer::timeout, this, &FaceCollectionDialog::onSnap);
 
-	// init
-	if (!m_faceInfos) reject();
+	// error check
+	if (!m_faceInfos) {
+		m_errorCode = FACE_COLLECTION_DIALOG_INVALID_PARAM;
+		return;
+	}
+	m_errorCode = m_cameraWidget->getErrorCode();
+	if (m_errorCode != CAMERA_WIDGET_OK) return;
+
 	UpdateLabel();
 	m_timer->start();
 }
@@ -76,7 +83,7 @@ void FaceCollectionDialog::onSnap()
 
 CameraWidget::CameraWidget(QWidget* parent)
 	: QWidget(parent)
-	, m_bInitError(false)
+	, m_errorCode(CAMERA_WIDGET_OK)
 {
 	// create
 	m_timer = new QTimer(this);
@@ -86,12 +93,11 @@ CameraWidget::CameraWidget(QWidget* parent)
 
 	// init
 	m_cap.open(0);
-	m_cascade.load("D:\\Programming_Project\\OpenCV\\StopTruancy\\x64\\Debug\\haarcascade_frontalface_alt.xml");
+	m_cascade.load(DATA_CENTER_INSTANCE->getFaceDetectionXmlPath().toStdString());
 	if (m_cap.isOpened() && !m_cascade.empty()) 
 		m_timer->start();
 	else {
-		m_bInitError = true;
-		emit sigCaptureError(FACECOLLECTIONDIALOG_ERROR_CODE);
+		m_errorCode = CAMERA_WIDGET_FACE_DETECTION_XML_ERROR;
 	}
 }
 
@@ -109,7 +115,7 @@ void CameraWidget::GetCurrentFace(cv::Mat* mat)
 
 void CameraWidget::paintEvent(QPaintEvent* event)
 {
-	if(!m_bInitError) m_cap >> m_frame;
+	if(!m_errorCode) m_cap >> m_frame;
 	QPainter painter(this);
 	if (!m_frame.empty()) {
 		cv::cvtColor(m_frame, m_gray, CV_BGR2GRAY);	// 转灰度图
@@ -122,9 +128,9 @@ void CameraWidget::paintEvent(QPaintEvent* event)
 		painter.drawImage(this->rect(), img);
 	}
 	else {
-		m_bInitError = true;	// 这种情况是摄像头被占用
+		m_errorCode = CAMERA_WIDGET_RUNTIME_ERROR;	// 这种情况是摄像头被占用
 		painter.drawText(this->width() / 2, this->height() / 2, "Something error");
-		emit sigCaptureError(FACECOLLECTIONDIALOG_ERROR_CODE);
+		emit sigRuntimeError(CAMERA_WIDGET_RUNTIME_ERROR);
 	}
 }
 

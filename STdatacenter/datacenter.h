@@ -12,6 +12,7 @@ private:
 	const QString m_allStudentStsPath;
 	const QString m_classPath;
 	const QString m_studentPath;
+	const QString m_faceDetectionXmlPath;
 
 private:
 	DataCenter();
@@ -22,6 +23,7 @@ public:
 	QString getRootPath() const;
 	QString getClassPath() const;
 	QString getStudentPath() const;
+	QString getFaceDetectionXmlPath() const;
 	std::vector<QString> getAllClassName() const;
 	bool addClassName(const QString& name);
 	bool delClassName(const QString& name);
