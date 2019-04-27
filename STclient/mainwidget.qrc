@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/Network">
+        <file>Resources/loading.gif</file>
+        <file>Resources/offline.png</file>
+    </qresource>
+    <qresource prefix="/LeftWidget">
+        <file>Resources/logo.png</file>
+        <file>Resources/search.png</file>
+    </qresource>
+    <qresource prefix="/Student">
+        <file>Resources/defalut_student_photo.png</file>
+        <file>Resources/add.png</file>
+        <file>Resources/user-add.png</file>
+        <file>Resources/user-delete.png</file>
+        <file>Resources/tick.png</file>
+    </qresource>
+    <qresource prefix="/Class">
+        <file>Resources/class-add.png</file>
+        <file>Resources/class-delete.png</file>
+        <file>Resources/refresh.png</file>
+        <file>Resources/back.png</file>
+        <file>Resources/forward.png</file>
+    </qresource>
+</RCC>
