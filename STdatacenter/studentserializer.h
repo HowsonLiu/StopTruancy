@@ -22,6 +22,7 @@ public:
 	bool Exist() const;
 	bool canDelete() const;
 	bool Init();
+	void WriteImage(const cv::Mat&);
 	void WriteImages(const std::vector<cv::Mat>&);
 	void ReadOriginImages(std::vector<cv::Mat>*);
 	void ReadTrainImages(std::vector<cv::Mat>*);

@@ -128,6 +128,19 @@ bool StudentSerializer::Init()
 	return dir.exists(m_path) || dir.mkpath(m_path) && dir.mkpath(m_faceInfoPath);
 }
 
+void StudentSerializer::WriteImage(const cv::Mat& mat)
+{
+	QDir dir(m_faceInfoPath);
+	if (!dir.exists() && !dir.mkpath(m_faceInfoPath)) return;
+	QStringList filters;
+	filters << "*.png" << "*.jpg" << "*.pgm";
+	dir.setNameFilters(filters);
+	QStringList imageNameList = dir.entryList();
+	int nameIndex = imageNameList.size();
+	QString name = m_faceInfoPath + QString("\\%1.jpg").arg(QString::number(nameIndex));
+	cv::imwrite(name.toStdString(), mat);
+}
+
 bool StudentSerializer::Delete()
 {
 	DATA_CENTER_INSTANCE->delStudentName(m_name);

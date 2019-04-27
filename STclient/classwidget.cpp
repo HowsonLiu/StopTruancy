@@ -169,7 +169,7 @@ void ClassWidget::onAddLessonButtonClick()
 	}
 	else if (errorCode == NEW_LESSON_OK) {
 		if (newLessonDialog.exec() == QDialog::Accepted) {
-
+			emit sigSelectClass(m_class->getName());
 		}
 	}
 }

@@ -57,6 +57,8 @@ private:
 	void AutoSelectStudent();
 	void UpdateNumLabel();
 	bool SaveChanges();
+
+private slots:
 	void onForwardButtonClicked();
 	void onBackButtonClicked();
 	void onOkButtonClicked();

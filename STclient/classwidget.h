@@ -32,6 +32,7 @@ public:
 	QString GetCurName() const;
 
 signals:
+	void sigSelectClass(const QString&);
 	void sigSelectStudent(const QString&);
 
 public slots:

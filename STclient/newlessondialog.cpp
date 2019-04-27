@@ -10,6 +10,7 @@
 #include <QPushButton>
 #include <QLayout>
 #include <QMessageBox>
+#include <QDateTime>
 #include <QDebug>
 
 NewLessonDialog::NewLessonDialog(const QString& classname, QImage* image, QWidget* parent)
@@ -77,6 +78,7 @@ NewLessonDialog::NewLessonDialog(const QString& classname, QImage* image, QWidge
 
 	connect(m_forwardButton, &QPushButton::clicked, this, &NewLessonDialog::onForwardButtonClicked);
 	connect(m_backButton, &QPushButton::clicked, this, &NewLessonDialog::onBackButtonClicked);
+	connect(m_okButton, &QPushButton::clicked, this, &NewLessonDialog::onOkButtonClicked);
 }
 
 
@@ -228,4 +230,27 @@ void NewLessonDialog::onBackButtonClicked()
 void NewLessonDialog::onOkButtonClicked()
 {
 	if (!SaveChanges()) return;
+	std::vector<int> tmp(m_customResult);
+	std::sort(tmp.begin(), tmp.end());
+	for (int i = 0; i < tmp.size() - 1; ++i) {
+		if (tmp[i] <= 0) continue;
+		if (tmp[i] == tmp[i + 1]) {
+			QMessageBox::critical(this, "Error", "A person can not have 2 faces");
+			return;
+		}
+	}
+	std::vector<QString> attendStudents;
+	for (int i = 0; i < m_customResult.size(); ++i) {
+		if (m_customResult[i] <= 0) continue;
+		QString stuName = QString::number(m_customResult[i]);
+		attendStudents.push_back(stuName);
+		if (m_customResult[i] != m_originResult[i]) {
+			StudentSerializer serializer(stuName);
+			if (serializer.Exist()) serializer.WriteImage(m_originMat(m_faceRect[i]));	// 对不准确的人脸进行优化处理
+		}
+	}
+	QString photoName = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss");
+	ClassSerializer clsSerializer(m_className);
+	clsSerializer.AddLesson(m_originMat, photoName + ".jpg", attendStudents);
+	accept();
 }
