@@ -55,6 +55,7 @@ private:
 	void SetUp();
 	void RectangleIndexFace();
 	void AutoSelectStudent();
+	void UpdateNumLabel();
 	bool SaveChanges();
 	void onForwardButtonClicked();
 	void onBackButtonClicked();

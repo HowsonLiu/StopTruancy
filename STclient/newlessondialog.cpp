@@ -149,6 +149,8 @@ void NewLessonDialog::SetUp()
 	}
 	else {
 		RectangleIndexFace();
+		AutoSelectStudent();
+		UpdateNumLabel();
 	}
 }
 
@@ -169,6 +171,15 @@ void NewLessonDialog::AutoSelectStudent()
 	int row = m_stuList.indexOf(stuName);
 	QModelIndex index = m_studentsModel->index(row, 0, QModelIndex());
 	m_listView->setCurrentIndex(index);
+}
+
+void NewLessonDialog::UpdateNumLabel()
+{
+	int res = 0;
+	for (int stu : m_customResult) {
+		if (stu > 0) res++;
+	}
+	m_numLabel->setText(QString::number(res));
 }
 
 bool NewLessonDialog::SaveChanges()
@@ -198,6 +209,7 @@ void NewLessonDialog::onForwardButtonClicked()
 	if (++m_curIndex > 0) m_backButton->setEnabled(true);
 	RectangleIndexFace();
 	AutoSelectStudent();
+	UpdateNumLabel();
 }
 
 void NewLessonDialog::onBackButtonClicked()
@@ -210,6 +222,7 @@ void NewLessonDialog::onBackButtonClicked()
 	if (--m_curIndex < m_faceRect.size() - 1) m_forwardButton->setEnabled(true);
 	RectangleIndexFace();
 	AutoSelectStudent();
+	UpdateNumLabel();
 }
 
 void NewLessonDialog::onOkButtonClicked()
