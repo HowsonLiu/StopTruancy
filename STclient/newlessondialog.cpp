@@ -251,6 +251,6 @@ void NewLessonDialog::onOkButtonClicked()
 	}
 	QString photoName = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss");
 	ClassSerializer clsSerializer(m_className);
-	clsSerializer.AddLesson(m_originMat, photoName + ".jpg", attendStudents);
+	clsSerializer.AddLesson(m_originMat, photoName, attendStudents);
 	accept();
 }
