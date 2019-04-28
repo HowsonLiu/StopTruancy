@@ -7,7 +7,7 @@
 #include <QMessageBox>
 #include <QLabel>
 #include <QPushButton>
-#include <QTreeView>
+#include <QListView>
 #include <QBoxLayout>
 
 StudentWidget::StudentWidget(QWidget *parent)
@@ -21,7 +21,7 @@ StudentWidget::StudentWidget(QWidget *parent)
 	m_nameLabel = new QLabel(this);
 	m_optimizeLabel = new QLabel(this);
 	m_optimizeButton = new QPushButton(this);
-	m_attendancesList = new QTreeView(this);
+	m_attendancesList = new QListView(this);
 	m_attendancesModel = new AttendancesModel(this);
 
 	// layout
@@ -54,10 +54,8 @@ StudentWidget::StudentWidget(QWidget *parent)
 
 	// list
 	m_attendancesList->setModel(m_attendancesModel);
-	m_attendancesList->setItemsExpandable(false);	// 不可展开
-	m_attendancesList->setRootIsDecorated(false);	// 隐藏折叠三角形
-	m_attendancesList->setHeaderHidden(true);
-	m_attendancesList->setColumnHidden(STUDENT_NAME_INDEX, true);	// 隐藏学生姓名列
+	ClassAttendanceDelegate* clsAttendanceDelegate = new ClassAttendanceDelegate(this);
+	m_attendancesList->setItemDelegate(clsAttendanceDelegate);
 
 	// background
 	QPalette pal = palette();
@@ -66,7 +64,7 @@ StudentWidget::StudentWidget(QWidget *parent)
 	setPalette(pal);
 
 	connect(m_optimizeButton, &QPushButton::clicked, this, &StudentWidget::onOptimizeButtonClick);
-	connect(m_attendancesList, &QTreeView::doubleClicked, this, &StudentWidget::onItemDoubleClick);
+	connect(m_attendancesList, &QListView::doubleClicked, this, &StudentWidget::onItemDoubleClick);
 }
 
 
@@ -99,8 +97,8 @@ QString StudentWidget::GetCurName() const
 void StudentWidget::onItemDoubleClick(const QModelIndex& index)
 {
 	if (!index.isValid()) return;
-	QModelIndex curIndex = m_attendancesModel->index(index.row(), CLASS_NAME_INDEX, index.parent());	// 需要计算同行class列的index
-	QString clsName = m_attendancesModel->data(curIndex, Qt::DisplayRole).toString();
+	QModelIndex curIndex = m_attendancesModel->index(index.row(), 0, index.parent());
+	QString clsName = m_attendancesModel->data(curIndex, Qt::UserRole + CLASS_NAME_INDEX).toString();
 	emit sigSelectClass(clsName);
 }
 

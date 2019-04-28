@@ -4,7 +4,6 @@
 #include "newlessondialog.h"
 #include <QVBoxLayout>
 #include <QListView>
-#include <QTreeView>
 #include <QLabel>
 #include <QPushButton>
 #include <QLayout>
@@ -24,7 +23,7 @@ ClassWidget::ClassWidget(QWidget *parent)
 	m_addLessonLabel = new QLabel(this);
 	m_addLessonButton = new QPushButton(this);
 	m_lessonList = new QListView(this);
-	m_attendanceList = new QTreeView(this);
+	m_attendanceList = new QListView(this);
 	m_attendanceModel = new AttendancesModel(this);
 	m_lessonsModel = new LessonsModel(this);
 
@@ -69,10 +68,8 @@ ClassWidget::ClassWidget(QWidget *parent)
 
 	// attendance
 	m_attendanceList->setModel(m_attendanceModel);
-	m_attendanceList->setItemsExpandable(false);	// 不可展开
-	m_attendanceList->setRootIsDecorated(false);	// 隐藏折叠三角形
-	m_attendanceList->setHeaderHidden(true);
-	m_attendanceList->setColumnHidden(CLASS_NAME_INDEX, true);	// 隐藏班级名字列
+	StudentAttendanceDelegate* stuAttendanceDelegate = new StudentAttendanceDelegate(this);
+	m_attendanceList->setItemDelegate(stuAttendanceDelegate);
 
 	// background
 	QPalette pal = palette();
@@ -81,7 +78,7 @@ ClassWidget::ClassWidget(QWidget *parent)
 	setPalette(pal);
 
 	connect(m_lessonList, &QListView::doubleClicked, this, &ClassWidget::onLessonItemDoubleClick);
-	connect(m_attendanceList, &QTreeView::doubleClicked, this, &ClassWidget::onAttendanceItemDoubleClick);
+	connect(m_attendanceList, &QListView::doubleClicked, this, &ClassWidget::onAttendanceItemDoubleClick);
 	connect(m_trainButton, &QPushButton::clicked, this, &ClassWidget::onTrainButtonClick);
 	connect(m_addLessonButton, &QPushButton::clicked, this, &ClassWidget::onAddLessonButtonClick);
 }
@@ -125,8 +122,8 @@ void ClassWidget::onLessonItemDoubleClick(const QModelIndex& index)
 void ClassWidget::onAttendanceItemDoubleClick(const QModelIndex& index)
 {
 	if (!index.isValid()) return;
-	QModelIndex curIndex = m_attendanceModel->index(index.row(), STUDENT_NAME_INDEX, index.parent());	// 计算同行stu列的index
-	QString stuName = m_attendanceModel->data(curIndex, Qt::DisplayRole).toString();
+	QModelIndex curIndex = m_attendanceModel->index(index.row(), 0, index.parent());
+	QString stuName = m_attendanceModel->data(curIndex, Qt::UserRole + STUDENT_NAME_INDEX).toString();
 	emit sigSelectStudent(stuName);
 }
 

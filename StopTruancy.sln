@@ -4,8 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "STfacedetection", "STfacedetection\STfacedetection.vcxproj", "{6960A345-3506-4495-9862-E2192115254C}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "STfacecollector", "STfacecollector\STfacecollector.vcxproj", "{06CA0ED0-A99F-4B07-A221-C2CDD43D981B}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "STdatacenter", "STdatacenter\STdatacenter.vcxproj", "{B12702AD-ABFB-343A-A199-8E24837244A3}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "STclient", "STclient\STclient.vcxproj", "{833E6D9F-9C33-4302-93BB-837AA3D04386}"
 EndProject
 Global
@@ -34,12 +37,16 @@ Global
 		{06CA0ED0-A99F-4B07-A221-C2CDD43D981B}.Release|x86.Build.0 = Release|Win32
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|x64.ActiveCfg = Debug|x64
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|x64.Build.0 = Debug|x64
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|x86.ActiveCfg = Debug|x64
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x64.ActiveCfg = Release|x64
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x64.Build.0 = Release|x64
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x86.ActiveCfg = Release|x64
 		{833E6D9F-9C33-4302-93BB-837AA3D04386}.Debug|x64.ActiveCfg = Debug|x64
 		{833E6D9F-9C33-4302-93BB-837AA3D04386}.Debug|x64.Build.0 = Debug|x64
+		{833E6D9F-9C33-4302-93BB-837AA3D04386}.Debug|x86.ActiveCfg = Debug|x64
 		{833E6D9F-9C33-4302-93BB-837AA3D04386}.Release|x64.ActiveCfg = Release|x64
 		{833E6D9F-9C33-4302-93BB-837AA3D04386}.Release|x64.Build.0 = Release|x64
+		{833E6D9F-9C33-4302-93BB-837AA3D04386}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

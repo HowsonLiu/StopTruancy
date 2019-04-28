@@ -194,7 +194,7 @@ int AttendancesModel::rowCount(const QModelIndex& parent) const
 int AttendancesModel::columnCount(const QModelIndex& parent) const
 {
 	Q_UNUSED(parent);
-	return 3;	// 三列，分别是学生名，课堂名，考勤字符串
+	return 1;
 }
 
 QVariant AttendancesModel::data(const QModelIndex& index, int role) const
@@ -205,13 +205,12 @@ QVariant AttendancesModel::data(const QModelIndex& index, int role) const
 	Attendance att = m_attendances.at(row);
 	switch (role)
 	{
-	case Qt::DisplayRole:
-		if (column == STUDENT_NAME_INDEX)
-			return att.studentName;
-		else if (column == CLASS_NAME_INDEX)
-			return att.className;
-		else if (column == ATTENDANCE_INDEX)
-			return QString("%1/%2").arg(att.attendanceNum).arg(att.allNum);
+	case Qt::UserRole + STUDENT_NAME_INDEX:
+		return att.studentName;
+	case Qt::UserRole + CLASS_NAME_INDEX:
+		return att.className;
+	case Qt::UserRole + ATTENDANCE_INDEX:
+		return QString("%1/%2").arg(att.attendanceNum).arg(att.allNum);
 	default:
 		break;
 	}
@@ -317,6 +316,7 @@ void DefaultStuAndClsDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 		painter->setPen(QPen(Qt::black));
 		painter->setFont(QFont(g_defaultFont, 20));
 		painter->drawText(textRect, name);
+		painter->restore();
 	}
 }
 
@@ -379,4 +379,80 @@ QModelIndex StudentsModel::index(int row, int column, const QModelIndex & parent
 	if (row < 0 || column < 0 || column >= columnCount(parent))
 		return QModelIndex();
 	return createIndex(row, column);
+}
+
+StudentAttendanceDelegate::StudentAttendanceDelegate(QObject* parent)
+	:QStyledItemDelegate(parent)
+{
+}
+
+StudentAttendanceDelegate::~StudentAttendanceDelegate()
+{
+}
+
+void StudentAttendanceDelegate::paint(QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index) const
+{
+	if (index.isValid()) {
+		painter->save();
+		QString stuName = index.data(Qt::UserRole + STUDENT_NAME_INDEX).toString();
+		QString attendance = index.data(Qt::UserRole + ATTENDANCE_INDEX).toString();
+
+		// 画选择背景
+		if (option.state.testFlag(QStyle::State_Selected)) {
+			painter->fillRect(option.rect, QColor("#e3e3e5"));
+		}
+
+		QRectF nameRect(option.rect.left() + 5, option.rect.top(), option.rect.width() / 2 - 5, option.rect.height());
+		QRectF attendRect(option.rect.left() + option.rect.width() / 2, option.rect.top(), option.rect.width() / 2, option.rect.height());
+		painter->setPen(QPen(Qt::black));
+		painter->setFont(QFont(g_defaultFont, 20));
+		painter->drawText(nameRect, stuName);
+		painter->drawText(attendRect, Qt::AlignRight, attendance);
+
+		painter->restore();
+	}
+}
+
+QSize StudentAttendanceDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+	Q_UNUSED(index);
+	return QSize(option.rect.width(), 40);
+}
+
+ClassAttendanceDelegate::ClassAttendanceDelegate(QObject* parent /* = nullptr */)
+	:QStyledItemDelegate(parent)
+{
+}
+
+ClassAttendanceDelegate::~ClassAttendanceDelegate()
+{
+}
+
+void ClassAttendanceDelegate::paint(QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index) const
+{
+	if (index.isValid()) {
+		painter->save();
+		QString clsName = index.data(Qt::UserRole + CLASS_NAME_INDEX).toString();
+		QString attendance = index.data(Qt::UserRole + ATTENDANCE_INDEX).toString();
+
+		// 画选择背景
+		if (option.state.testFlag(QStyle::State_Selected)) {
+			painter->fillRect(option.rect, QColor("#e3e3e5"));
+		}
+
+		QRectF nameRect(option.rect.left() + 5, option.rect.top(), option.rect.width() / 2 - 5, option.rect.height());
+		QRectF attendRect(option.rect.left() + option.rect.width() / 2, option.rect.top(), option.rect.width() / 2, option.rect.height());
+		painter->setPen(QPen(Qt::black));
+		painter->setFont(QFont(g_defaultFont, 20));
+		painter->drawText(nameRect, clsName);
+		painter->drawText(attendRect, Qt::AlignRight, attendance);
+
+		painter->restore();
+	}
+}
+
+QSize ClassAttendanceDelegate::sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const
+{
+	Q_UNUSED(index);
+	return QSize(option.rect.width(), 40);
 }

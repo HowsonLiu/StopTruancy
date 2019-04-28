@@ -4,7 +4,7 @@
 class Student;
 class QLabel;
 class QPushButton;
-class QTreeView;
+class QListView;
 class AttendancesModel;
 class StudentWidget : public QWidget
 {
@@ -18,7 +18,7 @@ private:
 	QLabel* m_nameLabel;
 	QLabel* m_optimizeLabel;
 	QPushButton* m_optimizeButton;
-	QTreeView* m_attendancesList;
+	QListView* m_attendancesList;
 	AttendancesModel* m_attendancesModel;
 
 public:

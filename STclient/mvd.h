@@ -106,3 +106,23 @@ public:
 	virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 	virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
+
+class StudentAttendanceDelegate : public QStyledItemDelegate
+{
+	Q_OBJECT
+public:
+	explicit StudentAttendanceDelegate(QObject* parent = nullptr);
+	~StudentAttendanceDelegate();
+	virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+};
+
+class ClassAttendanceDelegate : public QStyledItemDelegate
+{
+	Q_OBJECT
+public:
+	explicit ClassAttendanceDelegate(QObject* parent = nullptr);
+	~ClassAttendanceDelegate();
+	virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+};

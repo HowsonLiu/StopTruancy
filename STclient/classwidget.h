@@ -2,7 +2,6 @@
 #include <QWidget>
 
 class QListView;
-class QTreeView;
 class Class;
 class QLabel;
 class QPushButton;
@@ -21,7 +20,7 @@ private:
 	QLabel* m_addLessonLabel;
 	QPushButton* m_addLessonButton;
 	QListView* m_lessonList;
-	QTreeView* m_attendanceList;
+	QListView* m_attendanceList;
 	AttendancesModel* m_attendanceModel;
 	LessonsModel* m_lessonsModel;
 
