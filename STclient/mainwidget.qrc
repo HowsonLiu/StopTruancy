@@ -18,11 +18,13 @@
     </qresource>
     <qresource prefix="/Class">
         <file>Resources/refresh.png</file>
-        <file>Resources/back.png</file>
-        <file>Resources/forward.png</file>
         <file>Resources/class-add.png</file>
         <file>Resources/class-add-hover.png</file>
         <file>Resources/class-del.png</file>
         <file>Resources/class-del-hover.png</file>
+        <file>Resources/back.png</file>
+        <file>Resources/back-hover.png</file>
+        <file>Resources/forward.png</file>
+        <file>Resources/forward-hover.png</file>
     </qresource>
 </RCC>

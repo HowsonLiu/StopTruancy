@@ -67,10 +67,18 @@ NewLessonDialog::NewLessonDialog(const QString& classname, QImage* image, QWidge
 	m_numLabel->setStyleSheet("color:red");
 
 	// buttons
-	m_forwardButton->setStyleSheet("border-image:url(:/Class/Resources/forward.png)");
+	m_forwardButton->setStyleSheet("QPushButton{border-image:url(:/Class/Resources/forward.png)}"
+		"QPushButton:hover{border-image:url(:/Class/Resources/forward-hover.png)}");
 	m_forwardButton->setFixedSize(QSize(20, 20));
-	m_backButton->setStyleSheet("border-image:url(:/Class/Resources/back.png)");
+	m_backButton->setStyleSheet("QPushButton{border-image:url(:/Class/Resources/back.png)}"
+		"QPushButton:hover{border-image:url(:/Class/Resources/back-hover.png)}");
 	m_backButton->setFixedSize(QSize(20, 20));
+
+	// background
+	QPalette pal = palette();
+	pal.setColor(QPalette::Background, Qt::white);
+	setAutoFillBackground(true);
+	setPalette(pal);
 
 	Predict();
 	m_numLabel->setText(QString::number(m_faceRect.size()));

@@ -4,6 +4,7 @@
 #include <QColor>
 
 const QString g_defaultFont = "Microsoft Yahei";
+const QColor g_defaultGray = QColor("#CDCDCD");
 const QColor g_neteaseMusicTitleRed = QColor("#C62F2F");
 const QColor g_neteaseMusicPlayRed = QColor("#E83C3C");
 
