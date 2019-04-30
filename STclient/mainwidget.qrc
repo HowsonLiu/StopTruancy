@@ -26,5 +26,7 @@
         <file>Resources/back-hover.png</file>
         <file>Resources/forward.png</file>
         <file>Resources/forward-hover.png</file>
+        <file>Resources/tick.png</file>
+        <file>Resources/tick-hover.png</file>
     </qresource>
 </RCC>

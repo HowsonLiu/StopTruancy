@@ -43,6 +43,12 @@ NewLessonDialog::NewLessonDialog(const QString& classname, QImage* image, QWidge
 	rightLayout->addLayout(rightDownLayout);
 	layout->addLayout(rightLayout);
 	setLayout(layout);
+	QSizePolicy sizePolicy = m_backButton->sizePolicy();
+	sizePolicy.setRetainSizeWhenHidden(true);	// 设置在隐藏时依旧占位
+	m_backButton->setSizePolicy(sizePolicy);
+	sizePolicy = m_forwardButton->sizePolicy();
+	sizePolicy.setRetainSizeWhenHidden(true);
+	m_forwardButton->setSizePolicy(sizePolicy);
 
 	Init();
 	if (m_errorCode != NEW_LESSON_OK) return;
@@ -73,6 +79,9 @@ NewLessonDialog::NewLessonDialog(const QString& classname, QImage* image, QWidge
 	m_backButton->setStyleSheet("QPushButton{border-image:url(:/Class/Resources/back.png)}"
 		"QPushButton:hover{border-image:url(:/Class/Resources/back-hover.png)}");
 	m_backButton->setFixedSize(QSize(20, 20));
+	m_okButton->setStyleSheet("QPushButton{border-image:url(:/Class/Resources/tick.png)}"
+		"QPushButton:hover{border-image:url(:/Class/Resources/tick-hover.png)}");
+	m_okButton->setFixedSize(QSize(20, 20));
 
 	// background
 	QPalette pal = palette();
@@ -153,11 +162,13 @@ void NewLessonDialog::Predict()
 void NewLessonDialog::SetUp()
 {
 	if (m_faceRect.size() <= 0) {
-		m_forwardButton->setEnabled(false);
-		m_backButton->setEnabled(false);
+		m_forwardButton->setHidden(true);
+		m_backButton->setHidden(true);
 		m_listView->setSelectionMode(QListView::NoSelection);
 	}
 	else {
+		m_backButton->setHidden(true);
+		m_forwardButton->setHidden(false);
 		RectangleIndexFace();
 		AutoSelectStudent();
 		UpdateNumLabel();
@@ -212,11 +223,9 @@ bool NewLessonDialog::SaveChanges()
 void NewLessonDialog::onForwardButtonClicked()
 {
 	if (!SaveChanges()) return;
-	if (m_curIndex >= m_faceRect.size() - 1) {
-		m_forwardButton->setEnabled(false);
-		return;
-	}
-	if (++m_curIndex > 0) m_backButton->setEnabled(true);
+	if (++m_curIndex >= m_faceRect.size() - 1) 
+		m_forwardButton->setHidden(true);
+	m_backButton->setHidden(false);
 	RectangleIndexFace();
 	AutoSelectStudent();
 	UpdateNumLabel();
@@ -225,11 +234,9 @@ void NewLessonDialog::onForwardButtonClicked()
 void NewLessonDialog::onBackButtonClicked()
 {
 	if (!SaveChanges()) return;
-	if (m_curIndex <= 0) {
-		m_backButton->setEnabled(false);
-		return;
-	}
-	if (--m_curIndex < m_faceRect.size() - 1) m_forwardButton->setEnabled(true);
+	if (--m_curIndex <= 0) 
+		m_backButton->setHidden(true);
+	m_forwardButton->setHidden(false);
 	RectangleIndexFace();
 	AutoSelectStudent();
 	UpdateNumLabel();
