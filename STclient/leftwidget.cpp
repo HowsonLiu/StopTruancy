@@ -137,13 +137,17 @@ void LeftWidget::onSwitchComboBox(int index)
 	{
 	case 0:
 		m_listView->setModel(m_allStudentsModel);
-		m_addButton->setStyleSheet("border-image:url(:/Student/Resources/user-add.png)");
-		m_delButton->setStyleSheet("border-image:url(:/Student/Resources/user-delete.png)");
+		m_addButton->setStyleSheet("QPushButton{border-image:url(:/Student/Resources/student-add.png)}"
+			"QPushButton:hover{border-image:url(:/Student/Resources/student-add-hover.png)}");
+		m_delButton->setStyleSheet("QPushButton{border-image:url(:/Student/Resources/student-del.png)}"
+			"QPushButton:hover{border-image:url(:/Student/Resources/student-del-hover.png)}");
 		break;
 	case 1:
 		m_listView->setModel(m_allClassesModel);
-		m_addButton->setStyleSheet("border-image:url(:/Class/Resources/class-add.png)");
-		m_delButton->setStyleSheet("border-image:url(:/Class/Resources/class-delete.png)");
+		m_addButton->setStyleSheet("QPushButton{border-image:url(:/Class/Resources/class-add.png)}"
+			"QPushButton:hover{border-image:url(:/Class/Resources/class-add-hover.png)}");
+		m_delButton->setStyleSheet("QPushButton{border-image:url(:/Class/Resources/class-del.png)}"
+			"QPushButton:hover{border-image:url(:/Class/Resources/class-del-hover.png)}");
 		break;
 	default:
 		break;

@@ -10,15 +10,19 @@
     <qresource prefix="/Student">
         <file>Resources/defalut_student_photo.png</file>
         <file>Resources/add.png</file>
-        <file>Resources/user-add.png</file>
-        <file>Resources/user-delete.png</file>
         <file>Resources/tick.png</file>
+        <file>Resources/student-add.png</file>
+        <file>Resources/student-add-hover.png</file>
+        <file>Resources/student-del.png</file>
+        <file>Resources/student-del-hover.png</file>
     </qresource>
     <qresource prefix="/Class">
-        <file>Resources/class-add.png</file>
-        <file>Resources/class-delete.png</file>
         <file>Resources/refresh.png</file>
         <file>Resources/back.png</file>
         <file>Resources/forward.png</file>
+        <file>Resources/class-add.png</file>
+        <file>Resources/class-add-hover.png</file>
+        <file>Resources/class-del.png</file>
+        <file>Resources/class-del-hover.png</file>
     </qresource>
 </RCC>
