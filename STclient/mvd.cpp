@@ -403,9 +403,19 @@ void StudentAttendanceDelegate::paint(QPainter * painter, const QStyleOptionView
 		QString stuName = index.data(Qt::UserRole + STUDENT_NAME_INDEX).toString();
 		QString attendance = index.data(Qt::UserRole + ATTENDANCE_INDEX).toString();
 
-		// »­Ñ¡Ôñ±³¾°
+		// single index
+		if (index.row() % 2) {
+			painter->fillRect(option.rect, g_attendanceSingleIndexBackgroundColor);
+		}
+
+		// hover
+		if (option.state.testFlag(QStyle::State_MouseOver)) {
+			painter->fillRect(option.rect, g_attendanceHoverColor);
+		}
+
+		// selected
 		if (option.state.testFlag(QStyle::State_Selected)) {
-			painter->fillRect(option.rect, QColor("#e3e3e5"));
+			painter->fillRect(option.rect, g_attendanceSelectedColor);
 		}
 
 		QRectF nameRect(option.rect.left() + 5, option.rect.top(), option.rect.width() / 2 - 5, option.rect.height());
@@ -441,9 +451,19 @@ void ClassAttendanceDelegate::paint(QPainter * painter, const QStyleOptionViewIt
 		QString clsName = index.data(Qt::UserRole + CLASS_NAME_INDEX).toString();
 		QString attendance = index.data(Qt::UserRole + ATTENDANCE_INDEX).toString();
 
-		// »­Ñ¡Ôñ±³¾°
+		// single index
+		if (index.row() % 2) {
+			painter->fillRect(option.rect, g_attendanceSingleIndexBackgroundColor);
+		}
+
+		// hover
+		if (option.state.testFlag(QStyle::State_MouseOver)) {
+			painter->fillRect(option.rect, g_attendanceHoverColor);
+		}
+
+		// selected
 		if (option.state.testFlag(QStyle::State_Selected)) {
-			painter->fillRect(option.rect, QColor("#e3e3e5"));
+			painter->fillRect(option.rect, g_attendanceSelectedColor);
 		}
 
 		QRectF nameRect(option.rect.left() + 5, option.rect.top(), option.rect.width() / 2 - 5, option.rect.height());
