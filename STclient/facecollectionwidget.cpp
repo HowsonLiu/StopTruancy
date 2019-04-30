@@ -120,7 +120,12 @@ void CameraWidget::paintEvent(QPaintEvent* event)
 	if (!m_frame.empty()) {
 		cv::cvtColor(m_frame, m_gray, CV_BGR2GRAY);	// 转灰度图
 		cv::equalizeHist(m_gray, m_gray);	// 直方图均衡化，简单点来说就是提高对比度
-		m_cascade.detectMultiScale(m_gray, m_faceRect, 1.1f, 3, CV_HAAR_SCALE_IMAGE, cv::Size(100, 100), cv::Size(600, 600));
+		m_cascade.detectMultiScale(m_gray, m_faceRect,
+			1.1f,	// 图像金字塔按照1.1的比例缩放
+			3,	// 默认3个矩形框同时存在才算匹配成功
+			CV_HAAR_SCALE_IMAGE		// 缩放图片而不是缩放分类器
+			| CV_HAAR_FIND_BIGGEST_OBJECT,	// 只检测最大物体
+			cv::Size(100, 100));
 		for (size_t i = 0; i < m_faceRect.size(); ++i) {
 			cv::rectangle(m_frame, m_faceRect[i], cv::Scalar(0, 255, 0), 1, 8, 0);
 		}
