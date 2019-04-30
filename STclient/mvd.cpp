@@ -307,13 +307,19 @@ void DefaultStuAndClsDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 		painter->save();
 		QString name = index.data(Qt::DisplayRole).toString();
 
-		// »­Ñ¡Ôñ±³¾°
+		// selected
 		if (option.state.testFlag(QStyle::State_Selected)) {
-			painter->fillRect(option.rect, QColor("#e3e3e5"));
+			painter->fillRect(option.rect, g_leftBackgroundSelectedColor);
+			QRectF redRect(option.rect.left(), option.rect.top(), 3, option.rect.height());
+			painter->fillRect(redRect, g_neteaseMusicTitleRed);
 		}
 
-		QRectF textRect(option.rect.left() + 5, option.rect.top(), option.rect.width(), option.rect.height());
-		painter->setPen(QPen(Qt::black));
+		QRectF textRect(option.rect.left() + 3, option.rect.top(), option.rect.width(), option.rect.height());
+		// selected or hover
+		if (option.state.testFlag(QStyle::State_Selected) || option.state.testFlag(QStyle::State_MouseOver))
+			painter->setPen(QPen(g_leftTextSelectedColor));
+		else
+			painter->setPen(QPen(g_leftTextUnselectedColor));
 		painter->setFont(QFont(g_defaultFont, 20));
 		painter->drawText(textRect, name);
 		painter->restore();
