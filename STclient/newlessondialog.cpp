@@ -134,7 +134,7 @@ void NewLessonDialog::Predict()
 	m_originMat = QImage2MatEx(*m_originPhoto);
 	cv::cvtColor(m_originMat, m_gray, CV_BGR2GRAY);
 	cv::equalizeHist(m_gray, m_gray);
-	m_cascade.detectMultiScale(m_gray, m_faceRect, 1.1f, 3, CV_HAAR_SCALE_IMAGE, cv::Size(100, 100));
+	m_cascade.detectMultiScale(m_gray, m_faceRect, 1.1f, 3, CV_HAAR_SCALE_IMAGE, cv::Size(20, 20));
 	cv::Mat face;
 	auto it = m_faceRect.begin();
 	while (it != m_faceRect.end()) {
@@ -165,6 +165,13 @@ void NewLessonDialog::SetUp()
 		m_forwardButton->setHidden(true);
 		m_backButton->setHidden(true);
 		m_listView->setSelectionMode(QListView::NoSelection);
+	}
+	else if (m_faceRect.size() == 1) {
+		m_backButton->setHidden(true);
+		m_forwardButton->setHidden(true);
+		RectangleIndexFace();
+		AutoSelectStudent();
+		UpdateNumLabel();
 	}
 	else {
 		m_backButton->setHidden(true);
