@@ -97,7 +97,6 @@
   <ItemGroup>
     <ClCompile Include="classserializer.cpp" />
     <ClCompile Include="datacenter.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="sqlitehelper.cpp" />
     <ClCompile Include="studentserializer.cpp" />
   </ItemGroup>
