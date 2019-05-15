@@ -13,10 +13,10 @@ private:
 	static int CountCallBack(void*, int, char**, char**);	// 回调函数必须是静态
 
 public:
-	SQLiteHelper(const QString&);
+	SQLiteHelper(const QString&);		// 打开db文件
 	~SQLiteHelper();
 	inline bool isValid() const { return m_bValid; }
-	bool Init();
+	bool Init();						// 创建表
 	bool AddStudent(const QString&);	// sqlite 不支持添加多项
 	bool AddRecord(const QString&, const std::vector<QString>&);
 	bool GetRecordNums(int*) const;

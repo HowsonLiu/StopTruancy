@@ -174,8 +174,8 @@ void LeftWidget::AddStudent(const QString& name, const std::vector<cv::Mat>& fac
 	QModelIndex index = m_allStudentsModel->index(0, 0, QModelIndex());		// 拿出来改
 	m_allStudentsModel->setData(index, name, Qt::DisplayRole);
 	StudentSerializer stu(name);								// 更新后台数据
-	stu.Init();
-	stu.WriteImages(faces);
+	stu.init();
+	stu.writeImages(faces);
 }
 
 void LeftWidget::DelStudent()
@@ -186,7 +186,7 @@ void LeftWidget::DelStudent()
 		QString name = m_allStudentsModel->data(index).toString();
 		StudentSerializer stu(name);
 		if (stu.canDelete()) {
-			stu.Delete();
+			stu.deletes();
 			m_allStudentsModel->removeRows(index.row(), 1, QModelIndex());	// 没有排序，可以直接按照row来删除
 			emit sigDelStudent(name);
 		}
@@ -202,8 +202,10 @@ void LeftWidget::AddClass(const QString& name, const std::vector<QString>& stuNa
 	QModelIndex index = m_allClassesModel->index(0, 0, QModelIndex());		// 拿出来改
 	m_allClassesModel->setData(index, name, Qt::DisplayRole);
 	ClassSerializer cls(name);								// 更新后台数据
-	cls.Init();
-	cls.AddStudents(stuNames);
+	cls.init();
+	for (auto stuName : stuNames) {
+		cls.addStudent(stuName);
+	}
 }
 
 void LeftWidget::DelClass()
@@ -213,7 +215,7 @@ void LeftWidget::DelClass()
 		if (!index.isValid()) continue;
 		QString name = m_allClassesModel->data(index).toString();
 		ClassSerializer cls(name);
-		cls.Delete();
+		cls.deletes();
 		m_allClassesModel->removeRows(index.row(), 1, QModelIndex());	// 没有排序，可以直接按照row来删除
 		emit sigDelClass(name);
 	}

@@ -277,14 +277,14 @@ NewStudentDialog::~NewStudentDialog()
 
 void NewStudentDialog::onEnterOrButtonClick()
 {
-	if (StudentSerializer(m_edit->text()).Exist()) return;
+	if (StudentSerializer(m_edit->text()).exists()) return;
 	if (m_name) *m_name = m_edit->text();
 	accept();
 }
 
 void NewStudentDialog::onTextChanged(const QString& text)
 {
-	if (StudentSerializer(text).Exist()) {
+	if (StudentSerializer(text).exists()) {
 		m_tipLabel->show();
 		m_button->setEnabled(false);
 	}

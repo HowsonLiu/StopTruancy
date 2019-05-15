@@ -17,7 +17,7 @@ StudentSerializer::~StudentSerializer()
 {
 }
 
-void StudentSerializer::WriteImages(const std::vector<cv::Mat>& vm)
+void StudentSerializer::writeImages(const std::vector<cv::Mat>& vm)
 {
 	QDir dir(m_faceInfoPath);
 	if (!dir.exists() && !dir.mkpath(m_faceInfoPath)) return;
@@ -32,7 +32,7 @@ void StudentSerializer::WriteImages(const std::vector<cv::Mat>& vm)
 	}
 }
 
-void StudentSerializer::ReadOriginImages(std::vector<cv::Mat>* pvm)
+void StudentSerializer::readOriginImages(std::vector<cv::Mat>* pvm)
 {
 	QDir dir(m_faceInfoPath);
 	if (!pvm || !dir.exists()) return;
@@ -46,7 +46,7 @@ void StudentSerializer::ReadOriginImages(std::vector<cv::Mat>* pvm)
 	}
 }
 
-void StudentSerializer::ReadTrainImages(std::vector<cv::Mat>* pvm)
+void StudentSerializer::readTrainImages(std::vector<cv::Mat>* pvm)
 {
 	QDir dir(m_faceInfoPath);
 	if (!pvm || !dir.exists()) return;
@@ -62,7 +62,7 @@ void StudentSerializer::ReadTrainImages(std::vector<cv::Mat>* pvm)
 	}
 }
 
-void StudentSerializer::ReadProfilePhoto(QPixmap* image)
+void StudentSerializer::readProfilePhoto(QPixmap* image)
 {
 	QDir dir(m_faceInfoPath);
 	if (!image || !dir.exists()) return;
@@ -74,7 +74,7 @@ void StudentSerializer::ReadProfilePhoto(QPixmap* image)
 	image->load(dir.filePath(imageNameList[0]));
 }
 
-std::vector<QString> StudentSerializer::Classes()
+std::vector<QString> StudentSerializer::classes()
 {
 	std::vector<QString> res;
 	QFile classesFile(m_cfgPath);
@@ -88,7 +88,7 @@ std::vector<QString> StudentSerializer::Classes()
 	return res;
 }
 
-bool StudentSerializer::AddClass(const QString& name)
+bool StudentSerializer::addClass(const QString& name)
 {
 	QFile classesFile(m_cfgPath);
 	if (!classesFile.open(QIODevice::ReadWrite | QIODevice::Text)) return false;
@@ -102,7 +102,7 @@ bool StudentSerializer::AddClass(const QString& name)
 	return true;
 }
 
-bool StudentSerializer::DelClass(const QString& name)
+bool StudentSerializer::delClass(const QString& name)
 {
 	std::vector<QString> Classes;
 	QFile classesFile(m_cfgPath);
@@ -121,14 +121,17 @@ bool StudentSerializer::DelClass(const QString& name)
 	return true;
 }
 
-bool StudentSerializer::Init()
+bool StudentSerializer::init()
 {
-	DATA_CENTER_INSTANCE->addStudentName(m_name);
 	QDir dir;
-	return dir.exists(m_path) || dir.mkpath(m_path) && dir.mkpath(m_faceInfoPath);
+	if (dir.exists(m_path) || dir.mkpath(m_path) && dir.mkpath(m_faceInfoPath)) {
+		DATA_CENTER_INSTANCE->addStudentName(m_name);
+		return true;
+	}
+	return false;
 }
 
-void StudentSerializer::WriteImage(const cv::Mat& mat)
+void StudentSerializer::writeImage(const cv::Mat& mat)
 {
 	QDir dir(m_faceInfoPath);
 	if (!dir.exists() && !dir.mkpath(m_faceInfoPath)) return;
@@ -141,14 +144,14 @@ void StudentSerializer::WriteImage(const cv::Mat& mat)
 	cv::imwrite(name.toStdString(), mat);
 }
 
-bool StudentSerializer::Delete()
+bool StudentSerializer::deletes()
 {
 	DATA_CENTER_INSTANCE->delStudentName(m_name);
 	QDir dir(m_path);
 	return dir.removeRecursively();
 }
 
-bool StudentSerializer::Exist() const
+bool StudentSerializer::exists() const
 {
 	return QDir(m_path).exists();
 }

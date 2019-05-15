@@ -116,7 +116,7 @@ void NewClassDialog::onTextChanged(const QString& text)
 		m_okButton->setEnabled(bVaildStudents && bVaildName);
 		return;
 	}
-	if (ClassSerializer(text).Exist()) {
+	if (ClassSerializer(text).exists()) {
 		m_tipLabel->setText("Already exists name");
 		m_tipLabel->show();
 		bVaildName = false;

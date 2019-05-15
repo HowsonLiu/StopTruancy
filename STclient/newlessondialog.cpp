@@ -61,7 +61,7 @@ NewLessonDialog::NewLessonDialog(const QString& classname, QImage* image, QWidge
 	m_photoLabel->setPixmap(QPixmap::fromImage(*m_originPhoto));
 
 	// student list
-	ClassSerializer(m_className).GetStudents(&m_stuList);
+	ClassSerializer(m_className).getStudents(&m_stuList);
 	m_studentsModel->SetStudents(m_stuList);
 	m_listView->setModel(m_studentsModel);
 	DefaultStuAndClsDelegate* defaultDelegate = new DefaultStuAndClsDelegate(this);
@@ -106,7 +106,7 @@ NewLessonDialog::~NewLessonDialog()
 void NewLessonDialog::Init()
 {
 	ClassSerializer serializer(m_className);
-	if (!serializer.Exist()) {
+	if (!serializer.exists()) {
 		m_errorCode = NEW_LESSON_ERROR_CLASS_NOT_EXIST;
 		return;
 	}
@@ -268,11 +268,11 @@ void NewLessonDialog::onOkButtonClicked()
 		attendStudents.push_back(stuName);
 		if (m_customResult[i] != m_originResult[i]) {
 			StudentSerializer serializer(stuName);
-			if (serializer.Exist()) serializer.WriteImage(m_originMat(m_faceRect[i]));	// 对不准确的人脸进行优化处理
+			if (serializer.exists()) serializer.writeImage(m_originMat(m_faceRect[i]));	// 对不准确的人脸进行优化处理
 		}
 	}
 	QString photoName = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss");
 	ClassSerializer clsSerializer(m_className);
-	clsSerializer.AddLesson(m_originMat, photoName, attendStudents);
+	clsSerializer.addLesson(m_originMat, photoName, attendStudents);
 	accept();
 }

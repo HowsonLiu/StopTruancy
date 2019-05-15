@@ -108,7 +108,7 @@ void StudentWidget::onOptimizeButtonClick()
 	FaceCollectionDialog faceCollectionWidget(&faceInfos, this);
 	if (faceCollectionWidget.exec() == QDialog::Accepted) {
 		StudentSerializer stu(m_student->getName());	
-		if(stu.Exist()) stu.WriteImages(faceInfos);
+		if(stu.exists()) stu.writeImages(faceInfos);
 		QMessageBox::information(this, "Success", "Optimized successfully");
 	}
 }

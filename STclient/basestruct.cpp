@@ -7,15 +7,15 @@ Student::Student(const QString& name)
 	: m_name(name)
 {
 	m_serializer = new StudentSerializer(name);
-	m_serializer->ReadProfilePhoto(&m_photo);
-	for (QString className : m_serializer->Classes()) {
+	m_serializer->readProfilePhoto(&m_photo);
+	for (QString className : m_serializer->classes()) {
 		ClassSerializer cls(className);
-		if (cls.Exist()) {
+		if (cls.exists()) {
 			Attendance attend;
 			attend.className = className;
 			attend.studentName = m_name;
-			cls.GetLessonNum(&attend.allNum);
-			cls.GetStudentAttendances(m_name, &attend.attendanceNum);
+			cls.getLessonNum(&attend.allNum);
+			cls.getStudentAttendances(m_name, &attend.attendanceNum);
 			m_attendances.push_back(attend);
 		}
 	}
@@ -29,22 +29,22 @@ Student::~Student()
 
 inline bool Student::Exist() const
 {
-	return m_serializer && m_serializer->Exist();
+	return m_serializer && m_serializer->exists();
 }
 
 Class::Class(const QString& name)
 	: m_name(name)
 {
 	m_serializer = new ClassSerializer(name);
-	m_serializer->GetLessonsImage(&m_lessons);
-	for (QString stuName : m_serializer->Students()) {
+	m_serializer->getLessonImages(&m_lessons);
+	for (QString stuName : m_serializer->students()) {
 		StudentSerializer stu(stuName);
-		if (stu.Exist()) {
+		if (stu.exists()) {
 			Attendance attend;
 			attend.className = m_name;
 			attend.studentName = stuName;
-			m_serializer->GetLessonNum(&attend.allNum);
-			m_serializer->GetStudentAttendances(stuName, &attend.attendanceNum);
+			m_serializer->getLessonNum(&attend.allNum);
+			m_serializer->getStudentAttendances(stuName, &attend.attendanceNum);
 			m_attendances.push_back(attend);
 		}
 	}

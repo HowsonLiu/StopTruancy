@@ -130,8 +130,8 @@ void ClassWidget::onAttendanceItemDoubleClick(const QModelIndex& index)
 void ClassWidget::onTrainButtonClick()
 {
 	ClassSerializer serializer(m_class->getName());
-	if (!serializer.Exist()) return;
-	int res = serializer.Train();
+	if (!serializer.exists()) return;
+	int res = serializer.trains();
 	if (res == CS_OK) {
 		QMessageBox::information(this, "Success", "Train successfully");
 	}

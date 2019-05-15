@@ -7,12 +7,12 @@
 class DataCenter
 {
 private:
-	const QString m_rootPath;
-	const QString m_allClassStcPath;
-	const QString m_allStudentStsPath;
-	const QString m_classPath;
-	const QString m_studentPath;
-	const QString m_faceDetectionXmlPath;
+	const QString m_rootPath;				// 数据中心的根路径
+	const QString m_classesCacheStcPath;	// 班级缓存，里面存有所有班级的名字，避免每次查询遍历文件夹
+	const QString m_studentsCacheStsPath;	// 学生缓存
+	const QString m_classesFolderPath;		// 存放班级的父文件夹
+	const QString m_studentsFolderPath;		// 存放学生的父文件夹
+	const QString m_faceDetectionXmlPath;	// 人脸检测的xml文件
 
 private:
 	DataCenter();

@@ -85,7 +85,7 @@ void MainWidget::onSelectStudent(const QString& name)
 		return;
 	}
 	StudentSerializer serializer(name);
-	if (serializer.Exist()) {
+	if (serializer.exists()) {
 		Student* stu = new Student(name);
 		m_studentWidget->SetStudent(stu);
 	}
@@ -105,7 +105,7 @@ void MainWidget::onSelectClass(const QString& name)
 		return;
 	}
 	ClassSerializer serializer(name);
-	if (serializer.Exist()) {
+	if (serializer.exists()) {
 		Class* cls = new Class(name);
 		m_classWidget->SetClass(cls);
 	}

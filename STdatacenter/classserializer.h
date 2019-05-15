@@ -22,7 +22,7 @@ class ClassSerializer
 {
 private:
 	const QString m_name;
-	const QString m_path;
+	const QString m_path;			// 此班级的根路径，同样作为存在判断
 	const QString m_lessonPath;
 	const QString m_xmlPath;
 	const QString m_cfgPath;
@@ -32,17 +32,16 @@ public:
 	ClassSerializer(const QString&);
 	~ClassSerializer();
 	inline QString getXmlPath() const { return m_xmlPath; }
-	int Init();
-	bool Exist() const;
-	bool Delete();
-	int AddStudent(const QString&);
-	int AddStudents(const std::vector<QString>&);
-	std::vector<QString> Students() const;
-	void GetStudents(QList<QString>*);
-	void GetLessonsImage(QList<Lesson>*);
-	int AddLesson(const cv::Mat&, const QString&, const std::vector<QString>&);
-	int GetLessonNum(int*);
-	int GetStudentAttendances(const QString&, int*);
-	int Train();
+	int init();
+	bool exists() const;
+	bool deletes();
+	int addStudent(const QString&);
+	std::vector<QString> students() const;
+	void getStudents(QList<QString>*);
+	void getLessonImages(QList<Lesson>*);
+	int addLesson(const cv::Mat&, const QString&, const std::vector<QString>&);
+	int getLessonNum(int*);
+	int getStudentAttendances(const QString&, int*);
+	int trains();
 };
 
