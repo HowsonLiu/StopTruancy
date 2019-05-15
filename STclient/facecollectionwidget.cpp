@@ -52,6 +52,7 @@ FaceCollectionDialog::FaceCollectionDialog(std::vector<cv::Mat>* faceInfos, QWid
 
 	UpdateLabel();
 	m_timer->start();
+	resize(650, 480);	// 初始化大小
 }
 
 
