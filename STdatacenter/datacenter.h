@@ -2,7 +2,7 @@
 #include <QString>
 #include <vector>
 
-#define ROOT_PATH ".\\data"
+#define ROOT_PATH "D:\\tmp\\data"
 
 class DataCenter
 {
