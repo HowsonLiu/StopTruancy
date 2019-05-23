@@ -5,7 +5,7 @@
 #include <QDialog>
 
 #define COLLECT_NUMBER 10
-#define SNAP_INTERVAL 2000
+#define SNAP_INTERVAL 1000
 #define PAINT_INTERVAL 30
 
 #define FACE_COLLECTION_DIALOG_OK 0
