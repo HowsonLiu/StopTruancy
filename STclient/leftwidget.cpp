@@ -2,6 +2,7 @@
 #include "mvd.h"
 #include "../STdatacenter/studentserializer.h"
 #include "newclassdialog.h"
+#include "Resources.h"
 #include <QLabel>
 #include <QComboBox>
 #include <QVBoxLayout>
@@ -47,6 +48,9 @@ LeftWidget::LeftWidget(QWidget *parent)
 	// combobox
 	m_comboBox->addItem("Student");
 	m_comboBox->addItem("Class");
+	m_comboBox->setView(new QListView());	// 加上这句否则会用默认item样式
+	m_comboBox->setFont(QFont(g_defaultFont, g_comboBoxFontSize, g_defaultTitleFontWeight));
+	m_comboBox->view()->setFont(QFont(g_defaultFont, g_comboBoxFontSize, g_defaultTitleFontWeight));
 
 	// search
 	QPushButton* searchButton = new QPushButton(this);

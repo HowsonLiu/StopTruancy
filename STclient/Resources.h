@@ -17,6 +17,7 @@ const QColor g_attendanceHoverColor = QColor("#EBECED");
 const QColor g_attendanceSelectedColor = QColor("#E3E3E5");
 
 const int g_defaultTitleFontSize = 20;
+const int g_comboBoxFontSize = 10;
 const int g_defaultTitleFontWeight = QFont::Bold;
 
 const int g_defaultTipFontSize = 7;
